@@ -1,0 +1,48 @@
+/* Design tokens. Components use these only; no hard-coded colours. */
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-muted: #f4f4f2;
+  --border: #e6e5e1;
+  --text: #1a1a18;
+  --text-muted: #6b6a65;
+  --primary: #1f5a7a;
+  --primary-hover: #184963;
+  --primary-subtle: #e8f1f6;
+  --primary-foreground: #ffffff;
+  --success: #1e7a4c;
+  --warning: #a85b0a;
+  --danger: #b42318;
+  --chart-1: #1f5a7a;
+  --chart-2: #4c8f6b;
+  --chart-3: #c98a3a;
+  --chart-4: #7d5ba6;
+  --chart-5: #b5524a;
+  --chart-6: #6a7a8c;
+  --popover-shadow: 0 4px 16px rgb(0 0 0 / 0.08);
+  color-scheme: light;
+}
+
+:root.dark {
+  --bg: #111210;
+  --surface: #1a1b19;
+  --surface-muted: #222320;
+  --border: #2c2d2a;
+  --text: #ecece9;
+  --text-muted: #9c9b95;
+  --primary: #5fa3c7;
+  --primary-hover: #7ab6d6;
+  --primary-subtle: #16303d;
+  --primary-foreground: #111210;
+  --success: #4fbf86;
+  --warning: #e0a24a;
+  --danger: #f07167;
+  --chart-1: #4a7fa0;
+  --chart-2: #6fb08c;
+  --chart-3: #e0a85a;
+  --chart-4: #9a7bc2;
+  --chart-5: #d0726a;
+  --chart-6: #8a9aac;
+  --popover-shadow: 0 4px 16px rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}
