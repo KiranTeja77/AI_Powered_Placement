@@ -52,3 +52,11 @@ cd apps/web && pnpm lint && pnpm typecheck && pnpm test
 cd apps/api && ./mvnw verify
 cd apps/ai-service && uv run ruff check . && uv run mypy app && uv run pytest
 ```
+
+## API
+
+- OpenAPI document: http://localhost:8080/v3/api-docs, Swagger UI: http://localhost:8080/swagger-ui.html
+- The first admin is created at startup from `ADMIN_EMAIL` and `ADMIN_PASSWORD` if no such account exists.
+- `JWT_SECRET` must be at least 32 bytes; the API refuses to start without it.
+- The refresh cookie is `Secure`, so use `http://localhost` (browsers treat it as a secure context) or HTTPS.
+- Rate limiting keys on the client IP as seen by the API. Behind a reverse proxy, configure forwarded headers first.
