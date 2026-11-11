@@ -52,3 +52,28 @@ export function useUpdateSkills(id: string) {
     },
   })
 }
+
+export function useDeleteAnalysis() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => resumeApi.deleteAnalysis(id),
+    onSuccess: (_, id) => {
+      client.removeQueries({ queryKey: ['analysis', id] })
+      void client.invalidateQueries({ queryKey: ['analyses'] })
+    },
+  })
+}
+
+/** The roles the student has marked as interests. */
+export function useCareerInterests() {
+  return useQuery({ queryKey: ['career-interests'], queryFn: resumeApi.careerInterests })
+}
+
+/** Saves the whole list of interests; the screen updates from the saved answer. */
+export function useSaveCareerInterests() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: (roleSlugs: string[]) => resumeApi.saveCareerInterests(roleSlugs),
+    onSuccess: (saved) => client.setQueryData(['career-interests'], saved),
+  })
+}

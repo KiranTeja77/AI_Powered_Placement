@@ -3,7 +3,14 @@ import type { Priority, Suggestion } from '@/lib/api/resume-types'
 import { PRIORITY } from './labels'
 
 /** Suggestions in the order the analyzer ranked them, each with the reason it was given. */
-export function SuggestionsPanel({ suggestions }: { suggestions: Suggestion[] }) {
+export function SuggestionsPanel({
+  suggestions,
+  edited = false,
+}: {
+  suggestions: Suggestion[]
+  /** True when the suggestions were rebuilt after the student's changes. */
+  edited?: boolean
+}) {
   return (
     <section aria-labelledby="suggestions-heading" className="space-y-3">
       <div>
@@ -12,6 +19,7 @@ export function SuggestionsPanel({ suggestions }: { suggestions: Suggestion[] })
         </h2>
         <p className="text-base text-text-muted">
           Each suggestion comes from a fixed rule, and the reason says which one applied.
+          {edited ? ' These were rebuilt with your changes.' : ''}
         </p>
       </div>
       {suggestions.length === 0 ? (

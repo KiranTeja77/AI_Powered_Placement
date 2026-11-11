@@ -15,11 +15,22 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import type { AnalysisSummary } from '@/lib/api/resume-types'
+import { Button } from '@/components/ui/button'
+import { DeleteAnalysisDialog } from './DeleteAnalysisDialog'
 import { formatDateTime, formatPercent, pluralize } from './format'
 import { useAnalyses } from './queries'
 
 function rolesLabel(row: AnalysisSummary): string {
   return row.targetRoles.length === 0 ? 'All roles' : row.targetRoles.map((r) => r.name).join(', ')
+}
+
+/** A quiet text button; the date in its name tells screen-reader users which row it deletes. */
+function deleteButton(row: AnalysisSummary) {
+  return (
+    <Button variant="ghost" size="sm" className="ml-2 text-danger">
+      Delete<span className="sr-only"> analysis from {formatDateTime(row.createdAt)}</span>
+    </Button>
+  )
 }
 
 function readiness(row: AnalysisSummary): string {
@@ -82,6 +93,7 @@ export function HistoryTable() {
                     <Link to={`/s/resume/${row.id}`} className="text-primary hover:underline">
                       View
                     </Link>
+                    <DeleteAnalysisDialog id={row.id} trigger={deleteButton(row)} />
                   </TableCell>
                 </TableRow>
               ))}

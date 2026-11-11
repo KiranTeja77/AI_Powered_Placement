@@ -62,6 +62,11 @@ export type RoleSkill = Strict<Schemas['RoleSkillResponse']>
 export type RoleDefinition = Strict<Schemas['RoleResponse']>
 export type SkillDefinition = Strict<Schemas['SkillResponse']>
 
+/** The role slugs a student has marked as interests. */
+export interface CareerInterests {
+  roleSlugs: string[]
+}
+
 export interface AnalyzeInput {
   text: string
   targetRoles: string[]
