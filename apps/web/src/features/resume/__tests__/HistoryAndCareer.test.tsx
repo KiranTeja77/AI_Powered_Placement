@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import CareerPage from '@/features/career/CareerPage'
@@ -9,7 +9,13 @@ import { HistoryTable } from '../HistoryTable'
 import { renderWithProviders, ROLES } from './support'
 
 vi.mock('@/lib/api/resume-api', () => ({
-  resumeApi: { analyses: vi.fn(), roles: vi.fn() },
+  resumeApi: {
+    analyses: vi.fn(),
+    roles: vi.fn(),
+    deleteAnalysis: vi.fn(),
+    careerInterests: vi.fn(),
+    saveCareerInterests: vi.fn(),
+  },
 }))
 
 const api = vi.mocked(resumeApi)
@@ -38,7 +44,10 @@ const page = (
   ...extra,
 })
 
-beforeEach(() => vi.resetAllMocks())
+beforeEach(() => {
+  vi.resetAllMocks()
+  api.careerInterests.mockResolvedValue({ roleSlugs: [] })
+})
 
 describe('HistoryTable', () => {
   it('shows a loading state, then the rows', async () => {
@@ -100,8 +109,9 @@ describe('CareerPage', () => {
     api.roles.mockResolvedValue(ROLES)
     renderWithProviders(<CareerPage />)
     expect(await screen.findByText('Backend Developer')).toBeInTheDocument()
-    await userEvent.click(screen.getByText('Backend Developer'))
-    const opened = screen.getByText('Backend Developer').closest('details') as HTMLElement
+    const toggle = screen.getByRole('button', { name: /Backend Developer/, expanded: false })
+    await userEvent.click(toggle)
+    const opened = document.getElementById(toggle.getAttribute('aria-controls')!) as HTMLElement
     expect(within(opened).getByRole('heading', { name: /Core/ })).toBeInTheDocument()
     expect(within(opened).getByText('REST API')).toBeInTheDocument()
     expect(within(opened).getByText('Apache Kafka')).toBeInTheDocument()
@@ -133,5 +143,67 @@ describe('CareerPage', () => {
     api.roles.mockRejectedValue(new ApiError({ status: 500, message: 'x' }))
     renderWithProviders(<CareerPage />)
     expect(await screen.findByText('Roles could not be loaded')).toBeInTheDocument()
+  })
+})
+
+describe('CareerPage interests', () => {
+  it('marks a role as an interest and saves the whole list', async () => {
+    api.roles.mockResolvedValue(ROLES)
+    api.saveCareerInterests.mockResolvedValue({ roleSlugs: ['data-analyst'] })
+    renderWithProviders(<CareerPage />)
+    const button = await screen.findByRole('button', { name: /Mark as interest in Data Analyst/ })
+    await waitFor(() => expect(button).toBeEnabled())
+    expect(button).toHaveAttribute('aria-pressed', 'false')
+
+    await userEvent.click(button)
+    await waitFor(() => expect(api.saveCareerInterests).toHaveBeenCalledWith(['data-analyst']))
+    expect(
+      await screen.findByRole('button', { name: /Remove interest in Data Analyst/ }),
+    ).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('Interested')).toBeInTheDocument()
+  })
+
+  it('shows saved interests and removes one', async () => {
+    api.roles.mockResolvedValue(ROLES)
+    api.careerInterests.mockResolvedValue({ roleSlugs: ['backend-developer', 'data-analyst'] })
+    api.saveCareerInterests.mockResolvedValue({ roleSlugs: ['data-analyst'] })
+    renderWithProviders(<CareerPage />)
+    const remove = await screen.findByRole('button', {
+      name: /Remove interest in Backend Developer/,
+    })
+    expect(screen.getAllByText('Interested')).toHaveLength(2)
+    await userEvent.click(remove)
+    await waitFor(() => expect(api.saveCareerInterests).toHaveBeenCalledWith(['data-analyst']))
+  })
+
+  it('cannot change interests that failed to load, and offers a retry', async () => {
+    api.roles.mockResolvedValue(ROLES)
+    api.careerInterests.mockRejectedValueOnce(new ApiError({ status: 500, message: 'x' }))
+    renderWithProviders(<CareerPage />)
+    expect(await screen.findByText(/saved interests could not be loaded/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Mark as interest in Data Analyst/ })).toBeDisabled()
+    api.careerInterests.mockResolvedValue({ roleSlugs: [] })
+    await userEvent.click(screen.getByRole('button', { name: 'Try again' }))
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: /Mark as interest in Data Analyst/ }),
+      ).toBeEnabled(),
+    )
+  })
+})
+
+describe('HistoryTable delete', () => {
+  it('deletes a row after confirmation', async () => {
+    api.analyses.mockResolvedValue(page([row(1), row(2)]))
+    api.deleteAnalysis.mockResolvedValue(undefined)
+    renderWithProviders(<HistoryTable />)
+    const table = await screen.findByRole('table')
+    const first = within(table).getAllByRole('row')[1]!
+    await userEvent.click(within(first).getByRole('button', { name: /Delete analysis from/ }))
+    const dialog = await screen.findByRole('dialog', { name: 'Delete this analysis' })
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Delete analysis' }))
+    await waitFor(() =>
+      expect(api.deleteAnalysis).toHaveBeenCalledWith('00000000-0000-7000-8000-000000000001'),
+    )
   })
 })
