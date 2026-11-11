@@ -27,6 +27,10 @@ pythonpath = ["."]
 line-length = 100
 target-version = "py312"
 
+[tool.ruff.lint]
+# Explicit, so newer ruff defaults cannot rewrite string escapes or other intentional code.
+select = ["E", "F", "I", "UP", "B"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["app"]
 
