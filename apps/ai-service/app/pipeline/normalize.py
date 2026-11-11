@@ -18,7 +18,7 @@ _PUNCTUATION = {
     chr(0x201E): '"',  # double low-9 quotation mark
     chr(0x2212): "-",  # minus sign
 }
-# Invisible characters: zero-width space/non-joiner/joiner, word joiner, byte-order mark, soft hyphen.
+# Invisible: zero-width space, non-joiner, joiner, word joiner, byte-order mark, soft hyphen.
 _ZERO_WIDTH = {chr(0x200B), chr(0x200C), chr(0x200D), chr(0x2060), chr(0xFEFF), chr(0x00AD)}
 _LINE_SEPARATORS = {chr(0x2028), chr(0x2029)}
 
