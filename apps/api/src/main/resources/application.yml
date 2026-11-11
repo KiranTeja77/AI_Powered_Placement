@@ -33,6 +33,12 @@ springdoc:
   api-docs:
     path: /v3/api-docs
 
+logging:
+  level:
+    # Hibernate prints whole entities at DEBUG, and resume_analysis holds the resume text and the
+    # analysis. An explicit level here wins over a global DEBUG, so resumes cannot reach the logs.
+    org.hibernate.orm.core: INFO
+
 management:
   endpoints:
     web:

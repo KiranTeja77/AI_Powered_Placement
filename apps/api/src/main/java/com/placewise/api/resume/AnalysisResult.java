@@ -19,6 +19,12 @@ public record AnalysisResult(
         List<RoleReadiness> roles,
         List<AnalysisSuggestion> suggestions) {
 
+    /** Skills carry snippets of the resume, so only counts are printed. */
+    @Override
+    public String toString() {
+        return "AnalysisResult[engineVersion=" + engineVersion + ", skills=" + (skills == null ? 0 : skills.size()) + "]";
+    }
+
     public record AnalysisSection(String name, String heading, int start, int end) {}
 
     public record AnalysisSpan(int start, int end, String text) {}

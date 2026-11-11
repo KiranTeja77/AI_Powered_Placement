@@ -1,5 +1,6 @@
 package com.placewise.api.resume;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.placewise.api.common.AppProperties;
 import com.placewise.api.resume.AnalysisResult.RoleReadiness;
 import java.net.http.HttpClient;
@@ -56,7 +57,7 @@ public class AiServiceClient {
     }
 
     public AnalysisResult analyze(String text, List<String> targetRoles) {
-        String body = post("/analyze", Map.of("text", text, "target_roles", targetRoles));
+        String body = post("/analyze", new AnalyzeCall(text, targetRoles));
         return parse(body, AnalysisResult.class);
     }
 
@@ -71,7 +72,16 @@ public class AiServiceClient {
 
     private record CompareResponse(List<RoleReadiness> roles) {}
 
-    private String post(String path, Map<String, Object> body) {
+    /** The request body of /analyze. Its toString hides the text: debug logging prints bodies. */
+    private record AnalyzeCall(
+            @JsonProperty("text") String text, @JsonProperty("target_roles") List<String> targetRoles) {
+        @Override
+        public String toString() {
+            return "AnalyzeCall[text=<" + text.length() + " characters>, targetRoles=" + targetRoles + "]";
+        }
+    }
+
+    private String post(String path, Object body) {
         try {
             String response = client.post().uri(path).contentType(MediaType.APPLICATION_JSON).body(body)
                     .retrieve().body(String.class);
