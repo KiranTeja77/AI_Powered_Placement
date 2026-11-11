@@ -1,4 +1,5 @@
 import { Trash2 } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useState, type ReactNode } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -28,6 +29,7 @@ export function DeleteAnalysisDialog({ id, onDeleted, trigger }: DeleteAnalysisD
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const remove = useDeleteAnalysis()
+  const client = useQueryClient()
 
   const confirm = async () => {
     setError(null)
@@ -36,6 +38,9 @@ export function DeleteAnalysisDialog({ id, onDeleted, trigger }: DeleteAnalysisD
       setOpen(false)
       toast('Analysis deleted')
       onDeleted?.()
+      // After the redirect has rendered: removing a query the page still observes would make it
+      // refetch, get a 404 and replace the page before the redirect happens.
+      setTimeout(() => client.removeQueries({ queryKey: ['analysis', id] }), 0)
     } catch (e) {
       setError(describeError(e))
     }

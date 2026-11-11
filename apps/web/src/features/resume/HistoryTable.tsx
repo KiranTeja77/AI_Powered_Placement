@@ -122,12 +122,12 @@ export function HistoryTable() {
                 <span className="text-text-muted">Skills</span>
                 <span>{pluralize(row.skillCount, 'skill')}</span>
               </div>
-              <Link
-                to={`/s/resume/${row.id}`}
-                className="inline-block pt-1 text-primary hover:underline"
-              >
-                View analysis
-              </Link>
+              <div className="flex items-center justify-between pt-1">
+                <Link to={`/s/resume/${row.id}`} className="text-primary hover:underline">
+                  View analysis
+                </Link>
+                <DeleteAnalysisDialog id={row.id} trigger={deleteButton(row)} />
+              </div>
             </li>
           ))}
         </ul>

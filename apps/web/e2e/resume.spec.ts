@@ -137,14 +137,14 @@ test('the career page lists the roles with the skills each one needs', async ({
   await signIn(page, student.email)
   await page.goto('/s/career')
   await expect(page.getByRole('heading', { name: 'Career interests' })).toBeVisible()
-  await expect(page.getByText('Backend Developer')).toBeVisible()
-  await page.getByText('Backend Developer').click()
+  await expect(page.getByText('Backend Developer', { exact: true })).toBeVisible()
+  await page.getByText('Backend Developer', { exact: true }).click()
   await expect(page.getByRole('heading', { name: /^Core/ }).first()).toBeVisible()
   await expect(page.getByText('REST API').first()).toBeVisible()
 
   await page.getByLabel('Search roles').fill('vlsi')
-  await expect(page.getByText('VLSI Design Engineer')).toBeVisible()
-  await expect(page.getByText('Backend Developer')).toHaveCount(0)
+  await expect(page.getByText('VLSI Design Engineer', { exact: true })).toBeVisible()
+  await expect(page.getByText('Backend Developer', { exact: true })).toHaveCount(0)
   await page.getByLabel('Search roles').fill('zzzz')
   await expect(page.getByText('No roles match your search.')).toBeVisible()
 })
@@ -165,4 +165,86 @@ test('one student cannot open another student analysis', async ({ page, request,
   await otherPage.goto(url)
   await expect(otherPage.getByText('Analysis not found')).toBeVisible()
   await context.close()
+})
+
+test('a role marked as an interest is pre-selected when analyzing a resume', async ({
+  page,
+  request,
+}) => {
+  const student = await registerViaApi(request)
+  await signIn(page, student.email)
+
+  await page.goto('/s/career')
+  const mark = page.getByRole('button', { name: /Mark as interest in DevOps Engineer/ })
+  await expect(mark).toBeEnabled()
+  await mark.click()
+  await expect(
+    page.getByRole('button', { name: /Remove interest in DevOps Engineer/ }),
+  ).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByText('1 of 14 roles marked as interests.')).toBeVisible()
+
+  // It is saved on the server, so it is still marked after a reload...
+  await page.reload()
+  await expect(
+    page.getByRole('button', { name: /Remove interest in DevOps Engineer/ }),
+  ).toBeVisible()
+
+  // ...and the analyzer starts from it.
+  await page.goto('/s/resume')
+  await expect(page.getByText(/Pre-selected from your career interests/)).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Target roles' })).toContainText('1 selected')
+  await page.getByLabel('Resume text').fill(sampleResume())
+  await page.getByRole('button', { name: 'Analyze resume' }).click()
+  await expect(page).toHaveURL(/\/s\/resume\/[0-9a-f-]{36}$/)
+  await expect(page.getByRole('article', { name: 'DevOps Engineer' })).toBeVisible()
+
+  // Removing the interest clears it for the next analysis.
+  await page.goto('/s/career')
+  await page.getByRole('button', { name: /Remove interest in DevOps Engineer/ }).click()
+  await expect(
+    page.getByRole('button', { name: /Mark as interest in DevOps Engineer/ }),
+  ).toBeVisible()
+  await page.goto('/s/resume')
+  await expect(page.getByText(/Leave empty to compare your resume/)).toBeVisible()
+})
+
+test('an analysis is deleted only after confirmation, from its page and from the history', async ({
+  page,
+  request,
+}) => {
+  const student = await registerViaApi(request)
+  await signIn(page, student.email)
+
+  async function analyze() {
+    await page.goto('/s/resume')
+    await page.getByLabel('Resume text').fill(sampleResume())
+    await page.getByRole('button', { name: 'Analyze resume' }).click()
+    await expect(page).toHaveURL(/\/s\/resume\/[0-9a-f-]{36}$/)
+    await expect(page.getByRole('heading', { name: 'Readiness by role' })).toBeVisible()
+    return page.url()
+  }
+
+  // From the analysis page: cancel keeps it, confirm removes it and returns to the history.
+  const first = await analyze()
+  await page.getByRole('button', { name: 'Delete analysis', exact: true }).click()
+  const dialog = page.getByRole('dialog', { name: 'Delete this analysis' })
+  await expect(dialog).toContainText('cannot be undone')
+  await dialog.getByRole('button', { name: 'Cancel' }).click()
+  await expect(dialog).toHaveCount(0)
+  await expect(page).toHaveURL(first)
+
+  await page.getByRole('button', { name: 'Delete analysis', exact: true }).click()
+  await dialog.getByRole('button', { name: 'Delete analysis' }).click()
+  await expect(page).toHaveURL(/\/s\/resume$/)
+  await expect(page.getByText('No analyses yet')).toBeVisible()
+  await page.goto(first)
+  await expect(page.getByText('Analysis not found')).toBeVisible()
+
+  // From the history table.
+  await analyze()
+  await page.goto('/s/resume')
+  const row = page.getByRole('row', { name: /All roles/ })
+  await row.getByRole('button', { name: /Delete analysis from/ }).click()
+  await dialog.getByRole('button', { name: 'Delete analysis' }).click()
+  await expect(page.getByText('No analyses yet')).toBeVisible()
 })
