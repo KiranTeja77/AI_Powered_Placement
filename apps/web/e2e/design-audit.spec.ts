@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { chooseRole, registerViaApi, sampleResume, signIn } from './helpers.ts'
 
 /**
  * Screenshots /dev/components at 375 and 1280 px in light and dark, and checks the rendered DOM
@@ -168,6 +169,76 @@ test.describe('app screens', () => {
         await expect(page.getByRole('heading', { name: 'Account settings' })).toBeVisible()
         await shot('account')
         expect(await audit(page), 'account').toEqual([])
+      })
+    }
+  }
+})
+
+/** The resume analyzer screens: form, results, career catalogue and the analyzer-down message. */
+test.describe('resume screens', () => {
+  for (const viewport of VIEWPORTS) {
+    for (const theme of THEMES) {
+      test(`resume screens at ${viewport.name}px, ${theme}`, async ({ page, request }) => {
+        const student = await registerViaApi(request)
+        await page.addInitScript((t) => localStorage.setItem('theme', t), theme)
+        await page.setViewportSize({ width: viewport.width, height: viewport.height })
+        const shot = (name: string) =>
+          page.screenshot({
+            path: `e2e/screenshots/${name}-${viewport.name}-${theme}.png`,
+            fullPage: true,
+          })
+        await signIn(page, student.email)
+
+        // The form, with the empty history and the explanation.
+        await page.goto('/s/resume')
+        await expect(page.getByRole('heading', { name: 'Resume analyzer' })).toBeVisible()
+        await expect(page.getByText('No analyses yet')).toBeVisible()
+        await shot('resume-form')
+        expect(await audit(page), 'resume form').toEqual([])
+
+        // The analyzer being down: a friendly message, and the text is kept.
+        await page.route('**/api/v1/resumes/analyze', (route) =>
+          route.fulfill({
+            status: 503,
+            contentType: 'application/problem+json',
+            body: JSON.stringify({
+              status: 503,
+              code: 'analysis_unavailable',
+              detail: 'Resume analysis is temporarily unavailable.',
+            }),
+          }),
+        )
+        await page.getByLabel('Resume text').fill(sampleResume())
+        await page.getByRole('button', { name: 'Analyze resume' }).click()
+        await expect(page.getByRole('alert')).toContainText('temporarily unavailable')
+        await shot('resume-unavailable')
+        expect(await audit(page), 'analyzer down').toEqual([])
+        await page.unroute('**/api/v1/resumes/analyze')
+
+        // A real result.
+        await chooseRole(page, 'Backend Developer')
+        await page.getByRole('button', { name: 'Analyze resume' }).click()
+        await expect(page.getByRole('heading', { name: 'Readiness by role' })).toBeVisible()
+        await shot('resume-results')
+        expect(await audit(page), 'results').toEqual([])
+
+        // Edit bar with an unsaved change.
+        await page.getByRole('button', { name: 'Remove Docker' }).click()
+        await expect(page.getByText('You have unsaved changes to the skill list.')).toBeVisible()
+        await shot('resume-results-editing')
+        expect(await audit(page), 'results while editing').toEqual([])
+
+        // History with one row, and the career catalogue.
+        await page.goto('/s/resume')
+        await expect(page.getByRole('link', { name: /^View/ }).first()).toBeVisible()
+        await shot('resume-history')
+        expect(await audit(page), 'history').toEqual([])
+
+        await page.goto('/s/career')
+        await expect(page.getByRole('heading', { name: 'Career interests' })).toBeVisible()
+        await page.getByText('Backend Developer').click()
+        await shot('career')
+        expect(await audit(page), 'career').toEqual([])
       })
     }
   }
