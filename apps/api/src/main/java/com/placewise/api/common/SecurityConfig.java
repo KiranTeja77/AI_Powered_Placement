@@ -41,6 +41,7 @@ class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         // Analyses belong to the student who made them. Faculty access comes later.
                         .requestMatchers("/api/v1/resumes/**").hasRole("STUDENT")
+                        .requestMatchers("/api/v1/me/career-interests").hasRole("STUDENT")
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(problems)
