@@ -43,6 +43,8 @@ public final class AiStub implements AutoCloseable {
             server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), 0), 0);
             server.createContext("/analyze", exchange -> handle(exchange, true));
             server.createContext("/compare", exchange -> handle(exchange, false));
+            // Several requests at once: a deliberately slow one must not block the next test's.
+            server.setExecutor(java.util.concurrent.Executors.newCachedThreadPool());
             server.start();
         } catch (IOException e) {
             throw new IllegalStateException(e);
@@ -82,7 +84,7 @@ public final class AiStub implements AutoCloseable {
         switch (mode) {
             case DROP -> exchange.close();
             case SLOW -> {
-                sleep(3_000);
+                sleep(1_500);
                 respond(exchange, 200, analyze ? analyzeResponse : compareResponse(request));
             }
             case ERROR_500 -> respond(exchange, 500, "{\"detail\":\"The analysis could not be completed.\"}");
