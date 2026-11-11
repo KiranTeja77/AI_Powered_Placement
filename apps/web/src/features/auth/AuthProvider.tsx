@@ -4,7 +4,7 @@ import { authApi } from '@/lib/api/auth-api'
 import { configureAuthHooks, setAccessToken } from '@/lib/api/client'
 import type { LoginRequest, User } from '@/lib/api/types'
 import { AuthContext, type AuthContextValue, type AuthStatus } from './auth-context'
-import { refreshSession } from './session'
+import { clearSharedSession, refreshSession } from './session'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient()
@@ -22,6 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return result?.accessToken ?? null
       },
       onSessionLost: () => {
+        clearSharedSession()
         setAccessToken(null)
         setUser(null)
         setStatus('unauthenticated')
@@ -56,6 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await authApi.logout()
     } finally {
       // Clear local state even if the request failed; the cookie expires on its own.
+      clearSharedSession()
       setAccessToken(null)
       setUser(null)
       setStatus('unauthenticated')
