@@ -13,6 +13,7 @@ export function renderWithProviders(ui: ReactElement, { route = '/', path = '*' 
         <Routes>
           <Route path={path} element={ui} />
           <Route path="/s/resume/:id" element={<p>analysis page</p>} />
+          <Route path="/s/resume" element={<p>/s/resume reached</p>} />
         </Routes>
       </MemoryRouter>
     </QueryClientProvider>,
@@ -45,7 +46,7 @@ const SNIPPET = 'Containerised the app using Docker and deployed on AWS.'
 /** A small, typed analysis used only by tests. It is never shipped in the app. */
 export function makeDetail(overrides: Partial<AnalysisDetail> = {}): AnalysisDetail {
   const dockerStart = SNIPPET.indexOf('Docker')
-  return {
+  const detail: AnalysisDetail = {
     id: '0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b',
     createdAt: '2026-11-11T05:30:00Z',
     updatedAt: '2026-11-11T05:30:00Z',
@@ -159,6 +160,7 @@ export function makeDetail(overrides: Partial<AnalysisDetail> = {}): AnalysisDet
       ],
     },
     effective: {
+      suggestions: [],
       skills: [
         {
           id: 'docker',
@@ -248,6 +250,8 @@ export function makeDetail(overrides: Partial<AnalysisDetail> = {}): AnalysisDet
         },
       ],
     },
-    ...overrides,
   }
+  // Until a student edits, the suggestions are the analyzer's own.
+  detail.effective.suggestions = detail.result.suggestions
+  return { ...detail, ...overrides }
 }

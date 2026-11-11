@@ -153,8 +153,8 @@ student can see exactly which missing skill would raise it most (a missing core 
 points, a bonus one only 1).
 
 If no target roles are given, all 14 roles are scored and returned best first. The skill gap can
-also be recomputed from an edited skill list without the resume text (`POST /compare`), which is
-what happens when a student confirms, removes or adds a skill.
+also be recomputed after a student confirms, removes or adds a skill (`POST /revise`, below), so the
+scores and the suggestions always describe the skill list the student has confirmed.
 
 ### 8. Suggestions
 
@@ -171,7 +171,9 @@ Fixed rules, each producing one suggestion and the reason it fired. Examples:
 | projects contain no numbers | Add measurable results | No numbers or percentages were found |
 
 Suggestions are ordered high, medium, low and capped at twelve. Suggestions about skills follow the
-roles the student chose, or the best-matching role if none was chosen.
+roles the student chose, or the best-matching role if none was chosen. After a student edits the
+skill list the suggestions are rebuilt from the edited list: a skill they removed is no longer
+"found", so advice that depended on it comes back, and a skill they added counts as listed.
 
 ## "Never invent a skill": how this is enforced
 
@@ -221,7 +223,8 @@ Internal only.
 | Request | Purpose |
 | --- | --- |
 | `POST /analyze` | Body: `{ "text": "...", "target_roles": ["backend-developer"] }`. Text must be 200 to 20,000 characters. Returns sections, fields, skills with evidence, role readiness with breakdown, suggestions, and `engine_version`. |
-| `POST /compare` | Body: `{ "skills": [{ "skill_id": "git", "strength": 1.0 }], "target_roles": [...] }`. Recomputes the gap without the text. |
+| `POST /compare` | Body: `{ "skills": [{ "skill_id": "git", "strength": 1.0 }], "target_roles": [...] }`. Recomputes the gap without the text. The API no longer uses it. |
+| `POST /revise` | Body: the `/analyze` body plus `confirmed_skill_ids`, `removed_skill_ids`, `added_skill_ids`. Reads the text again, applies the edits, and returns the effective skills, role scores and suggestions. Ids that do not fit the analysis (confirming a skill that was not a possible match, removing one that was not found) give 422 `invalid_edit` naming ids only, never text. |
 | `GET /health` | Liveness check. |
 
 Unknown role ids return 422 naming the role. Positions are character offsets into the submitted
@@ -305,7 +308,10 @@ browser  ->  API (Spring Boot)  ->  analyzer (FastAPI, internal only)
 | `POST /api/v1/resumes/analyze` | `{ text, targetRoles }`. Checks the text (200 to 20,000 characters) and the role slugs, calls the analyzer, saves the result and returns it (201). |
 | `GET /api/v1/resumes/analyses?page=&size=` | The student's own history, newest first. Small rows only: no resume text, no results. |
 | `GET /api/v1/resumes/analyses/{id}` | One analysis. |
-| `PATCH /api/v1/resumes/analyses/{id}/skills` | `{ confirmedSkillIds, removedSkillIds, addedSkillIds }`. Recomputes the gap through the analyzer's `/compare` and saves it. |
+| `PATCH /api/v1/resumes/analyses/{id}/skills` | `{ confirmedSkillIds, removedSkillIds, addedSkillIds }`. The API sends the stored text and the confirmed skills to the analyzer's `/revise`, and saves the scores and suggestions that come back. The browser never sends the text again. An analysis made by an older analyzer version answers 409 `analysis_outdated`. |
+| `DELETE /api/v1/resumes/analyses/{id}` | Deletes the analysis and the resume text stored with it (204). Only its owner can; this cannot be undone. |
+| `GET /api/v1/me/career-interests` | The roles the student marked as interests, ordered by role name. |
+| `PUT /api/v1/me/career-interests` | `{ roleSlugs }` replaces the whole list (at most 14, unknown roles give 400, duplicates are ignored). Students only. |
 
 A student can only read or change their own analyses: another student's id gives 403, an unknown id
 gives 404. Faculty and other roles get 403 on all of these for now.
@@ -329,9 +335,14 @@ gives the same result and an empty request resets the analysis.
 - **Add** a skill from the list that was not in the text: it counts as *listed* (0.5), because there
   is no evidence for it. It is labelled "Added by you" so it is never mistaken for a finding.
 
-The readiness scores shown after a save come from the analyzer (`/compare`), not from the web app,
-so there is one implementation of the formula. Suggestions are not recomputed after edits; the
-page says so.
+The readiness scores and suggestions shown after a save come from the analyzer (`/revise`), not
+from the web app or the API, so there is one implementation of the formula and of the advice.
+
+### Career interests
+
+A student can mark roles as interests on the career page. The resume form starts with those roles
+selected as its target roles; the student can change the selection for a single analysis without
+changing the saved interests.
 
 ### One catalogue, two services
 

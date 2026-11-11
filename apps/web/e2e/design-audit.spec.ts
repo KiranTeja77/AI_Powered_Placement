@@ -27,10 +27,16 @@ export async function audit(page: Page): Promise<Violation[]> {
     for (const el of Array.from(document.body.querySelectorAll('*'))) {
       const cs = getComputedStyle(el)
       if (cs.display === 'none') continue
+      // Toasts are popovers: they carry the popover shadow and sonner's own enter animation.
+      if (el.closest('[data-sonner-toaster]')) continue
       if (cs.backgroundImage.includes('gradient')) {
         found.push({ rule: 'no gradients', where: describe(el), value: cs.backgroundImage })
       }
-      if (cs.boxShadow !== 'none') {
+      // Dialogs and popovers may carry exactly the popover shadow from the design system.
+      const popoverShadow =
+        el.matches('[role="dialog"], [role="listbox"], [role="menu"]') &&
+        cs.boxShadow.endsWith(' 0px 4px 16px 0px')
+      if (cs.boxShadow !== 'none' && !popoverShadow) {
         found.push({ rule: 'shadow only on popovers', where: describe(el), value: cs.boxShadow })
       }
       if (cs.backdropFilter !== 'none' && cs.backdropFilter !== '') {
@@ -236,9 +242,18 @@ test.describe('resume screens', () => {
 
         await page.goto('/s/career')
         await expect(page.getByRole('heading', { name: 'Career interests' })).toBeVisible()
-        await page.getByText('Backend Developer').click()
+        await page.getByText('Backend Developer', { exact: true }).click()
+        await page.getByRole('button', { name: /Mark as interest in Backend Developer/ }).click()
+        await expect(page.getByText('Interested', { exact: true })).toBeVisible()
         await shot('career')
         expect(await audit(page), 'career').toEqual([])
+
+        // The delete confirmation, opened from the history.
+        await page.goto('/s/resume')
+        await page.getByRole('button', { name: /Delete analysis from/ }).click()
+        await expect(page.getByRole('dialog', { name: 'Delete this analysis' })).toBeVisible()
+        await shot('resume-delete-dialog')
+        expect(await audit(page), 'delete dialog').toEqual([])
       })
     }
   }

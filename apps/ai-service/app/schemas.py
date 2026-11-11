@@ -230,3 +230,34 @@ class CompareResponse(BaseModel):
     engine_version: str
     taxonomy_version: str
     roles: list[RoleReadiness]
+
+
+class EffectiveSkill(Frozen):
+    """A skill that counts toward the scores after the student's edits, and where it came from."""
+
+    id: str
+    name: str
+    category: str
+    strength: float
+    grade: Grade
+    source: Literal["detected", "confirmed", "added"]
+
+
+class ReviseRequest(AnalyzeRequest):
+    """The resume text and the student's edits, always relative to the analyzer's own answer.
+
+    confirmed: possible matches the student confirmed. removed: skills that were found and that
+    the student removed. added: skills from the taxonomy added by hand (counted as listed).
+    """
+
+    confirmed_skill_ids: list[str] = Field(default_factory=list, max_length=200)
+    removed_skill_ids: list[str] = Field(default_factory=list, max_length=500)
+    added_skill_ids: list[str] = Field(default_factory=list, max_length=200)
+
+
+class ReviseResponse(BaseModel):
+    engine_version: str
+    taxonomy_version: str
+    skills: list[EffectiveSkill]
+    roles: list[RoleReadiness]
+    suggestions: list[Suggestion]

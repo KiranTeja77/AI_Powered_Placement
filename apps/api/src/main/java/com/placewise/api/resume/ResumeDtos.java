@@ -1,5 +1,6 @@
 package com.placewise.api.resume;
 
+import com.placewise.api.resume.AnalysisResult.AnalysisSuggestion;
 import com.placewise.api.resume.AnalysisResult.RoleReadiness;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -44,8 +45,12 @@ public final class ResumeDtos {
     public record EffectiveSkill(
             String id, String name, String category, double strength, String grade, String source) {}
 
-    /** The skills and role readiness after the student's edits (or the analyzer's own, if none). */
-    public record EffectiveAnalysis(List<EffectiveSkill> skills, List<RoleReadiness> roles) {}
+    /**
+     * The skills, role readiness and suggestions after the student's edits (or the analyzer's own,
+     * if there are none).
+     */
+    public record EffectiveAnalysis(
+            List<EffectiveSkill> skills, List<RoleReadiness> roles, List<AnalysisSuggestion> suggestions) {}
 
     public record SkillEdits(
             List<String> confirmedSkillIds,
@@ -89,5 +94,6 @@ public final class ResumeDtos {
             List<String> addedSkillIds,
             List<EffectiveSkill> skills,
             List<RoleReadiness> roles,
+            List<AnalysisSuggestion> suggestions,
             String updatedAt) {}
 }

@@ -52,3 +52,29 @@ export function useUpdateSkills(id: string) {
     },
   })
 }
+
+export function useDeleteAnalysis() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => resumeApi.deleteAnalysis(id),
+    // The cached detail is dropped by the caller after it has left the page: removing it while
+    // the page still observes it would flash a loading state and cancel the redirect.
+    onSuccess: () => {
+      void client.invalidateQueries({ queryKey: ['analyses'] })
+    },
+  })
+}
+
+/** The roles the student has marked as interests. */
+export function useCareerInterests() {
+  return useQuery({ queryKey: ['career-interests'], queryFn: resumeApi.careerInterests })
+}
+
+/** Saves the whole list of interests; the screen updates from the saved answer. */
+export function useSaveCareerInterests() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: (roleSlugs: string[]) => resumeApi.saveCareerInterests(roleSlugs),
+    onSuccess: (saved) => client.setQueryData(['career-interests'], saved),
+  })
+}

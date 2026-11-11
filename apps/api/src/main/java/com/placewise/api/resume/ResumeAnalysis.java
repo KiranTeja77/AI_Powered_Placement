@@ -97,6 +97,10 @@ class ResumeAnalysis {
         return studentId;
     }
 
+    String getRawText() {
+        return rawText;
+    }
+
     String getTargetRoles() {
         return targetRoles;
     }

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 import { FormError } from '@/features/auth/AuthLayout'
@@ -10,7 +10,7 @@ import { ApiError, applyFieldErrors, describeError } from '@/lib/api/errors'
 import { MAX_TEXT } from '@/lib/api/resume-types'
 import { cn } from '@/lib/utils'
 import { RolePicker } from './RolePicker'
-import { useAnalyze, useRoles } from './queries'
+import { useAnalyze, useCareerInterests, useRoles } from './queries'
 import { analyzeSchema, describeLength, type AnalyzeValues } from './schemas'
 
 const UNAVAILABLE =
@@ -19,6 +19,7 @@ const UNAVAILABLE =
 export function ResumeForm() {
   const navigate = useNavigate()
   const roles = useRoles()
+  const interests = useCareerInterests()
   const analyze = useAnalyze()
   const [formError, setFormError] = useState<string | null>(null)
 
@@ -27,6 +28,8 @@ export function ResumeForm() {
     control,
     handleSubmit,
     setError,
+    setValue,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<AnalyzeValues>({
     resolver: zodResolver(analyzeSchema),
@@ -36,6 +39,26 @@ export function ResumeForm() {
   })
 
   const text = useWatch({ control, name: 'text' })
+  const chosen = useWatch({ control, name: 'targetRoles' })
+
+  // Start from the roles the student marked as interests, once, unless they already picked some.
+  const saved = interests.data?.roleSlugs
+  const known = roles.data
+  useEffect(() => {
+    if (!saved || !known || saved.length === 0) return
+    if (getValues('targetRoles').length > 0) return
+    const slugs = known.map((r) => r.slug)
+    setValue(
+      'targetRoles',
+      saved.filter((s) => slugs.includes(s)),
+      { shouldDirty: false },
+    )
+  }, [saved, known, getValues, setValue])
+  const fromInterests =
+    !!saved &&
+    saved.length > 0 &&
+    chosen.length === saved.length &&
+    saved.every((s) => chosen.includes(s))
   const length = describeLength(text)
   const busy = isSubmitting || analyze.isPending
 
@@ -111,7 +134,9 @@ export function ResumeForm() {
         />
         {errors.targetRoles && <p className="text-sm text-danger">{errors.targetRoles.message}</p>}
         <p className="text-sm text-text-muted">
-          Leave empty to compare your resume with all 14 roles.
+          {fromInterests
+            ? 'Pre-selected from your career interests. Change them here for this analysis only.'
+            : 'Leave empty to compare your resume with all 14 roles.'}
         </p>
       </div>
 

@@ -7,6 +7,7 @@ Nothing here logs, stores or sends the resume anywhere; the text lives only for 
 """
 
 from collections.abc import Sequence
+from dataclasses import dataclass
 
 from app.config import ENGINE_VERSION
 from app.data import load_data
@@ -21,7 +22,9 @@ from app.schemas import (
     AnalyzeResponse,
     CompareResponse,
     DetectedSkill,
+    Fields,
     RoleCatalogue,
+    Section,
     SkillStrength,
     Taxonomy,
 )
@@ -32,6 +35,25 @@ def scoring_inputs(skills: Sequence[DetectedSkill]) -> tuple[dict[str, float], f
     strengths = {s.id: s.strength for s in skills if s.counts_toward_score}
     possible = frozenset(s.id for s in skills if not s.counts_toward_score)
     return strengths, possible
+
+
+@dataclass(frozen=True)
+class Reading:
+    """What the first four stages found in a resume."""
+
+    text: str  # normalised: the same length as the submitted text
+    sections: list[Section]
+    fields: Fields
+    skills: list[DetectedSkill]
+
+
+def read_resume(text: str, taxonomy: Taxonomy, matcher: SkillMatcher | None = None) -> Reading:
+    """Normalize, find sections and fields, find skills and grade their evidence."""
+    clean = normalize(text)  # same length as `text`, so every position is valid in the original
+    sections = segment_sections(clean)
+    fields = extract_fields(clean, sections)
+    mentions = find_mentions(clean, sections, matcher or default_matcher())
+    return Reading(clean, sections, fields, grade_evidence(clean, sections, mentions, taxonomy))
 
 
 def analyze(
@@ -45,23 +67,21 @@ def analyze(
         taxonomy, catalogue = load_data()
     matcher = matcher or default_matcher()
 
-    clean = normalize(text)  # same length as `text`, so every position is valid in the original
-    sections = segment_sections(clean)
-    fields = extract_fields(clean, sections)
-    mentions = find_mentions(clean, sections, matcher)
-    skills = grade_evidence(clean, sections, mentions, taxonomy)
+    reading = read_resume(text, taxonomy, matcher)
 
-    strengths, possible = scoring_inputs(skills)
+    strengths, possible = scoring_inputs(reading.skills)
     roles = compare_roles(strengths, possible, catalogue, taxonomy, target_roles)
-    suggestions = build_suggestions(clean, sections, fields, skills, roles, bool(target_roles))
+    suggestions = build_suggestions(
+        reading.text, reading.sections, reading.fields, reading.skills, roles, bool(target_roles)
+    )
 
     return AnalyzeResponse(
         engine_version=ENGINE_VERSION,
         taxonomy_version=taxonomy.version,
         text_length=len(text),
-        sections=sections,
-        fields=fields,
-        skills=skills,
+        sections=reading.sections,
+        fields=reading.fields,
+        skills=reading.skills,
         roles=roles,
         suggestions=suggestions,
     )

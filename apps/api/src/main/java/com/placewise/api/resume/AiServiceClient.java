@@ -5,13 +5,13 @@ import com.placewise.api.common.AppProperties;
 import com.placewise.api.resume.AnalysisResult.RoleReadiness;
 import java.net.http.HttpClient;
 import java.util.List;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientResponseException;
 import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.json.JsonMapper;
@@ -33,7 +33,12 @@ public class AiServiceClient {
         }
     }
 
-    public record SkillStrength(String skillId, double strength) {}
+    /** The analyzer answered, but refused the request (for example edits that do not fit). */
+    public static class AiRejectedException extends RuntimeException {
+        public AiRejectedException(Throwable cause) {
+            super("The analyzer rejected the request", cause);
+        }
+    }
 
     private static final Logger log = LoggerFactory.getLogger(AiServiceClient.class);
 
@@ -66,16 +71,25 @@ public class AiServiceClient {
         return parse(body, AnalysisResult.class);
     }
 
-    /** Recomputes role readiness from a list of skills, without the resume text. */
-    public List<RoleReadiness> compare(List<SkillStrength> skills, List<String> targetRoles) {
-        List<Map<String, Object>> payload = skills.stream()
-                .map(s -> Map.<String, Object>of("skill_id", s.skillId(), "strength", s.strength()))
-                .toList();
-        String body = post("/compare", Map.of("skills", payload, "target_roles", targetRoles));
-        return parse(body, CompareResponse.class).roles();
-    }
+    /** The student's corrections, relative to the analyzer's own answer. */
+    public record Edits(List<String> confirmed, List<String> removed, List<String> added) {}
 
-    private record CompareResponse(List<RoleReadiness> roles) {}
+    /** The skills that count after the edits, with the scores and suggestions rebuilt from them. */
+    public record Revision(
+            List<ResumeDtos.EffectiveSkill> skills,
+            List<RoleReadiness> roles,
+            List<AnalysisResult.AnalysisSuggestion> suggestions) {}
+
+    /**
+     * Re-reads the stored resume text, applies the edits and returns the new skills, role
+     * readiness and suggestions. The text is sent again from the database; the browser never
+     * resends it.
+     */
+    public Revision revise(String text, List<String> targetRoles, Edits edits) {
+        String body = post("/revise", new ReviseCall(text, targetRoles, edits.confirmed(), edits.removed(),
+                edits.added()));
+        return parse(body, Revision.class);
+    }
 
     /** The request body of /analyze. Its toString hides the text: debug logging prints bodies. */
     private record AnalyzeCall(
@@ -83,6 +97,18 @@ public class AiServiceClient {
         @Override
         public String toString() {
             return "AnalyzeCall[text=<" + text.length() + " characters>, targetRoles=" + targetRoles + "]";
+        }
+    }
+
+    private record ReviseCall(
+            @JsonProperty("text") String text,
+            @JsonProperty("target_roles") List<String> targetRoles,
+            @JsonProperty("confirmed_skill_ids") List<String> confirmed,
+            @JsonProperty("removed_skill_ids") List<String> removed,
+            @JsonProperty("added_skill_ids") List<String> added) {
+        @Override
+        public String toString() {
+            return "ReviseCall[text=<" + text.length() + " characters>, targetRoles=" + targetRoles + "]";
         }
     }
 
@@ -96,6 +122,14 @@ public class AiServiceClient {
             return response;
         } catch (AiUnavailableException e) {
             throw e;
+        } catch (RestClientResponseException e) {
+            if (e.getStatusCode().value() == 422) {
+                // Not an outage: the request itself was refused. Only the status is logged.
+                log.warn("Resume analyzer refused the request to {}", path);
+                throw new AiRejectedException(e);
+            }
+            log.warn("Resume analyzer call to {} failed: {}", path, e.getClass().getSimpleName());
+            throw new AiUnavailableException("The analyzer could not be reached or answered with an error", e);
         } catch (RuntimeException e) {
             // Only the exception type is logged: its message can include request details.
             log.warn("Resume analyzer call to {} failed: {}", path, e.getClass().getSimpleName());

@@ -3,6 +3,7 @@ import type {
   AnalysisDetail,
   AnalysisSummary,
   AnalyzeInput,
+  CareerInterests,
   Page,
   RoleDefinition,
   SkillDefinition,
@@ -19,4 +20,8 @@ export const resumeApi = {
   analysis: (id: string) => apiRequest<AnalysisDetail>(`/resumes/analyses/${id}`),
   updateSkills: (id: string, body: SkillEditsInput) =>
     apiRequest<AnalysisDetail>(`/resumes/analyses/${id}/skills`, { method: 'PATCH', body }),
+  deleteAnalysis: (id: string) => apiRequest<void>(`/resumes/analyses/${id}`, { method: 'DELETE' }),
+  careerInterests: () => apiRequest<CareerInterests>('/me/career-interests'),
+  saveCareerInterests: (roleSlugs: string[]) =>
+    apiRequest<CareerInterests>('/me/career-interests', { method: 'PUT', body: { roleSlugs } }),
 }

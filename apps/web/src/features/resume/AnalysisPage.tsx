@@ -1,6 +1,6 @@
 import { FileX } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 import { toast } from 'sonner'
 import { EmptyState } from '@/components/EmptyState'
 import { ErrorState } from '@/components/ErrorState'
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ApiError, describeError } from '@/lib/api/errors'
 import type { AnalysisDetail } from '@/lib/api/resume-types'
+import { DeleteAnalysisDialog } from './DeleteAnalysisDialog'
 import { EditBar } from './EditBar'
 import { FoundFacts } from './FoundFacts'
 import { formatDateTime, formatPercent } from './format'
@@ -39,6 +40,7 @@ function AnalysisSkeleton() {
 function AnalysisView({ detail }: { detail: AnalysisDetail }) {
   const editing = useSkillEdits(detail)
   const update = useUpdateSkills(detail.id)
+  const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
   const edited = detail.edits !== null
 
@@ -62,17 +64,11 @@ function AnalysisView({ detail }: { detail: AnalysisDetail }) {
         breadcrumbs={[...CRUMBS, { label: 'Analysis' }]}
         title="Resume analysis"
         description={`Analyzed ${formatDateTime(detail.createdAt)}, ${result.textLength.toLocaleString('en-US')} characters, analyzer version ${result.engineVersion}.`}
+        action={<DeleteAnalysisDialog id={detail.id} onDeleted={() => navigate('/s/resume')} />}
       />
       <div className="space-y-8 pb-4">
         <ReadinessPanel roles={detail.effective.roles} edited={edited} />
-        <div className="space-y-3">
-          <SuggestionsPanel suggestions={result.suggestions} />
-          {edited && (
-            <p className="max-w-4xl text-sm text-text-muted">
-              Suggestions follow the analyzer&apos;s original reading, not your changes.
-            </p>
-          )}
-        </div>
+        <SuggestionsPanel suggestions={detail.effective.suggestions} edited={edited} />
         <SkillsPanel skills={result.skills} editing={editing} />
         <FoundFacts fields={result.fields} sections={result.sections} />
       </div>

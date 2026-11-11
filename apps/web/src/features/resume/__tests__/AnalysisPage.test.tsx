@@ -7,7 +7,13 @@ import AnalysisPage from '../AnalysisPage'
 import { makeDetail, renderWithProviders } from './support'
 
 vi.mock('@/lib/api/resume-api', () => ({
-  resumeApi: { analysis: vi.fn(), updateSkills: vi.fn(), skills: vi.fn() },
+  resumeApi: {
+    analysis: vi.fn(),
+    updateSkills: vi.fn(),
+    skills: vi.fn(),
+    deleteAnalysis: vi.fn(),
+    analyses: vi.fn(),
+  },
 }))
 
 const api = vi.mocked(resumeApi)
@@ -144,6 +150,16 @@ describe('AnalysisPage editing', () => {
       },
     })
     saved.effective.roles[0]!.score = 24.5
+    saved.effective.suggestions = [
+      {
+        id: 'after-edit',
+        kind: 'evidence',
+        priority: 'medium',
+        message: 'Show Docker in a project.',
+        reason: 'Rebuilt after your edits.',
+        skills: [],
+      },
+    ]
     api.updateSkills.mockResolvedValue(saved)
     renderPage()
 
@@ -164,7 +180,9 @@ describe('AnalysisPage editing', () => {
     expect(screen.getByText(/Recalculated with your changes/)).toBeInTheDocument()
     expect(screen.getByText('Removed by you')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Reset to analyzer result' })).toBeInTheDocument()
-    expect(screen.getByText(/Suggestions follow the analyzer/)).toBeInTheDocument()
+    // Suggestions are rebuilt from the edited list, so the note about them being stale is gone.
+    expect(screen.getByText('Show Docker in a project.')).toBeInTheDocument()
+    expect(screen.queryByText(/Suggestions follow the analyzer/)).not.toBeInTheDocument()
   })
 
   it('confirms a possible match', async () => {
@@ -249,5 +267,37 @@ describe('AnalysisPage editing', () => {
         screen.queryByRole('button', { name: 'Reset to analyzer result' }),
       ).not.toBeInTheDocument(),
     )
+  })
+})
+
+describe('AnalysisPage delete', () => {
+  it('asks first, then deletes and returns to the resume page', async () => {
+    api.deleteAnalysis.mockResolvedValue(undefined)
+    renderPage()
+    await userEvent.click(await screen.findByRole('button', { name: 'Delete analysis' }))
+    const dialog = await screen.findByRole('dialog', { name: 'Delete this analysis' })
+    expect(dialog).toHaveTextContent('cannot be undone')
+    expect(api.deleteAnalysis).not.toHaveBeenCalled()
+
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Delete analysis' }))
+    await waitFor(() => expect(api.deleteAnalysis).toHaveBeenCalledWith(ID))
+    expect(await screen.findByText('/s/resume reached')).toBeInTheDocument()
+  })
+
+  it('does nothing when cancelled', async () => {
+    renderPage()
+    await userEvent.click(await screen.findByRole('button', { name: 'Delete analysis' }))
+    await userEvent.click(await screen.findByRole('button', { name: 'Cancel' }))
+    expect(api.deleteAnalysis).not.toHaveBeenCalled()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('stays open and shows the error when the delete fails', async () => {
+    api.deleteAnalysis.mockRejectedValue(new ApiError({ status: 500, message: 'Server is down' }))
+    renderPage()
+    await userEvent.click(await screen.findByRole('button', { name: 'Delete analysis' }))
+    const dialog = await screen.findByRole('dialog')
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Delete analysis' }))
+    expect(await within(dialog).findByRole('alert')).toBeInTheDocument()
   })
 })

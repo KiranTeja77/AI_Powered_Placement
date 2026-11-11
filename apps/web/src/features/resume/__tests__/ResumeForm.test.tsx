@@ -7,7 +7,7 @@ import { ResumeForm } from '../ResumeForm'
 import { makeDetail, renderWithProviders, ROLES } from './support'
 
 vi.mock('@/lib/api/resume-api', () => ({
-  resumeApi: { roles: vi.fn(), analyze: vi.fn() },
+  resumeApi: { roles: vi.fn(), analyze: vi.fn(), careerInterests: vi.fn() },
 }))
 
 const api = vi.mocked(resumeApi)
@@ -16,6 +16,7 @@ const RESUME = 'Python and SQL projects. '.repeat(12)
 beforeEach(() => {
   vi.resetAllMocks()
   api.roles.mockResolvedValue(ROLES)
+  api.careerInterests.mockResolvedValue({ roleSlugs: [] })
 })
 
 async function typeResume(text = RESUME) {
@@ -146,5 +147,19 @@ describe('ResumeForm', () => {
     expect(await screen.findByText('Roles could not be loaded')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: 'Try again' }))
     expect(await screen.findByRole('button', { name: 'Target roles' })).toBeInTheDocument()
+  })
+})
+
+describe('ResumeForm saved interests', () => {
+  it('pre-selects the roles marked as interests and says so', async () => {
+    api.careerInterests.mockResolvedValue({ roleSlugs: ['data-analyst'] })
+    renderWithProviders(<ResumeForm />)
+    expect(await screen.findByText(/Pre-selected from your career interests/)).toBeInTheDocument()
+  })
+
+  it('compares with all roles when there are no saved interests', async () => {
+    renderWithProviders(<ResumeForm />)
+    expect(await screen.findByText(/Leave empty to compare your resume/)).toBeInTheDocument()
+    expect(screen.queryByText(/Pre-selected/)).not.toBeInTheDocument()
   })
 })

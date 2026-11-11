@@ -2,7 +2,9 @@ package com.placewise.api.resume;
 
 import com.placewise.api.common.ApiException;
 import com.placewise.api.resume.AiServiceClient.AiUnavailableException;
-import com.placewise.api.resume.AiServiceClient.SkillStrength;
+import com.placewise.api.resume.AiServiceClient.AiRejectedException;
+import com.placewise.api.resume.AiServiceClient.Edits;
+import com.placewise.api.resume.AiServiceClient.Revision;
 import com.placewise.api.resume.AnalysisResult.AnalysisSkill;
 import com.placewise.api.resume.AnalysisResult.RoleReadiness;
 import com.placewise.api.resume.ResumeAnalysisRepository.SummaryRow;
@@ -17,7 +19,6 @@ import com.placewise.api.resume.ResumeDtos.StoredEdits;
 import com.placewise.api.resume.ResumeDtos.TargetRole;
 import com.placewise.api.resume.ResumeDtos.UpdateSkillsRequest;
 import com.placewise.api.role.CatalogueDtos.RoleResponse;
-import com.placewise.api.role.CatalogueDtos.SkillResponse;
 import com.placewise.api.role.CatalogueService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -34,6 +35,7 @@ import java.util.function.Supplier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.json.JsonMapper;
@@ -49,10 +51,6 @@ class ResumeService {
 
     static final int MIN_TEXT_CHARS = 200;
     private static final String SOURCE_DETECTED = "detected";
-    private static final String SOURCE_CONFIRMED = "confirmed";
-    private static final String SOURCE_ADDED = "added";
-    /** A skill the student adds by hand has no evidence in the text, so it counts as listed. */
-    private static final double ADDED_STRENGTH = 0.5;
 
     private final ResumeAnalysisRepository repository;
     private final AiServiceClient ai;
@@ -122,13 +120,27 @@ class ResumeService {
             return detail(repository.save(analysis));
         }
 
-        List<EffectiveSkill> effective = effectiveSkills(found, confirmed, removed, added);
-        List<SkillStrength> strengths = effective.stream().map(s -> new SkillStrength(s.id(), s.strength())).toList();
-        List<RoleReadiness> roles = whileAvailable(() -> ai.compare(strengths, targetRoles));
+        // The analyzer re-reads the stored text, applies the edits and rebuilds the scores and the
+        // suggestions, so there is one implementation of both. The browser never resends the text.
+        Edits edits = new Edits(confirmed, removed, added);
+        Revision revision;
+        try {
+            revision = whileAvailable(() -> ai.revise(analysis.getRawText(), targetRoles, edits));
+        } catch (AiRejectedException e) {
+            throw new ApiException(HttpStatus.CONFLICT, "analysis_outdated",
+                    "This analysis was made with an older version of the analyzer. Analyze the resume again to edit it.",
+                    null, null);
+        }
 
-        StoredEdits stored = new StoredEdits(confirmed, removed, added, effective, roles, now.toString());
-        analysis.applyEdits(write(stored), summarize(roles, effective.size()), now);
+        StoredEdits stored = new StoredEdits(confirmed, removed, added, revision.skills(), revision.roles(),
+                revision.suggestions(), now.toString());
+        analysis.applyEdits(write(stored), summarize(revision.roles(), revision.skills().size()), now);
         return detail(repository.save(analysis));
+    }
+
+    /** Permanently deletes one of the student's own analyses, including the resume text stored with it. */
+    void delete(UUID studentId, UUID id) {
+        repository.delete(owned(studentId, id));
     }
 
     // ------------------------------------------------------------------ editing rules
@@ -157,25 +169,6 @@ class ResumeService {
         }
     }
 
-    /** Skills found and not removed, plus confirmed possible matches, plus skills added by hand. */
-    private List<EffectiveSkill> effectiveSkills(Map<String, AnalysisSkill> found, List<String> confirmed,
-            List<String> removed, List<String> added) {
-        List<EffectiveSkill> out = new ArrayList<>();
-        for (AnalysisSkill skill : found.values()) {
-            if ("detected".equals(skill.status()) && !removed.contains(skill.id())) {
-                out.add(effective(skill, SOURCE_DETECTED));
-            }
-        }
-        for (String id : confirmed) {
-            out.add(effective(found.get(id), SOURCE_CONFIRMED));
-        }
-        for (String id : added) {
-            SkillResponse skill = catalogue.get().skillsBySlug().get(id);
-            out.add(new EffectiveSkill(skill.slug(), skill.name(), skill.category(), ADDED_STRENGTH, "listed", SOURCE_ADDED));
-        }
-        return out;
-    }
-
     private static EffectiveSkill effective(AnalysisSkill skill, String source) {
         return new EffectiveSkill(skill.id(), skill.name(), skill.category(), skill.strength(), skill.grade(), source);
     }
@@ -194,8 +187,8 @@ class ResumeService {
         StoredEdits stored = analysis.getConfirmedSkills() == null
                 ? null : read(analysis.getConfirmedSkills(), StoredEdits.class);
         EffectiveAnalysis effective = stored == null
-                ? new EffectiveAnalysis(effectiveFromResult(result), result.roles())
-                : new EffectiveAnalysis(stored.skills(), stored.roles());
+                ? new EffectiveAnalysis(effectiveFromResult(result), result.roles(), result.suggestions())
+                : new EffectiveAnalysis(stored.skills(), stored.roles(), stored.suggestions());
         SkillEdits edits = stored == null ? null : new SkillEdits(stored.confirmedSkillIds(),
                 stored.removedSkillIds(), stored.addedSkillIds(), Instant.parse(stored.updatedAt()));
         return new AnalysisDetail(analysis.getId(), analysis.getCreatedAt(), analysis.getUpdatedAt(),
