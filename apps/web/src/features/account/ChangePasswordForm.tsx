@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
 import { PasswordField } from '@/components/PasswordField'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/features/auth/auth-context'
@@ -36,10 +37,10 @@ export function ChangePasswordForm() {
     }
     // The API ends every session when the password changes, so sign in again.
     await logout()
-    navigate('/login', {
-      replace: true,
-      state: { notice: 'Password changed. Sign in with your new password.' },
-    })
+    // A toast, not navigation state: signing out also triggers the route guard's own redirect to
+    // /login, which would replace any state passed here.
+    toast('Password changed. Sign in with your new password.')
+    navigate('/login', { replace: true })
   }
 
   return (
