@@ -13,3 +13,19 @@ if (!window.matchMedia) {
     dispatchEvent: () => false,
   })
 }
+
+// cmdk (command menus) and Radix popovers expect these browser APIs, which jsdom lacks.
+if (!window.ResizeObserver) {
+  window.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+}
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => undefined
+}
+if (!Element.prototype.hasPointerCapture) {
+  Element.prototype.hasPointerCapture = () => false
+  Element.prototype.releasePointerCapture = () => undefined
+}
