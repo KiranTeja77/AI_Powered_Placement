@@ -42,7 +42,12 @@ public class AiServiceClient {
 
     AiServiceClient(AppProperties props, JsonMapper json) {
         var timeout = props.ai().timeout();
-        HttpClient http = HttpClient.newBuilder().connectTimeout(timeout).build();
+        // HTTP/1.1 only: the JDK client otherwise tries an HTTP/2 upgrade on plain connections, which
+        // the Python server (uvicorn) does not support and answers by mishandling the request.
+        HttpClient http = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .connectTimeout(timeout)
+                .build();
         JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(http);
         factory.setReadTimeout(timeout);
         this.client = RestClient.builder()

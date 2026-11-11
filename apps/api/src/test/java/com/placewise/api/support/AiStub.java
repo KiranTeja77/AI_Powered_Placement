@@ -81,6 +81,12 @@ public final class AiStub implements AutoCloseable {
     private void handle(HttpExchange exchange, boolean analyze) throws IOException {
         String request = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
         (analyze ? analyzeRequests : compareRequests).add(request);
+        // uvicorn cannot upgrade to HTTP/2 on a plain connection. A client that tries gets this,
+        // so a regression to the JDK default (an h2c upgrade) fails the tests instead of production.
+        if (exchange.getRequestHeaders().containsKey("Upgrade")) {
+            respond(exchange, 426, "{\"detail\":\"HTTP/1.1 only\"}");
+            return;
+        }
         switch (mode) {
             case DROP -> exchange.close();
             case SLOW -> {
