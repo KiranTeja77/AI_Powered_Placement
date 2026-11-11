@@ -284,3 +284,73 @@ uv run uvicorn app.main:app --port 8000
 uv run pytest           # 219 tests
 uv run ruff check . && uv run mypy app
 ```
+
+## How the API and the web app use it
+
+The student never talks to the analyzer. The browser calls the Spring Boot API, and the API calls
+the analyzer over the internal Docker network.
+
+```
+browser  ->  API (Spring Boot)  ->  analyzer (FastAPI, internal only)
+                  |
+              PostgreSQL
+```
+
+### Endpoints (all need a signed-in student, except `GET /roles` and `GET /skills`, which any signed-in user may read)
+
+| Request | What it does |
+| --- | --- |
+| `GET /api/v1/roles` | The 14 roles with the skills each needs and how much each matters. |
+| `GET /api/v1/skills` | All 453 skills, used by the "add a skill" picker. |
+| `POST /api/v1/resumes/analyze` | `{ text, targetRoles }`. Checks the text (200 to 20,000 characters) and the role slugs, calls the analyzer, saves the result and returns it (201). |
+| `GET /api/v1/resumes/analyses?page=&size=` | The student's own history, newest first. Small rows only: no resume text, no results. |
+| `GET /api/v1/resumes/analyses/{id}` | One analysis. |
+| `PATCH /api/v1/resumes/analyses/{id}/skills` | `{ confirmedSkillIds, removedSkillIds, addedSkillIds }`. Recomputes the gap through the analyzer's `/compare` and saves it. |
+
+A student can only read or change their own analyses: another student's id gives 403, an unknown id
+gives 404. Faculty and other roles get 403 on all of these for now.
+
+### What is stored
+
+One row per analysis in `resume_analysis`: the resume text exactly as submitted, the analyzer's full
+answer (JSONB, with a GIN index), the student's edits and the recomputed result (JSONB), the engine
+version, and a few summary columns so the history list never loads the large documents.
+
+The analyzer's answer is never changed. Edits are stored next to it, so "Reset to analyzer result"
+is always possible.
+
+### Editing the skill list
+
+Edits are always relative to the analyzer's original answer, so sending the same request twice
+gives the same result and an empty request resets the analysis.
+
+- **Confirm** a "possible" match: it then counts, with the strength its section earned.
+- **Remove** a skill that was found: it stops counting.
+- **Add** a skill from the list that was not in the text: it counts as *listed* (0.5), because there
+  is no evidence for it. It is labelled "Added by you" so it is never mistaken for a finding.
+
+The readiness scores shown after a save come from the analyzer (`/compare`), not from the web app,
+so there is one implementation of the formula. Suggestions are not recomputed after edits; the
+page says so.
+
+### One catalogue, two services
+
+The API's `skill`, `job_role` and `role_skill` tables are filled from the same two JSON files the
+analyzer reads (`apps/ai-service/data`). The build copies them onto the API's classpath and a
+repeatable database migration loads them. Its checksum comes from the files, so changing a file
+re-runs the seed on the next start. Automated tests compare the database with the files, so the two
+cannot disagree unnoticed.
+
+### When the analyzer is down
+
+The API waits at most 10 seconds. If the analyzer cannot be reached, is too slow or returns an
+error, the API answers `503` (problem+json, `analysis_unavailable`, with `Retry-After`) and nothing
+is saved. The web app shows "Resume analysis is temporarily unavailable" and keeps the student's text
+and unsaved edits. Reading and listing existing analyses never needs the analyzer.
+
+### Keeping the text out of the logs
+
+The analyzer's own code never logs the text. In the API, the request, the outgoing call and the
+response all print only a summary if a framework logs them, and Hibernate's entity logging is held
+at INFO so debug logging cannot print a stored resume. A test turns on DEBUG for everything, runs
+success and failure paths, and checks that a unique marker never appears in any log line.
