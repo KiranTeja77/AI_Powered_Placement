@@ -60,3 +60,11 @@ cd apps/ai-service && uv run ruff check . && uv run mypy app && uv run pytest
 - `JWT_SECRET` must be at least 32 bytes; the API refuses to start without it.
 - The refresh cookie is `Secure`, so use `http://localhost` (browsers treat it as a secure context) or HTTPS.
 - Rate limiting keys on the client IP as seen by the API. Behind a reverse proxy, configure forwarded headers first.
+
+## Web
+
+- `pnpm gen:api` regenerates `src/lib/api/schema.d.ts` from the running API's OpenAPI document.
+- In development Vite proxies `/api` to `http://localhost:8080`, so the app and API share an origin.
+- `pnpm e2e` runs the Playwright tests. They need the API and Postgres running
+  (`docker compose up -d`) and install their browser once with `pnpm exec playwright install chromium`.
+  `e2e/design-audit.spec.ts` also writes screenshots to `apps/web/e2e/screenshots` (not committed).

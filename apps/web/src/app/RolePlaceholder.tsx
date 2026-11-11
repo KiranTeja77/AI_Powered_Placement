@@ -21,9 +21,7 @@ export function RolePlaceholder({ title: fixedTitle }: { title?: string }) {
     <>
       <PageHeader
         breadcrumbs={
-          item && item.to !== home
-            ? [{ label: 'Home', to: home }, { label: title }]
-            : [{ label: title }]
+          item && item.to !== home ? [{ label: 'Home', to: home }, { label: title }] : undefined
         }
         title={title}
       />
