@@ -15,8 +15,16 @@ from fastapi.responses import JSONResponse
 from app.data import load_data
 from app.pipeline.analyze import analyze, compare_skills
 from app.pipeline.compare import UnknownRoleError
+from app.pipeline.revise import InvalidEditsError, revise
 from app.pipeline.skills import default_matcher
-from app.schemas import AnalyzeRequest, AnalyzeResponse, CompareRequest, CompareResponse
+from app.schemas import (
+    AnalyzeRequest,
+    AnalyzeResponse,
+    CompareRequest,
+    CompareResponse,
+    ReviseRequest,
+    ReviseResponse,
+)
 
 log = logging.getLogger("ai-service")
 
@@ -46,6 +54,20 @@ async def unknown_role(_: Request, exc: UnknownRoleError) -> JSONResponse:
     return JSONResponse(status_code=422, content={"detail": detail})
 
 
+@app.exception_handler(InvalidEditsError)
+async def invalid_edits(_: Request, exc: InvalidEditsError) -> JSONResponse:
+    # Skill ids only: they are taxonomy ids, never resume text.
+    detail = [
+        {
+            "loc": ["body", field],
+            "msg": f"Not valid for this analysis: {', '.join(ids)}",
+            "type": "invalid_edit",
+        }
+        for field, ids in exc.errors.items()
+    ]
+    return JSONResponse(status_code=422, content={"detail": detail})
+
+
 @app.exception_handler(Exception)
 async def unexpected_error(_: Request, exc: Exception) -> JSONResponse:
     log.error("request failed: %s", type(exc).__name__)  # the type only, never the message
@@ -65,3 +87,15 @@ def analyze_resume(request: AnalyzeRequest) -> AnalyzeResponse:
 @app.post("/compare")
 def compare(request: CompareRequest) -> CompareResponse:
     return compare_skills(request.skills, request.target_roles)
+
+
+@app.post("/revise")
+def revise_analysis(request: ReviseRequest) -> ReviseResponse:
+    """Re-read the text and apply the student's edits; scores and suggestions are rebuilt."""
+    return revise(
+        request.text,
+        request.target_roles,
+        request.confirmed_skill_ids,
+        request.removed_skill_ids,
+        request.added_skill_ids,
+    )
