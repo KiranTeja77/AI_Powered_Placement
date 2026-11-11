@@ -4,6 +4,7 @@ import { useTheme } from '@/lib/theme/theme-context'
 import { DevComposites } from './DevComposites'
 import { DevControls } from './DevControls'
 import { DevOverlays } from './DevOverlays'
+import { DevStudent } from './DevStudent'
 
 /** Development-only catalogue of every component and state. Not linked from the app. */
 export default function DevComponentsPage() {
@@ -40,6 +41,7 @@ export default function DevComponentsPage() {
       <DevControls />
       <DevOverlays />
       <DevComposites />
+      <DevStudent />
     </main>
   )
 }

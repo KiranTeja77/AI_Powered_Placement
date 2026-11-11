@@ -54,7 +54,6 @@ export function usePendingPage<T>(): PendingQuery<Page<T>> {
   return empty<Page<T>>({ items: [], total: 0 })
 }
 
-
 // Student screens. Each hook is a placeholder for the endpoint in its TODO and makes no request.
 
 /** TODO(api): GET /api/v1/student/tasks?week=current -> WeeklyTask[] */
