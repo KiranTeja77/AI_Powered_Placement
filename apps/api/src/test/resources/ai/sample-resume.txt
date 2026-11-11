@@ -1,0 +1,18 @@
+Kiran Teja
+kiran.teja@example.com | 9876543210 | github.com/kiranteja | linkedin.com/in/kiran-teja
+
+EDUCATION
+B.Tech in Computer Science and Engineering, Example Institute of Technology, 2021 - 2025
+CGPA: 8.5/10
+
+SKILLS
+Python, Java, SQL, Git, Docker, Kubernets, Communication skills
+
+PROJECTS
+Campus Placement Portal | Python, SQL, Docker
+- Built a REST API with Python and SQL used by 300 students and tested it with Postman.
+- Packaged the service with Docker and wrote unit tests.
+
+INTERNSHIP
+Backend Intern, Example Labs (Jun 2024 - Aug 2024)
+- Wrote SQL reports and used Git for code reviews with the team.
