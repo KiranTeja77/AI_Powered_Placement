@@ -33,7 +33,10 @@ services:
     networks: [internal]
 
   api:
-    build: ./apps/api
+    build:
+      # Context is ./apps so the image can read ai-service/data (the shared skill and role catalogue).
+      context: ./apps
+      dockerfile: api/Dockerfile
     depends_on:
       postgres:
         condition: service_healthy

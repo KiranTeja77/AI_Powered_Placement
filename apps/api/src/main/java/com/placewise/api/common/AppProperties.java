@@ -11,7 +11,8 @@ public record AppProperties(
         @DefaultValue Auth auth,
         @DefaultValue Cookie cookie,
         @DefaultValue Mail mail,
-        @DefaultValue Admin admin) {
+        @DefaultValue Admin admin,
+        @DefaultValue Ai ai) {
 
     public record Jwt(String secret, @DefaultValue("15m") Duration accessTtl) {}
 
@@ -27,4 +28,9 @@ public record AppProperties(
     public record Mail(@DefaultValue("no-reply@placewise.local") String from) {}
 
     public record Admin(String email, String password) {}
+
+    /** The internal resume-analysis service. */
+    public record Ai(
+            @DefaultValue("http://localhost:8000") String baseUrl,
+            @DefaultValue("10s") Duration timeout) {}
 }
