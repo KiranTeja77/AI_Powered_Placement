@@ -1,0 +1,1843 @@
+{
+  "version": "1.0.0",
+  "importance_weights": {
+    "core": 3,
+    "important": 2,
+    "bonus": 1
+  },
+  "roles": [
+    {
+      "id": "software-developer",
+      "name": "Software Developer",
+      "branches": [
+        "CSE",
+        "IT",
+        "ECE",
+        "EEE"
+      ],
+      "summary": "Builds and maintains application software across the stack.",
+      "skills": [
+        {
+          "skill": "data-structures",
+          "importance": "core"
+        },
+        {
+          "skill": "algorithms",
+          "importance": "core"
+        },
+        {
+          "skill": "object-oriented-programming",
+          "importance": "core"
+        },
+        {
+          "skill": "git",
+          "importance": "core"
+        },
+        {
+          "skill": "sql",
+          "importance": "core"
+        },
+        {
+          "skill": "debugging",
+          "importance": "core"
+        },
+        {
+          "skill": "python",
+          "importance": "important"
+        },
+        {
+          "skill": "java",
+          "importance": "important"
+        },
+        {
+          "skill": "rest-api",
+          "importance": "important"
+        },
+        {
+          "skill": "dbms",
+          "importance": "important"
+        },
+        {
+          "skill": "operating-systems",
+          "importance": "important"
+        },
+        {
+          "skill": "software-development-life-cycle",
+          "importance": "important"
+        },
+        {
+          "skill": "unit-testing",
+          "importance": "important"
+        },
+        {
+          "skill": "agile",
+          "importance": "important"
+        },
+        {
+          "skill": "problem-solving",
+          "importance": "important"
+        },
+        {
+          "skill": "javascript",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cpp",
+          "importance": "bonus"
+        },
+        {
+          "skill": "docker",
+          "importance": "bonus"
+        },
+        {
+          "skill": "system-design",
+          "importance": "bonus"
+        },
+        {
+          "skill": "design-patterns",
+          "importance": "bonus"
+        },
+        {
+          "skill": "linux",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cloud-computing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "teamwork",
+          "importance": "bonus"
+        },
+        {
+          "skill": "communication-skills",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "frontend-developer",
+      "name": "Frontend Developer",
+      "branches": [
+        "CSE",
+        "IT"
+      ],
+      "summary": "Builds the user-facing part of web applications.",
+      "skills": [
+        {
+          "skill": "html",
+          "importance": "core"
+        },
+        {
+          "skill": "css",
+          "importance": "core"
+        },
+        {
+          "skill": "javascript",
+          "importance": "core"
+        },
+        {
+          "skill": "react",
+          "importance": "core"
+        },
+        {
+          "skill": "git",
+          "importance": "core"
+        },
+        {
+          "skill": "responsive-design",
+          "importance": "core"
+        },
+        {
+          "skill": "typescript",
+          "importance": "important"
+        },
+        {
+          "skill": "rest-api",
+          "importance": "important"
+        },
+        {
+          "skill": "ui-ux-design",
+          "importance": "important"
+        },
+        {
+          "skill": "redux",
+          "importance": "important"
+        },
+        {
+          "skill": "unit-testing",
+          "importance": "important"
+        },
+        {
+          "skill": "debugging",
+          "importance": "important"
+        },
+        {
+          "skill": "next-js",
+          "importance": "important"
+        },
+        {
+          "skill": "angular",
+          "importance": "bonus"
+        },
+        {
+          "skill": "vue-js",
+          "importance": "bonus"
+        },
+        {
+          "skill": "tailwind-css",
+          "importance": "bonus"
+        },
+        {
+          "skill": "bootstrap",
+          "importance": "bonus"
+        },
+        {
+          "skill": "webpack",
+          "importance": "bonus"
+        },
+        {
+          "skill": "figma",
+          "importance": "bonus"
+        },
+        {
+          "skill": "jest",
+          "importance": "bonus"
+        },
+        {
+          "skill": "agile",
+          "importance": "bonus"
+        },
+        {
+          "skill": "communication-skills",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "backend-developer",
+      "name": "Backend Developer",
+      "branches": [
+        "CSE",
+        "IT"
+      ],
+      "summary": "Builds servers, APIs and databases behind applications.",
+      "skills": [
+        {
+          "skill": "sql",
+          "importance": "core"
+        },
+        {
+          "skill": "rest-api",
+          "importance": "core"
+        },
+        {
+          "skill": "data-structures",
+          "importance": "core"
+        },
+        {
+          "skill": "algorithms",
+          "importance": "core"
+        },
+        {
+          "skill": "git",
+          "importance": "core"
+        },
+        {
+          "skill": "database-design",
+          "importance": "core"
+        },
+        {
+          "skill": "python",
+          "importance": "important"
+        },
+        {
+          "skill": "java",
+          "importance": "important"
+        },
+        {
+          "skill": "node-js",
+          "importance": "important"
+        },
+        {
+          "skill": "spring-boot",
+          "importance": "important"
+        },
+        {
+          "skill": "django",
+          "importance": "important"
+        },
+        {
+          "skill": "postgresql",
+          "importance": "important"
+        },
+        {
+          "skill": "mysql",
+          "importance": "important"
+        },
+        {
+          "skill": "microservices",
+          "importance": "important"
+        },
+        {
+          "skill": "docker",
+          "importance": "important"
+        },
+        {
+          "skill": "unit-testing",
+          "importance": "important"
+        },
+        {
+          "skill": "operating-systems",
+          "importance": "important"
+        },
+        {
+          "skill": "system-design",
+          "importance": "important"
+        },
+        {
+          "skill": "redis",
+          "importance": "bonus"
+        },
+        {
+          "skill": "apache-kafka",
+          "importance": "bonus"
+        },
+        {
+          "skill": "aws",
+          "importance": "bonus"
+        },
+        {
+          "skill": "kubernetes",
+          "importance": "bonus"
+        },
+        {
+          "skill": "ci-cd",
+          "importance": "bonus"
+        },
+        {
+          "skill": "mongodb",
+          "importance": "bonus"
+        },
+        {
+          "skill": "graphql",
+          "importance": "bonus"
+        },
+        {
+          "skill": "linux",
+          "importance": "bonus"
+        },
+        {
+          "skill": "design-patterns",
+          "importance": "bonus"
+        },
+        {
+          "skill": "software-architecture",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "data-analyst",
+      "name": "Data Analyst",
+      "branches": [
+        "CSE",
+        "IT",
+        "ECE",
+        "EEE",
+        "MECH",
+        "CIVIL"
+      ],
+      "summary": "Turns data into reports and decisions.",
+      "skills": [
+        {
+          "skill": "sql",
+          "importance": "core"
+        },
+        {
+          "skill": "microsoft-excel",
+          "importance": "core"
+        },
+        {
+          "skill": "data-analysis",
+          "importance": "core"
+        },
+        {
+          "skill": "data-visualization",
+          "importance": "core"
+        },
+        {
+          "skill": "statistics",
+          "importance": "core"
+        },
+        {
+          "skill": "data-cleaning",
+          "importance": "core"
+        },
+        {
+          "skill": "python",
+          "importance": "important"
+        },
+        {
+          "skill": "pandas",
+          "importance": "important"
+        },
+        {
+          "skill": "power-bi",
+          "importance": "important"
+        },
+        {
+          "skill": "tableau",
+          "importance": "important"
+        },
+        {
+          "skill": "numpy",
+          "importance": "important"
+        },
+        {
+          "skill": "reporting-and-dashboards",
+          "importance": "important"
+        },
+        {
+          "skill": "data-modeling",
+          "importance": "important"
+        },
+        {
+          "skill": "hypothesis-testing",
+          "importance": "important"
+        },
+        {
+          "skill": "problem-solving",
+          "importance": "important"
+        },
+        {
+          "skill": "communication-skills",
+          "importance": "important"
+        },
+        {
+          "skill": "r",
+          "importance": "bonus"
+        },
+        {
+          "skill": "matplotlib",
+          "importance": "bonus"
+        },
+        {
+          "skill": "seaborn",
+          "importance": "bonus"
+        },
+        {
+          "skill": "etl",
+          "importance": "bonus"
+        },
+        {
+          "skill": "a-b-testing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "google-analytics",
+          "importance": "bonus"
+        },
+        {
+          "skill": "apache-spark",
+          "importance": "bonus"
+        },
+        {
+          "skill": "data-warehousing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "machine-learning",
+          "importance": "bonus"
+        },
+        {
+          "skill": "business-analysis",
+          "importance": "bonus"
+        },
+        {
+          "skill": "public-speaking",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "ml-engineer",
+      "name": "ML Engineer",
+      "branches": [
+        "CSE",
+        "IT",
+        "ECE"
+      ],
+      "summary": "Builds, trains and deploys machine learning models.",
+      "skills": [
+        {
+          "skill": "python",
+          "importance": "core"
+        },
+        {
+          "skill": "machine-learning",
+          "importance": "core"
+        },
+        {
+          "skill": "deep-learning",
+          "importance": "core"
+        },
+        {
+          "skill": "statistics",
+          "importance": "core"
+        },
+        {
+          "skill": "scikit-learn",
+          "importance": "core"
+        },
+        {
+          "skill": "numpy",
+          "importance": "core"
+        },
+        {
+          "skill": "pandas",
+          "importance": "core"
+        },
+        {
+          "skill": "tensorflow",
+          "importance": "important"
+        },
+        {
+          "skill": "pytorch",
+          "importance": "important"
+        },
+        {
+          "skill": "feature-engineering",
+          "importance": "important"
+        },
+        {
+          "skill": "model-evaluation",
+          "importance": "important"
+        },
+        {
+          "skill": "neural-networks",
+          "importance": "important"
+        },
+        {
+          "skill": "data-structures",
+          "importance": "important"
+        },
+        {
+          "skill": "algorithms",
+          "importance": "important"
+        },
+        {
+          "skill": "sql",
+          "importance": "important"
+        },
+        {
+          "skill": "git",
+          "importance": "important"
+        },
+        {
+          "skill": "natural-language-processing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "computer-vision",
+          "importance": "bonus"
+        },
+        {
+          "skill": "mlops",
+          "importance": "bonus"
+        },
+        {
+          "skill": "docker",
+          "importance": "bonus"
+        },
+        {
+          "skill": "hugging-face",
+          "importance": "bonus"
+        },
+        {
+          "skill": "generative-ai",
+          "importance": "bonus"
+        },
+        {
+          "skill": "large-language-models",
+          "importance": "bonus"
+        },
+        {
+          "skill": "apache-spark",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cloud-computing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "keras",
+          "importance": "bonus"
+        },
+        {
+          "skill": "xgboost",
+          "importance": "bonus"
+        },
+        {
+          "skill": "reinforcement-learning",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "qa-engineer",
+      "name": "QA Engineer",
+      "branches": [
+        "CSE",
+        "IT",
+        "ECE"
+      ],
+      "summary": "Tests software to find defects before release.",
+      "skills": [
+        {
+          "skill": "manual-testing",
+          "importance": "core"
+        },
+        {
+          "skill": "test-cases",
+          "importance": "core"
+        },
+        {
+          "skill": "test-plan",
+          "importance": "core"
+        },
+        {
+          "skill": "bug-tracking",
+          "importance": "core"
+        },
+        {
+          "skill": "software-quality-assurance",
+          "importance": "core"
+        },
+        {
+          "skill": "regression-testing",
+          "importance": "core"
+        },
+        {
+          "skill": "test-automation",
+          "importance": "important"
+        },
+        {
+          "skill": "selenium",
+          "importance": "important"
+        },
+        {
+          "skill": "api-testing",
+          "importance": "important"
+        },
+        {
+          "skill": "postman",
+          "importance": "important"
+        },
+        {
+          "skill": "sql",
+          "importance": "important"
+        },
+        {
+          "skill": "jira",
+          "importance": "important"
+        },
+        {
+          "skill": "agile",
+          "importance": "important"
+        },
+        {
+          "skill": "software-development-life-cycle",
+          "importance": "important"
+        },
+        {
+          "skill": "integration-testing",
+          "importance": "important"
+        },
+        {
+          "skill": "attention-to-detail",
+          "importance": "important"
+        },
+        {
+          "skill": "junit",
+          "importance": "bonus"
+        },
+        {
+          "skill": "testng",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cypress",
+          "importance": "bonus"
+        },
+        {
+          "skill": "playwright",
+          "importance": "bonus"
+        },
+        {
+          "skill": "appium",
+          "importance": "bonus"
+        },
+        {
+          "skill": "jmeter",
+          "importance": "bonus"
+        },
+        {
+          "skill": "performance-testing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cucumber",
+          "importance": "bonus"
+        },
+        {
+          "skill": "python",
+          "importance": "bonus"
+        },
+        {
+          "skill": "java",
+          "importance": "bonus"
+        },
+        {
+          "skill": "ci-cd",
+          "importance": "bonus"
+        },
+        {
+          "skill": "git",
+          "importance": "bonus"
+        },
+        {
+          "skill": "communication-skills",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "devops-engineer",
+      "name": "DevOps Engineer",
+      "branches": [
+        "CSE",
+        "IT"
+      ],
+      "summary": "Automates building, deploying and running software.",
+      "skills": [
+        {
+          "skill": "linux",
+          "importance": "core"
+        },
+        {
+          "skill": "git",
+          "importance": "core"
+        },
+        {
+          "skill": "ci-cd",
+          "importance": "core"
+        },
+        {
+          "skill": "docker",
+          "importance": "core"
+        },
+        {
+          "skill": "bash",
+          "importance": "core"
+        },
+        {
+          "skill": "cloud-computing",
+          "importance": "core"
+        },
+        {
+          "skill": "kubernetes",
+          "importance": "important"
+        },
+        {
+          "skill": "jenkins",
+          "importance": "important"
+        },
+        {
+          "skill": "terraform",
+          "importance": "important"
+        },
+        {
+          "skill": "ansible",
+          "importance": "important"
+        },
+        {
+          "skill": "aws",
+          "importance": "important"
+        },
+        {
+          "skill": "computer-networks",
+          "importance": "important"
+        },
+        {
+          "skill": "python",
+          "importance": "important"
+        },
+        {
+          "skill": "infrastructure-as-code",
+          "importance": "important"
+        },
+        {
+          "skill": "prometheus",
+          "importance": "important"
+        },
+        {
+          "skill": "grafana",
+          "importance": "important"
+        },
+        {
+          "skill": "github-actions",
+          "importance": "important"
+        },
+        {
+          "skill": "nginx",
+          "importance": "important"
+        },
+        {
+          "skill": "microsoft-azure",
+          "importance": "bonus"
+        },
+        {
+          "skill": "google-cloud",
+          "importance": "bonus"
+        },
+        {
+          "skill": "helm",
+          "importance": "bonus"
+        },
+        {
+          "skill": "site-reliability",
+          "importance": "bonus"
+        },
+        {
+          "skill": "gitlab",
+          "importance": "bonus"
+        },
+        {
+          "skill": "maven",
+          "importance": "bonus"
+        },
+        {
+          "skill": "gradle",
+          "importance": "bonus"
+        },
+        {
+          "skill": "network-security",
+          "importance": "bonus"
+        },
+        {
+          "skill": "microservices",
+          "importance": "bonus"
+        },
+        {
+          "skill": "debugging",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "business-analyst",
+      "name": "Business Analyst",
+      "branches": [
+        "CSE",
+        "IT",
+        "MECH",
+        "CIVIL",
+        "ECE",
+        "EEE"
+      ],
+      "summary": "Connects business needs to technical solutions.",
+      "skills": [
+        {
+          "skill": "requirements-gathering",
+          "importance": "core"
+        },
+        {
+          "skill": "business-analysis",
+          "importance": "core"
+        },
+        {
+          "skill": "microsoft-excel",
+          "importance": "core"
+        },
+        {
+          "skill": "stakeholder-management",
+          "importance": "core"
+        },
+        {
+          "skill": "process-mapping",
+          "importance": "core"
+        },
+        {
+          "skill": "documentation",
+          "importance": "core"
+        },
+        {
+          "skill": "sql",
+          "importance": "important"
+        },
+        {
+          "skill": "business-requirements-document",
+          "importance": "important"
+        },
+        {
+          "skill": "user-stories",
+          "importance": "important"
+        },
+        {
+          "skill": "use-case-modeling",
+          "importance": "important"
+        },
+        {
+          "skill": "data-analysis",
+          "importance": "important"
+        },
+        {
+          "skill": "communication-skills",
+          "importance": "important"
+        },
+        {
+          "skill": "problem-solving",
+          "importance": "important"
+        },
+        {
+          "skill": "microsoft-powerpoint",
+          "importance": "important"
+        },
+        {
+          "skill": "agile",
+          "importance": "important"
+        },
+        {
+          "skill": "wireframing",
+          "importance": "important"
+        },
+        {
+          "skill": "jira",
+          "importance": "important"
+        },
+        {
+          "skill": "power-bi",
+          "importance": "bonus"
+        },
+        {
+          "skill": "tableau",
+          "importance": "bonus"
+        },
+        {
+          "skill": "gap-analysis",
+          "importance": "bonus"
+        },
+        {
+          "skill": "risk-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "project-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "financial-analysis",
+          "importance": "bonus"
+        },
+        {
+          "skill": "market-research",
+          "importance": "bonus"
+        },
+        {
+          "skill": "swot-analysis",
+          "importance": "bonus"
+        },
+        {
+          "skill": "figma",
+          "importance": "bonus"
+        },
+        {
+          "skill": "public-speaking",
+          "importance": "bonus"
+        },
+        {
+          "skill": "negotiation",
+          "importance": "bonus"
+        },
+        {
+          "skill": "sap",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "embedded-systems-engineer",
+      "name": "Embedded Systems Engineer",
+      "branches": [
+        "ECE",
+        "EEE",
+        "CSE"
+      ],
+      "summary": "Writes software for microcontrollers and hardware devices.",
+      "skills": [
+        {
+          "skill": "embedded-c",
+          "importance": "core"
+        },
+        {
+          "skill": "microcontrollers",
+          "importance": "core"
+        },
+        {
+          "skill": "embedded-systems",
+          "importance": "core"
+        },
+        {
+          "skill": "digital-electronics",
+          "importance": "core"
+        },
+        {
+          "skill": "firmware-development",
+          "importance": "core"
+        },
+        {
+          "skill": "c",
+          "importance": "important"
+        },
+        {
+          "skill": "rtos",
+          "importance": "important"
+        },
+        {
+          "skill": "uart",
+          "importance": "important"
+        },
+        {
+          "skill": "i2c",
+          "importance": "important"
+        },
+        {
+          "skill": "spi",
+          "importance": "important"
+        },
+        {
+          "skill": "arm-cortex",
+          "importance": "important"
+        },
+        {
+          "skill": "analog-electronics",
+          "importance": "important"
+        },
+        {
+          "skill": "pcb-design",
+          "importance": "important"
+        },
+        {
+          "skill": "internet-of-things",
+          "importance": "important"
+        },
+        {
+          "skill": "sensor-interfacing",
+          "importance": "important"
+        },
+        {
+          "skill": "electronic-measurement",
+          "importance": "important"
+        },
+        {
+          "skill": "debugging",
+          "importance": "important"
+        },
+        {
+          "skill": "stm32",
+          "importance": "bonus"
+        },
+        {
+          "skill": "esp32",
+          "importance": "bonus"
+        },
+        {
+          "skill": "arduino",
+          "importance": "bonus"
+        },
+        {
+          "skill": "raspberry-pi",
+          "importance": "bonus"
+        },
+        {
+          "skill": "freertos",
+          "importance": "bonus"
+        },
+        {
+          "skill": "embedded-linux",
+          "importance": "bonus"
+        },
+        {
+          "skill": "device-drivers",
+          "importance": "bonus"
+        },
+        {
+          "skill": "can-bus",
+          "importance": "bonus"
+        },
+        {
+          "skill": "mqtt",
+          "importance": "bonus"
+        },
+        {
+          "skill": "jtag",
+          "importance": "bonus"
+        },
+        {
+          "skill": "python",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cpp",
+          "importance": "bonus"
+        },
+        {
+          "skill": "git",
+          "importance": "bonus"
+        },
+        {
+          "skill": "8051-microcontroller",
+          "importance": "bonus"
+        },
+        {
+          "skill": "pic-microcontroller",
+          "importance": "bonus"
+        },
+        {
+          "skill": "avr",
+          "importance": "bonus"
+        },
+        {
+          "skill": "altium-designer",
+          "importance": "bonus"
+        },
+        {
+          "skill": "proteus",
+          "importance": "bonus"
+        },
+        {
+          "skill": "matlab",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "vlsi-design-engineer",
+      "name": "VLSI Design Engineer",
+      "branches": [
+        "ECE",
+        "EEE"
+      ],
+      "summary": "Designs and verifies integrated circuits.",
+      "skills": [
+        {
+          "skill": "vlsi-design",
+          "importance": "core"
+        },
+        {
+          "skill": "verilog",
+          "importance": "core"
+        },
+        {
+          "skill": "digital-electronics",
+          "importance": "core"
+        },
+        {
+          "skill": "cmos-design",
+          "importance": "core"
+        },
+        {
+          "skill": "rtl-design",
+          "importance": "core"
+        },
+        {
+          "skill": "computer-architecture",
+          "importance": "core"
+        },
+        {
+          "skill": "systemverilog",
+          "importance": "important"
+        },
+        {
+          "skill": "vhdl",
+          "importance": "important"
+        },
+        {
+          "skill": "fpga",
+          "importance": "important"
+        },
+        {
+          "skill": "xilinx-vivado",
+          "importance": "important"
+        },
+        {
+          "skill": "modelsim",
+          "importance": "important"
+        },
+        {
+          "skill": "logic-synthesis",
+          "importance": "important"
+        },
+        {
+          "skill": "static-timing-analysis",
+          "importance": "important"
+        },
+        {
+          "skill": "analog-electronics",
+          "importance": "important"
+        },
+        {
+          "skill": "semiconductor-devices",
+          "importance": "important"
+        },
+        {
+          "skill": "design-verification",
+          "importance": "important"
+        },
+        {
+          "skill": "tcl-scripting",
+          "importance": "important"
+        },
+        {
+          "skill": "linux",
+          "importance": "important"
+        },
+        {
+          "skill": "uvm",
+          "importance": "bonus"
+        },
+        {
+          "skill": "physical-design",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cadence-virtuoso",
+          "importance": "bonus"
+        },
+        {
+          "skill": "synopsys-design-compiler",
+          "importance": "bonus"
+        },
+        {
+          "skill": "asic-design",
+          "importance": "bonus"
+        },
+        {
+          "skill": "ic-layout",
+          "importance": "bonus"
+        },
+        {
+          "skill": "low-power-design",
+          "importance": "bonus"
+        },
+        {
+          "skill": "design-for-testability",
+          "importance": "bonus"
+        },
+        {
+          "skill": "intel-quartus",
+          "importance": "bonus"
+        },
+        {
+          "skill": "python",
+          "importance": "bonus"
+        },
+        {
+          "skill": "bash",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "electrical-design-engineer",
+      "name": "Electrical Design Engineer",
+      "branches": [
+        "EEE",
+        "ECE"
+      ],
+      "summary": "Designs power distribution, wiring and electrical systems for buildings and plants.",
+      "skills": [
+        {
+          "skill": "electrical-design",
+          "importance": "core"
+        },
+        {
+          "skill": "autocad",
+          "importance": "core"
+        },
+        {
+          "skill": "power-systems",
+          "importance": "core"
+        },
+        {
+          "skill": "electrical-machines",
+          "importance": "core"
+        },
+        {
+          "skill": "cable-sizing",
+          "importance": "core"
+        },
+        {
+          "skill": "earthing-and-lightning-protection",
+          "importance": "core"
+        },
+        {
+          "skill": "autocad-electrical",
+          "importance": "important"
+        },
+        {
+          "skill": "switchgear-and-protection",
+          "importance": "important"
+        },
+        {
+          "skill": "transformers-electrical",
+          "importance": "important"
+        },
+        {
+          "skill": "load-flow-analysis",
+          "importance": "important"
+        },
+        {
+          "skill": "etap",
+          "importance": "important"
+        },
+        {
+          "skill": "fault-analysis",
+          "importance": "important"
+        },
+        {
+          "skill": "illumination-design",
+          "importance": "important"
+        },
+        {
+          "skill": "electrical-safety",
+          "importance": "important"
+        },
+        {
+          "skill": "control-systems",
+          "importance": "important"
+        },
+        {
+          "skill": "power-electronics",
+          "importance": "important"
+        },
+        {
+          "skill": "plc",
+          "importance": "important"
+        },
+        {
+          "skill": "matlab",
+          "importance": "important"
+        },
+        {
+          "skill": "microsoft-excel",
+          "importance": "important"
+        },
+        {
+          "skill": "revit",
+          "importance": "bonus"
+        },
+        {
+          "skill": "solar-pv-design",
+          "importance": "bonus"
+        },
+        {
+          "skill": "renewable-energy",
+          "importance": "bonus"
+        },
+        {
+          "skill": "motor-drives",
+          "importance": "bonus"
+        },
+        {
+          "skill": "scada",
+          "importance": "bonus"
+        },
+        {
+          "skill": "energy-auditing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "power-quality",
+          "importance": "bonus"
+        },
+        {
+          "skill": "smart-grid",
+          "importance": "bonus"
+        },
+        {
+          "skill": "instrumentation",
+          "importance": "bonus"
+        },
+        {
+          "skill": "bim",
+          "importance": "bonus"
+        },
+        {
+          "skill": "project-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "industrial-automation",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "mechanical-design-cad",
+      "name": "Mechanical Design/CAD Engineer",
+      "branches": [
+        "MECH"
+      ],
+      "summary": "Designs mechanical parts and assemblies using CAD and analysis tools.",
+      "skills": [
+        {
+          "skill": "solidworks",
+          "importance": "core"
+        },
+        {
+          "skill": "autocad",
+          "importance": "core"
+        },
+        {
+          "skill": "3d-modeling",
+          "importance": "core"
+        },
+        {
+          "skill": "engineering-drawing",
+          "importance": "core"
+        },
+        {
+          "skill": "gdandt",
+          "importance": "core"
+        },
+        {
+          "skill": "machine-design",
+          "importance": "core"
+        },
+        {
+          "skill": "catia",
+          "importance": "important"
+        },
+        {
+          "skill": "creo",
+          "importance": "important"
+        },
+        {
+          "skill": "siemens-nx",
+          "importance": "important"
+        },
+        {
+          "skill": "finite-element-analysis",
+          "importance": "important"
+        },
+        {
+          "skill": "ansys",
+          "importance": "important"
+        },
+        {
+          "skill": "strength-of-materials",
+          "importance": "important"
+        },
+        {
+          "skill": "manufacturing-processes",
+          "importance": "important"
+        },
+        {
+          "skill": "design-for-manufacturing",
+          "importance": "important"
+        },
+        {
+          "skill": "materials-science",
+          "importance": "important"
+        },
+        {
+          "skill": "bill-of-materials",
+          "importance": "important"
+        },
+        {
+          "skill": "sheet-metal-design",
+          "importance": "important"
+        },
+        {
+          "skill": "thermodynamics",
+          "importance": "important"
+        },
+        {
+          "skill": "autodesk-inventor",
+          "importance": "important"
+        },
+        {
+          "skill": "fusion-360",
+          "importance": "important"
+        },
+        {
+          "skill": "computational-fluid-dynamics",
+          "importance": "bonus"
+        },
+        {
+          "skill": "3d-printing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "hypermesh",
+          "importance": "bonus"
+        },
+        {
+          "skill": "cnc-machining",
+          "importance": "bonus"
+        },
+        {
+          "skill": "fmea",
+          "importance": "bonus"
+        },
+        {
+          "skill": "product-lifecycle-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "product-design",
+          "importance": "bonus"
+        },
+        {
+          "skill": "heat-transfer",
+          "importance": "bonus"
+        },
+        {
+          "skill": "fluid-mechanics",
+          "importance": "bonus"
+        },
+        {
+          "skill": "vibration-analysis",
+          "importance": "bonus"
+        },
+        {
+          "skill": "six-sigma",
+          "importance": "bonus"
+        },
+        {
+          "skill": "matlab",
+          "importance": "bonus"
+        },
+        {
+          "skill": "hydraulics-and-pneumatics",
+          "importance": "bonus"
+        },
+        {
+          "skill": "welding",
+          "importance": "bonus"
+        },
+        {
+          "skill": "mechatronics",
+          "importance": "bonus"
+        },
+        {
+          "skill": "robotics",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "site-structural-engineer",
+      "name": "Site/Structural Engineer",
+      "branches": [
+        "CIVIL"
+      ],
+      "summary": "Plans, designs and supervises construction and structures.",
+      "skills": [
+        {
+          "skill": "autocad",
+          "importance": "core"
+        },
+        {
+          "skill": "structural-analysis",
+          "importance": "core"
+        },
+        {
+          "skill": "structural-design",
+          "importance": "core"
+        },
+        {
+          "skill": "rcc-design",
+          "importance": "core"
+        },
+        {
+          "skill": "building-codes",
+          "importance": "core"
+        },
+        {
+          "skill": "quantity-surveying",
+          "importance": "core"
+        },
+        {
+          "skill": "staad-pro",
+          "importance": "important"
+        },
+        {
+          "skill": "etabs",
+          "importance": "important"
+        },
+        {
+          "skill": "concrete-technology",
+          "importance": "important"
+        },
+        {
+          "skill": "soil-mechanics",
+          "importance": "important"
+        },
+        {
+          "skill": "foundation-engineering",
+          "importance": "important"
+        },
+        {
+          "skill": "surveying",
+          "importance": "important"
+        },
+        {
+          "skill": "site-supervision",
+          "importance": "important"
+        },
+        {
+          "skill": "construction-management",
+          "importance": "important"
+        },
+        {
+          "skill": "cost-estimation",
+          "importance": "important"
+        },
+        {
+          "skill": "steel-structures",
+          "importance": "important"
+        },
+        {
+          "skill": "construction-safety",
+          "importance": "important"
+        },
+        {
+          "skill": "material-testing",
+          "importance": "important"
+        },
+        {
+          "skill": "project-scheduling",
+          "importance": "important"
+        },
+        {
+          "skill": "revit",
+          "importance": "bonus"
+        },
+        {
+          "skill": "bim",
+          "importance": "bonus"
+        },
+        {
+          "skill": "primavera-p6",
+          "importance": "bonus"
+        },
+        {
+          "skill": "microsoft-project",
+          "importance": "bonus"
+        },
+        {
+          "skill": "sap2000",
+          "importance": "bonus"
+        },
+        {
+          "skill": "civil-3d",
+          "importance": "bonus"
+        },
+        {
+          "skill": "total-station",
+          "importance": "bonus"
+        },
+        {
+          "skill": "earthquake-engineering",
+          "importance": "bonus"
+        },
+        {
+          "skill": "contract-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "gis",
+          "importance": "bonus"
+        },
+        {
+          "skill": "highway-engineering",
+          "importance": "bonus"
+        },
+        {
+          "skill": "microsoft-excel",
+          "importance": "bonus"
+        },
+        {
+          "skill": "building-design",
+          "importance": "bonus"
+        },
+        {
+          "skill": "sketchup",
+          "importance": "bonus"
+        },
+        {
+          "skill": "communication-skills",
+          "importance": "bonus"
+        }
+      ]
+    },
+    {
+      "id": "graduate-engineer-trainee",
+      "name": "Graduate Engineer Trainee",
+      "branches": [
+        "CSE",
+        "IT",
+        "ECE",
+        "EEE",
+        "MECH",
+        "CIVIL"
+      ],
+      "summary": "Entry-level engineering role that values core professional skills in any branch.",
+      "skills": [
+        {
+          "skill": "problem-solving",
+          "importance": "core"
+        },
+        {
+          "skill": "communication-skills",
+          "importance": "core"
+        },
+        {
+          "skill": "teamwork",
+          "importance": "core"
+        },
+        {
+          "skill": "analytical-skills",
+          "importance": "core"
+        },
+        {
+          "skill": "quick-learner",
+          "importance": "core"
+        },
+        {
+          "skill": "time-management",
+          "importance": "core"
+        },
+        {
+          "skill": "microsoft-excel",
+          "importance": "important"
+        },
+        {
+          "skill": "microsoft-powerpoint",
+          "importance": "important"
+        },
+        {
+          "skill": "aptitude",
+          "importance": "important"
+        },
+        {
+          "skill": "leadership",
+          "importance": "important"
+        },
+        {
+          "skill": "critical-thinking",
+          "importance": "important"
+        },
+        {
+          "skill": "adaptability",
+          "importance": "important"
+        },
+        {
+          "skill": "report-writing",
+          "importance": "important"
+        },
+        {
+          "skill": "documentation",
+          "importance": "important"
+        },
+        {
+          "skill": "interpersonal-skills",
+          "importance": "important"
+        },
+        {
+          "skill": "attention-to-detail",
+          "importance": "important"
+        },
+        {
+          "skill": "decision-making",
+          "importance": "important"
+        },
+        {
+          "skill": "python",
+          "importance": "bonus"
+        },
+        {
+          "skill": "sql",
+          "importance": "bonus"
+        },
+        {
+          "skill": "matlab",
+          "importance": "bonus"
+        },
+        {
+          "skill": "autocad",
+          "importance": "bonus"
+        },
+        {
+          "skill": "quality-control",
+          "importance": "bonus"
+        },
+        {
+          "skill": "six-sigma",
+          "importance": "bonus"
+        },
+        {
+          "skill": "lean-manufacturing",
+          "importance": "bonus"
+        },
+        {
+          "skill": "public-speaking",
+          "importance": "bonus"
+        },
+        {
+          "skill": "research-skills",
+          "importance": "bonus"
+        },
+        {
+          "skill": "volunteering",
+          "importance": "bonus"
+        },
+        {
+          "skill": "mentoring",
+          "importance": "bonus"
+        },
+        {
+          "skill": "event-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "industrial-engineering",
+          "importance": "bonus"
+        },
+        {
+          "skill": "supply-chain-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "stress-management",
+          "importance": "bonus"
+        },
+        {
+          "skill": "negotiation",
+          "importance": "bonus"
+        },
+        {
+          "skill": "customer-service",
+          "importance": "bonus"
+        },
+        {
+          "skill": "project-management",
+          "importance": "bonus"
+        }
+      ]
+    }
+  ]
+}
