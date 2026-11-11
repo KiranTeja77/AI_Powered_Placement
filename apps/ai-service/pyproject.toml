@@ -6,6 +6,8 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "fastapi>=0.162.3",
     "pydantic>=2.14.3",
+    "rapidfuzz>=3.14.6",
+    "spacy>=3.8.18",
     "uvicorn[standard]>=0.54.0",
 ]
 
@@ -24,6 +26,10 @@ pythonpath = ["."]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+
+[tool.ruff.lint]
+# Explicit, so newer ruff defaults cannot rewrite string escapes or other intentional code.
+select = ["E", "F", "I", "UP", "B"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["app"]

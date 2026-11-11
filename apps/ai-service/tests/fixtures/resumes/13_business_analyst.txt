@@ -1,0 +1,33 @@
+Ishita Kapoor
+ishita.kapoor@example.com | +91 98100 00099 | linkedin.com/in/ishita-kapoor
+
+PROFESSIONAL SUMMARY
+Final-year engineering student moving into business analysis, with internship work in requirements and reporting.
+
+EDUCATION
+B.Tech Information Technology, Example Institute, 2025
+CGPA: 8.6/10
+
+SKILLS
+Business analysis, Requirements gathering, Process mapping, User stories, Stakeholder management
+Tools: Microsoft Excel (pivot tables, VLOOKUP), Power BI, SQL, Jira, Figma, MS PowerPoint
+Soft skills: Communication skills, Leadership, Teamwork, Problem solving, Presentation skills
+
+EXPERIENCE
+Business Analyst Intern, Meridian Retail (Jun 2024 - Aug 2024)
+- Gathered requirements from store managers and wrote 30 user stories with acceptance criteria.
+- Mapped the returns process and proposed changes that cut handling time by 20%.
+- Built a Power BI dashboard from SQL data to track weekly sales.
+- Presented the findings to senior stakeholders using PowerPoint.
+
+PROJECTS
+Hospital Appointment System
+- Wrote the business requirements document and created wireframes in Figma.
+- Tracked tasks in Jira using Scrum sprints.
+
+Market Study of Electric Scooters
+- Completed market research and a SWOT analysis for three competitors.
+
+ACHIEVEMENTS
+- Won a case competition on retail analytics.
+- President of the college management club, leading a team of 15.

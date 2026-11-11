@@ -1,0 +1,35 @@
+Divya Menon
+divya.menon@example.com | 9400123456 | linkedin.com/in/divya-menon
+
+SUMMARY
+ECE student specialising in VLSI design, looking for RTL design and verification roles.
+
+EDUCATION
+M.Tech VLSI Design, Example Institute of Technology, 2023 - 2025, CGPA: 8.9/10
+B.E. Electronics and Communication, Example College, 2023, CGPA: 8.2/10
+
+TECHNICAL SKILLS
+HDLs: Verilog, VHDL, SystemVerilog
+EDA Tools: Xilinx Vivado, ModelSim, Cadence Virtuoso, Synopsys Design Compiler
+Scripting: TCL, Python, Linux shell
+Concepts: CMOS circuits, Digital Electronics, Analog Electronics, Static Timing Analysis, FPGA, Low Power Design, Computer Architecture
+
+PROJECTS
+8-bit RISC Processor
+- Designed and verified an 8-bit processor in Verilog and simulated it in ModelSim.
+- Implemented the design on an FPGA using Xilinx Vivado.
+
+CMOS Op-Amp Design
+- Designed a two stage CMOS op-amp and drew its layout in Cadence Virtuoso.
+
+UART Controller with SystemVerilog Testbench
+- Wrote a UART module in Verilog and a class based testbench in SystemVerilog.
+- Ran timing checks and fixed setup violations with static timing analysis.
+
+INTERNSHIP
+VLSI Intern, Chipwave Technologies (Jun 2024 - Aug 2024)
+- Wrote RTL for a FIFO block and ran logic synthesis with Synopsys Design Compiler.
+- Automated regressions with TCL scripts.
+
+PUBLICATIONS
+Low power adder design, national student conference.

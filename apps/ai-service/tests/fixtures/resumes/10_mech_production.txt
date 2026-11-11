@@ -1,0 +1,33 @@
+Neha Kulkarni
+neha.kulkarni@example.com | +91 97654 32100
+
+SUMMARY
+Mechanical engineering graduate with plant internship experience in quality and production planning.
+
+EDUCATION
+B.E. Mechanical Engineering, Example College of Engineering, 2025 | 72.4%
+
+SKILLS
+Quality tools: Six Sigma Green Belt, FMEA, Root cause analysis, 5S, Kaizen, Statistical process control
+Operations: Production planning and control, Supply chain management, Maintenance engineering, Inventory management
+Software: MS Excel, SAP MM, AutoCAD, MS Project
+Manufacturing: Welding, Hydraulics and pneumatics, CNC programming
+
+INDUSTRIAL INTERNSHIP
+Production Intern, Axle Components Pvt Ltd (6 weeks)
+- Mapped the assembly line with value stream mapping and cut idle time by 15%.
+- Used root cause analysis and a fishbone diagram to find the reason for a recurring defect.
+- Prepared daily production reports in Excel and tracked stock using SAP MM.
+- Supported a preventive maintenance schedule for CNC machines.
+
+PROJECTS
+Defect Reduction in Casting
+- Applied Six Sigma DMAIC and FMEA to cut rejection from 8% to 5%.
+
+Plant Layout Improvement
+- Redesigned a workstation layout in AutoCAD to shorten material movement.
+- Estimated the savings with a spreadsheet and presented the plan to the supervisor.
+
+ACTIVITIES
+- Organised the department technical fest with a team of 20 volunteers.
+- Student coordinator for industrial visits.

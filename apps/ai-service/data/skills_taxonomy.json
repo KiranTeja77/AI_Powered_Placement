@@ -1,0 +1,4206 @@
+{
+  "version": "1.0.0",
+  "skills": [
+    {
+      "id": "python",
+      "name": "Python",
+      "category": "Programming languages",
+      "aliases": [
+        "python 3",
+        "python programming",
+        "python3"
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "category": "Programming languages",
+      "aliases": [
+        "core java",
+        "java 11",
+        "java 17",
+        "java 8",
+        "java programming",
+        "java se"
+      ]
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "category": "Programming languages",
+      "aliases": [
+        "ecmascript",
+        "es6",
+        "javascript es6",
+        "js",
+        "vanilla javascript"
+      ]
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "category": "Programming languages",
+      "aliases": [
+        "typescript programming"
+      ]
+    },
+    {
+      "id": "c",
+      "name": "C",
+      "category": "Programming languages",
+      "aliases": [
+        "ansi c",
+        "c language",
+        "c programming"
+      ],
+      "context_required": [
+        "C"
+      ]
+    },
+    {
+      "id": "cpp",
+      "name": "C++",
+      "category": "Programming languages",
+      "aliases": [
+        "c plus plus",
+        "c++ programming",
+        "c/c++",
+        "cpp"
+      ]
+    },
+    {
+      "id": "csharp",
+      "name": "C#",
+      "category": "Programming languages",
+      "aliases": [
+        "c sharp",
+        "c# programming",
+        "csharp"
+      ]
+    },
+    {
+      "id": "go",
+      "name": "Go",
+      "category": "Programming languages",
+      "aliases": [
+        "go language",
+        "golang"
+      ],
+      "context_required": [
+        "Go"
+      ]
+    },
+    {
+      "id": "rust",
+      "name": "Rust",
+      "category": "Programming languages",
+      "aliases": [
+        "rust programming"
+      ],
+      "exact_case": [
+        "Rust"
+      ]
+    },
+    {
+      "id": "kotlin",
+      "name": "Kotlin",
+      "category": "Programming languages",
+      "aliases": []
+    },
+    {
+      "id": "swift",
+      "name": "Swift",
+      "category": "Programming languages",
+      "aliases": [
+        "swift programming",
+        "swiftui"
+      ],
+      "context_required": [
+        "Swift"
+      ]
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "category": "Programming languages",
+      "aliases": [
+        "php 8",
+        "php7"
+      ]
+    },
+    {
+      "id": "ruby",
+      "name": "Ruby",
+      "category": "Programming languages",
+      "aliases": [
+        "ruby programming"
+      ],
+      "exact_case": [
+        "Ruby"
+      ]
+    },
+    {
+      "id": "scala",
+      "name": "Scala",
+      "category": "Programming languages",
+      "aliases": []
+    },
+    {
+      "id": "r",
+      "name": "R",
+      "category": "Programming languages",
+      "aliases": [
+        "r language",
+        "r programming",
+        "rstudio"
+      ],
+      "context_required": [
+        "R"
+      ]
+    },
+    {
+      "id": "sql",
+      "name": "SQL",
+      "category": "Programming languages",
+      "aliases": [
+        "sql programming",
+        "sql queries",
+        "structured query language"
+      ]
+    },
+    {
+      "id": "bash",
+      "name": "Bash",
+      "category": "Programming languages",
+      "aliases": [
+        "bash script",
+        "bash scripting",
+        "shell script",
+        "shell scripting"
+      ]
+    },
+    {
+      "id": "powershell",
+      "name": "PowerShell",
+      "category": "Programming languages",
+      "aliases": [
+        "powershell scripting"
+      ]
+    },
+    {
+      "id": "dart",
+      "name": "Dart",
+      "category": "Programming languages",
+      "aliases": [],
+      "exact_case": [
+        "Dart"
+      ]
+    },
+    {
+      "id": "perl",
+      "name": "Perl",
+      "category": "Programming languages",
+      "aliases": []
+    },
+    {
+      "id": "assembly-language",
+      "name": "Assembly Language",
+      "category": "Programming languages",
+      "aliases": [
+        "arm assembly",
+        "assembly programming",
+        "x86 assembly"
+      ],
+      "exact_case": [
+        "ASM"
+      ],
+      "context_required": [
+        "Assembly"
+      ]
+    },
+    {
+      "id": "objective-c",
+      "name": "Objective-C",
+      "category": "Programming languages",
+      "aliases": [
+        "objective c"
+      ]
+    },
+    {
+      "id": "lua",
+      "name": "Lua",
+      "category": "Programming languages",
+      "aliases": []
+    },
+    {
+      "id": "haskell",
+      "name": "Haskell",
+      "category": "Programming languages",
+      "aliases": []
+    },
+    {
+      "id": "embedded-c",
+      "name": "Embedded C",
+      "category": "Programming languages",
+      "aliases": [
+        "embedded c programming"
+      ]
+    },
+    {
+      "id": "html",
+      "name": "HTML",
+      "category": "Web development",
+      "aliases": [
+        "html 5",
+        "html5"
+      ]
+    },
+    {
+      "id": "css",
+      "name": "CSS",
+      "category": "Web development",
+      "aliases": [
+        "cascading style sheets",
+        "css 3",
+        "css3"
+      ]
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "Web development",
+      "aliases": [
+        "react js",
+        "react.js",
+        "reactjs"
+      ],
+      "exact_case": [
+        "React"
+      ]
+    },
+    {
+      "id": "next-js",
+      "name": "Next.js",
+      "category": "Web development",
+      "aliases": [
+        "next js",
+        "nextjs"
+      ]
+    },
+    {
+      "id": "angular",
+      "name": "Angular",
+      "category": "Web development",
+      "aliases": [
+        "angular 2",
+        "angular js",
+        "angularjs"
+      ]
+    },
+    {
+      "id": "vue-js",
+      "name": "Vue.js",
+      "category": "Web development",
+      "aliases": [
+        "vue js",
+        "vuejs"
+      ],
+      "exact_case": [
+        "Vue"
+      ]
+    },
+    {
+      "id": "node-js",
+      "name": "Node.js",
+      "category": "Web development",
+      "aliases": [
+        "node js",
+        "nodejs"
+      ],
+      "context_required": [
+        "Node"
+      ]
+    },
+    {
+      "id": "express",
+      "name": "Express",
+      "category": "Web development",
+      "aliases": [
+        "express js",
+        "express.js",
+        "expressjs"
+      ],
+      "context_required": [
+        "Express"
+      ]
+    },
+    {
+      "id": "redux",
+      "name": "Redux",
+      "category": "Web development",
+      "aliases": [
+        "redux toolkit"
+      ]
+    },
+    {
+      "id": "tailwind-css",
+      "name": "Tailwind CSS",
+      "category": "Web development",
+      "aliases": [
+        "tailwind",
+        "tailwindcss"
+      ]
+    },
+    {
+      "id": "bootstrap",
+      "name": "Bootstrap",
+      "category": "Web development",
+      "aliases": [
+        "bootstrap 4",
+        "bootstrap 5"
+      ]
+    },
+    {
+      "id": "jquery",
+      "name": "jQuery",
+      "category": "Web development",
+      "aliases": []
+    },
+    {
+      "id": "sass",
+      "name": "Sass",
+      "category": "Web development",
+      "aliases": [
+        "scss"
+      ]
+    },
+    {
+      "id": "webpack",
+      "name": "Webpack",
+      "category": "Web development",
+      "aliases": []
+    },
+    {
+      "id": "vite",
+      "name": "Vite",
+      "category": "Web development",
+      "aliases": [
+        "vite.js"
+      ],
+      "exact_case": [
+        "Vite"
+      ]
+    },
+    {
+      "id": "rest-api",
+      "name": "REST API",
+      "category": "Web development",
+      "aliases": [
+        "rest apis",
+        "restful api",
+        "restful apis",
+        "restful services",
+        "restful web services"
+      ],
+      "context_required": [
+        "REST"
+      ]
+    },
+    {
+      "id": "graphql",
+      "name": "GraphQL",
+      "category": "Web development",
+      "aliases": []
+    },
+    {
+      "id": "websocket",
+      "name": "WebSocket",
+      "category": "Web development",
+      "aliases": [
+        "web sockets",
+        "websockets"
+      ]
+    },
+    {
+      "id": "django",
+      "name": "Django",
+      "category": "Web development",
+      "aliases": [
+        "django rest framework",
+        "drf"
+      ]
+    },
+    {
+      "id": "flask",
+      "name": "Flask",
+      "category": "Web development",
+      "aliases": []
+    },
+    {
+      "id": "fastapi",
+      "name": "FastAPI",
+      "category": "Web development",
+      "aliases": [
+        "fast api"
+      ]
+    },
+    {
+      "id": "spring-boot",
+      "name": "Spring Boot",
+      "category": "Web development",
+      "aliases": [
+        "springboot"
+      ]
+    },
+    {
+      "id": "spring-framework",
+      "name": "Spring Framework",
+      "category": "Web development",
+      "aliases": [
+        "spring core",
+        "spring data",
+        "spring mvc",
+        "spring security"
+      ]
+    },
+    {
+      "id": "hibernate",
+      "name": "Hibernate",
+      "category": "Web development",
+      "aliases": [
+        "hibernate orm",
+        "jpa"
+      ]
+    },
+    {
+      "id": "asp-net",
+      "name": "ASP.NET",
+      "category": "Web development",
+      "aliases": [
+        "asp.net core",
+        "asp.net mvc"
+      ]
+    },
+    {
+      "id": "dotnet",
+      "name": ".NET",
+      "category": "Web development",
+      "aliases": [
+        ".net core",
+        ".net framework",
+        "dotnet"
+      ]
+    },
+    {
+      "id": "laravel",
+      "name": "Laravel",
+      "category": "Web development",
+      "aliases": []
+    },
+    {
+      "id": "ruby-on-rails",
+      "name": "Ruby on Rails",
+      "category": "Web development",
+      "aliases": [
+        "rails",
+        "ror"
+      ]
+    },
+    {
+      "id": "flutter",
+      "name": "Flutter",
+      "category": "Web development",
+      "aliases": []
+    },
+    {
+      "id": "react-native",
+      "name": "React Native",
+      "category": "Web development",
+      "aliases": [
+        "react-native"
+      ]
+    },
+    {
+      "id": "android-development",
+      "name": "Android Development",
+      "category": "Web development",
+      "aliases": [
+        "android",
+        "android app development",
+        "android studio"
+      ]
+    },
+    {
+      "id": "ios-development",
+      "name": "iOS Development",
+      "category": "Web development",
+      "aliases": [
+        "ios",
+        "ios app development",
+        "xcode"
+      ]
+    },
+    {
+      "id": "microservices",
+      "name": "Microservices",
+      "category": "Web development",
+      "aliases": [
+        "micro services",
+        "microservice architecture",
+        "microservices architecture"
+      ]
+    },
+    {
+      "id": "ui-ux-design",
+      "name": "UI/UX Design",
+      "category": "Web development",
+      "aliases": [
+        "ui design",
+        "ui/ux",
+        "user experience design",
+        "user interface design",
+        "ux design"
+      ]
+    },
+    {
+      "id": "responsive-design",
+      "name": "Responsive Design",
+      "category": "Web development",
+      "aliases": [
+        "mobile first design",
+        "responsive web design"
+      ]
+    },
+    {
+      "id": "mysql",
+      "name": "MySQL",
+      "category": "Databases",
+      "aliases": [
+        "my sql"
+      ]
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "category": "Databases",
+      "aliases": [
+        "postgre sql",
+        "postgres"
+      ]
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "category": "Databases",
+      "aliases": [
+        "mongo",
+        "mongo db"
+      ]
+    },
+    {
+      "id": "oracle-database",
+      "name": "Oracle Database",
+      "category": "Databases",
+      "aliases": [
+        "oracle 11g",
+        "oracle 12c",
+        "oracle db",
+        "oracle sql"
+      ],
+      "context_required": [
+        "Oracle"
+      ]
+    },
+    {
+      "id": "sqlite",
+      "name": "SQLite",
+      "category": "Databases",
+      "aliases": []
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "category": "Databases",
+      "aliases": []
+    },
+    {
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "category": "Databases",
+      "aliases": [
+        "elastic search",
+        "elk stack"
+      ]
+    },
+    {
+      "id": "cassandra",
+      "name": "Cassandra",
+      "category": "Databases",
+      "aliases": [
+        "apache cassandra"
+      ]
+    },
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "category": "Databases",
+      "aliases": [
+        "firestore"
+      ]
+    },
+    {
+      "id": "dynamodb",
+      "name": "DynamoDB",
+      "category": "Databases",
+      "aliases": [
+        "amazon dynamodb"
+      ]
+    },
+    {
+      "id": "sql-server",
+      "name": "SQL Server",
+      "category": "Databases",
+      "aliases": [
+        "microsoft sql server",
+        "ms sql",
+        "mssql",
+        "t-sql"
+      ]
+    },
+    {
+      "id": "nosql",
+      "name": "NoSQL",
+      "category": "Databases",
+      "aliases": [
+        "no-sql",
+        "nosql databases"
+      ]
+    },
+    {
+      "id": "pl-sql",
+      "name": "PL/SQL",
+      "category": "Databases",
+      "aliases": [
+        "pl sql",
+        "plsql"
+      ]
+    },
+    {
+      "id": "database-design",
+      "name": "Database Design",
+      "category": "Databases",
+      "aliases": [
+        "database schema design",
+        "er diagrams",
+        "er modeling",
+        "schema design"
+      ]
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "amazon web services",
+        "aws cloud"
+      ]
+    },
+    {
+      "id": "microsoft-azure",
+      "name": "Microsoft Azure",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "azure",
+        "azure cloud"
+      ]
+    },
+    {
+      "id": "google-cloud",
+      "name": "Google Cloud",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "gcp",
+        "google cloud platform"
+      ]
+    },
+    {
+      "id": "aws-lambda",
+      "name": "AWS Lambda",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "lambda functions"
+      ]
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "containerization",
+        "docker compose",
+        "dockerfile"
+      ]
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "k8s",
+        "kubectl"
+      ]
+    },
+    {
+      "id": "helm",
+      "name": "Helm",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "helm charts"
+      ],
+      "exact_case": [
+        "Helm"
+      ]
+    },
+    {
+      "id": "terraform",
+      "name": "Terraform",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "ansible",
+      "name": "Ansible",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "jenkins",
+      "name": "Jenkins",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "git commands",
+        "git version control"
+      ]
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "github repositories"
+      ]
+    },
+    {
+      "id": "gitlab",
+      "name": "GitLab",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "gitlab ci"
+      ]
+    },
+    {
+      "id": "bitbucket",
+      "name": "Bitbucket",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "github-actions",
+      "name": "GitHub Actions",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "ci-cd",
+      "name": "CI/CD",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "ci cd",
+        "cicd",
+        "continuous delivery",
+        "continuous deployment",
+        "continuous integration"
+      ]
+    },
+    {
+      "id": "linux",
+      "name": "Linux",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "linux administration",
+        "red hat",
+        "ubuntu",
+        "unix"
+      ]
+    },
+    {
+      "id": "nginx",
+      "name": "Nginx",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "prometheus",
+      "name": "Prometheus",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "infrastructure-as-code",
+      "name": "Infrastructure as Code",
+      "category": "Cloud and DevOps",
+      "aliases": [],
+      "exact_case": [
+        "IaC"
+      ]
+    },
+    {
+      "id": "cloud-computing",
+      "name": "Cloud Computing",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "cloud infrastructure",
+        "cloud platforms"
+      ]
+    },
+    {
+      "id": "maven",
+      "name": "Maven",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "apache maven"
+      ]
+    },
+    {
+      "id": "gradle",
+      "name": "Gradle",
+      "category": "Cloud and DevOps",
+      "aliases": []
+    },
+    {
+      "id": "site-reliability",
+      "name": "Site Reliability",
+      "category": "Cloud and DevOps",
+      "aliases": [
+        "site reliability engineering"
+      ],
+      "exact_case": [
+        "SRE"
+      ]
+    },
+    {
+      "id": "pandas",
+      "name": "Pandas",
+      "category": "Data and analytics",
+      "aliases": []
+    },
+    {
+      "id": "numpy",
+      "name": "NumPy",
+      "category": "Data and analytics",
+      "aliases": [
+        "numpy arrays"
+      ]
+    },
+    {
+      "id": "matplotlib",
+      "name": "Matplotlib",
+      "category": "Data and analytics",
+      "aliases": []
+    },
+    {
+      "id": "seaborn",
+      "name": "Seaborn",
+      "category": "Data and analytics",
+      "aliases": []
+    },
+    {
+      "id": "scipy",
+      "name": "SciPy",
+      "category": "Data and analytics",
+      "aliases": []
+    },
+    {
+      "id": "power-bi",
+      "name": "Power BI",
+      "category": "Data and analytics",
+      "aliases": [
+        "microsoft power bi",
+        "powerbi"
+      ],
+      "exact_case": [
+        "DAX"
+      ]
+    },
+    {
+      "id": "tableau",
+      "name": "Tableau",
+      "category": "Data and analytics",
+      "aliases": [
+        "tableau desktop"
+      ]
+    },
+    {
+      "id": "data-analysis",
+      "name": "Data Analysis",
+      "category": "Data and analytics",
+      "aliases": [
+        "data analytics",
+        "exploratory data analysis"
+      ]
+    },
+    {
+      "id": "data-visualization",
+      "name": "Data Visualization",
+      "category": "Data and analytics",
+      "aliases": [
+        "data visualisation",
+        "data visualization tools"
+      ]
+    },
+    {
+      "id": "statistics",
+      "name": "Statistics",
+      "category": "Data and analytics",
+      "aliases": [
+        "descriptive statistics",
+        "inferential statistics",
+        "statistical analysis",
+        "statistical methods"
+      ]
+    },
+    {
+      "id": "hypothesis-testing",
+      "name": "Hypothesis Testing",
+      "category": "Data and analytics",
+      "aliases": [
+        "statistical testing"
+      ]
+    },
+    {
+      "id": "etl",
+      "name": "ETL",
+      "category": "Data and analytics",
+      "aliases": [
+        "etl pipelines",
+        "etl processes",
+        "extract transform load"
+      ]
+    },
+    {
+      "id": "data-warehousing",
+      "name": "Data Warehousing",
+      "category": "Data and analytics",
+      "aliases": [
+        "data warehouse"
+      ]
+    },
+    {
+      "id": "apache-spark",
+      "name": "Apache Spark",
+      "category": "Data and analytics",
+      "aliases": [
+        "pyspark",
+        "spark sql"
+      ],
+      "context_required": [
+        "Spark"
+      ]
+    },
+    {
+      "id": "hadoop",
+      "name": "Hadoop",
+      "category": "Data and analytics",
+      "aliases": [
+        "hdfs",
+        "mapreduce"
+      ]
+    },
+    {
+      "id": "apache-kafka",
+      "name": "Apache Kafka",
+      "category": "Data and analytics",
+      "aliases": [
+        "kafka"
+      ]
+    },
+    {
+      "id": "apache-airflow",
+      "name": "Apache Airflow",
+      "category": "Data and analytics",
+      "aliases": [
+        "airflow"
+      ]
+    },
+    {
+      "id": "big-data",
+      "name": "Big Data",
+      "category": "Data and analytics",
+      "aliases": [
+        "bigdata"
+      ]
+    },
+    {
+      "id": "data-cleaning",
+      "name": "Data Cleaning",
+      "category": "Data and analytics",
+      "aliases": [
+        "data preparation",
+        "data preprocessing",
+        "data wrangling"
+      ]
+    },
+    {
+      "id": "data-mining",
+      "name": "Data Mining",
+      "category": "Data and analytics",
+      "aliases": []
+    },
+    {
+      "id": "data-modeling",
+      "name": "Data Modeling",
+      "category": "Data and analytics",
+      "aliases": [
+        "data modelling"
+      ]
+    },
+    {
+      "id": "a-b-testing",
+      "name": "A/B Testing",
+      "category": "Data and analytics",
+      "aliases": [
+        "a/b tests",
+        "ab testing"
+      ]
+    },
+    {
+      "id": "google-analytics",
+      "name": "Google Analytics",
+      "category": "Data and analytics",
+      "aliases": []
+    },
+    {
+      "id": "spss",
+      "name": "SPSS",
+      "category": "Data and analytics",
+      "aliases": []
+    },
+    {
+      "id": "reporting-and-dashboards",
+      "name": "Reporting and Dashboards",
+      "category": "Data and analytics",
+      "aliases": [
+        "business intelligence",
+        "dashboard development"
+      ],
+      "context_required": [
+        "BI"
+      ]
+    },
+    {
+      "id": "machine-learning",
+      "name": "Machine Learning",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "machine learning algorithms",
+        "supervised learning",
+        "unsupervised learning"
+      ],
+      "context_required": [
+        "ML"
+      ]
+    },
+    {
+      "id": "deep-learning",
+      "name": "Deep Learning",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "deep neural networks"
+      ]
+    },
+    {
+      "id": "tensorflow",
+      "name": "TensorFlow",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "tensorflow 2",
+        "tf.keras"
+      ]
+    },
+    {
+      "id": "pytorch",
+      "name": "PyTorch",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "pytorch lightning"
+      ]
+    },
+    {
+      "id": "keras",
+      "name": "Keras",
+      "category": "Machine learning and AI",
+      "aliases": []
+    },
+    {
+      "id": "scikit-learn",
+      "name": "Scikit-learn",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "scikit learn",
+        "sklearn"
+      ]
+    },
+    {
+      "id": "natural-language-processing",
+      "name": "Natural Language Processing",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "nlp",
+        "nltk",
+        "spacy",
+        "text mining"
+      ]
+    },
+    {
+      "id": "computer-vision",
+      "name": "Computer Vision",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "image classification",
+        "object detection"
+      ]
+    },
+    {
+      "id": "opencv",
+      "name": "OpenCV",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "open cv",
+        "opencv-python"
+      ]
+    },
+    {
+      "id": "generative-ai",
+      "name": "Generative AI",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "gen ai",
+        "genai",
+        "generative models"
+      ]
+    },
+    {
+      "id": "large-language-models",
+      "name": "Large Language Models",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "gpt",
+        "llm",
+        "llms"
+      ]
+    },
+    {
+      "id": "neural-networks",
+      "name": "Neural Networks",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "artificial neural networks",
+        "lstm"
+      ],
+      "exact_case": [
+        "ANN",
+        "CNN",
+        "RNN"
+      ]
+    },
+    {
+      "id": "reinforcement-learning",
+      "name": "Reinforcement Learning",
+      "category": "Machine learning and AI",
+      "aliases": []
+    },
+    {
+      "id": "xgboost",
+      "name": "XGBoost",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "gradient boosting",
+        "lightgbm"
+      ]
+    },
+    {
+      "id": "feature-engineering",
+      "name": "Feature Engineering",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "feature selection"
+      ]
+    },
+    {
+      "id": "mlops",
+      "name": "MLOps",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "ml pipelines",
+        "mlflow",
+        "model deployment"
+      ]
+    },
+    {
+      "id": "hugging-face",
+      "name": "Hugging Face",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "huggingface",
+        "transformers library"
+      ]
+    },
+    {
+      "id": "time-series-analysis",
+      "name": "Time Series Analysis",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "time series forecasting",
+        "time-series"
+      ]
+    },
+    {
+      "id": "recommendation-systems",
+      "name": "Recommendation Systems",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "recommendation engine",
+        "recommender systems"
+      ]
+    },
+    {
+      "id": "prompt-engineering",
+      "name": "Prompt Engineering",
+      "category": "Machine learning and AI",
+      "aliases": []
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "category": "Machine learning and AI",
+      "aliases": []
+    },
+    {
+      "id": "regression-analysis",
+      "name": "Regression Analysis",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "linear regression",
+        "logistic regression",
+        "regression model",
+        "regression models"
+      ]
+    },
+    {
+      "id": "model-evaluation",
+      "name": "Model Evaluation",
+      "category": "Machine learning and AI",
+      "aliases": [
+        "cross validation",
+        "cross-validation",
+        "hyperparameter tuning"
+      ]
+    },
+    {
+      "id": "data-structures",
+      "name": "Data Structures",
+      "category": "Software engineering",
+      "aliases": []
+    },
+    {
+      "id": "algorithms",
+      "name": "Algorithms",
+      "category": "Software engineering",
+      "aliases": [
+        "algorithm analysis",
+        "algorithm design"
+      ]
+    },
+    {
+      "id": "object-oriented-programming",
+      "name": "Object-Oriented Programming",
+      "category": "Software engineering",
+      "aliases": [
+        "object oriented design",
+        "object oriented programming",
+        "oop",
+        "oops concepts"
+      ],
+      "exact_case": [
+        "OOPS"
+      ]
+    },
+    {
+      "id": "design-patterns",
+      "name": "Design Patterns",
+      "category": "Software engineering",
+      "aliases": [
+        "factory pattern",
+        "gof patterns",
+        "singleton pattern"
+      ]
+    },
+    {
+      "id": "system-design",
+      "name": "System Design",
+      "category": "Software engineering",
+      "aliases": [
+        "high level design",
+        "hld",
+        "lld",
+        "low level design",
+        "scalable systems"
+      ]
+    },
+    {
+      "id": "agile",
+      "name": "Agile",
+      "category": "Software engineering",
+      "aliases": [
+        "agile development",
+        "agile methodology"
+      ]
+    },
+    {
+      "id": "scrum",
+      "name": "Scrum",
+      "category": "Software engineering",
+      "aliases": [
+        "scrum master",
+        "sprint planning"
+      ]
+    },
+    {
+      "id": "software-development-life-cycle",
+      "name": "Software Development Life Cycle",
+      "category": "Software engineering",
+      "aliases": [
+        "sdlc"
+      ]
+    },
+    {
+      "id": "code-review",
+      "name": "Code Review",
+      "category": "Software engineering",
+      "aliases": [
+        "code reviews",
+        "pull requests"
+      ]
+    },
+    {
+      "id": "version-control",
+      "name": "Version Control",
+      "category": "Software engineering",
+      "aliases": [
+        "version control systems"
+      ]
+    },
+    {
+      "id": "api-design",
+      "name": "API Design",
+      "category": "Software engineering",
+      "aliases": [
+        "api development",
+        "api integration"
+      ]
+    },
+    {
+      "id": "unit-testing",
+      "name": "Unit Testing",
+      "category": "Software engineering",
+      "aliases": [
+        "unit test",
+        "unit tests"
+      ]
+    },
+    {
+      "id": "test-driven-development",
+      "name": "Test-Driven Development",
+      "category": "Software engineering",
+      "aliases": [
+        "tdd"
+      ]
+    },
+    {
+      "id": "debugging",
+      "name": "Debugging",
+      "category": "Software engineering",
+      "aliases": [
+        "troubleshooting"
+      ]
+    },
+    {
+      "id": "uml",
+      "name": "UML",
+      "category": "Software engineering",
+      "aliases": [
+        "class diagrams",
+        "sequence diagrams",
+        "uml diagrams"
+      ]
+    },
+    {
+      "id": "jira",
+      "name": "Jira",
+      "category": "Software engineering",
+      "aliases": []
+    },
+    {
+      "id": "confluence",
+      "name": "Confluence",
+      "category": "Software engineering",
+      "aliases": []
+    },
+    {
+      "id": "postman",
+      "name": "Postman",
+      "category": "Software engineering",
+      "aliases": []
+    },
+    {
+      "id": "swagger",
+      "name": "Swagger",
+      "category": "Software engineering",
+      "aliases": [
+        "openapi"
+      ]
+    },
+    {
+      "id": "competitive-programming",
+      "name": "Competitive Programming",
+      "category": "Software engineering",
+      "aliases": [
+        "competitive coding"
+      ]
+    },
+    {
+      "id": "concurrency",
+      "name": "Concurrency",
+      "category": "Software engineering",
+      "aliases": [
+        "multi-threading",
+        "multithreaded programming",
+        "multithreading"
+      ]
+    },
+    {
+      "id": "software-architecture",
+      "name": "Software Architecture",
+      "category": "Software engineering",
+      "aliases": [
+        "architecture design",
+        "mvc",
+        "mvc architecture"
+      ]
+    },
+    {
+      "id": "manual-testing",
+      "name": "Manual Testing",
+      "category": "Testing and QA",
+      "aliases": [
+        "exploratory testing",
+        "functional testing"
+      ]
+    },
+    {
+      "id": "test-automation",
+      "name": "Test Automation",
+      "category": "Testing and QA",
+      "aliases": [
+        "automated testing",
+        "automation testing",
+        "test automation framework"
+      ]
+    },
+    {
+      "id": "selenium",
+      "name": "Selenium",
+      "category": "Testing and QA",
+      "aliases": [
+        "selenium webdriver"
+      ]
+    },
+    {
+      "id": "cypress",
+      "name": "Cypress",
+      "category": "Testing and QA",
+      "aliases": [
+        "cypress.io"
+      ],
+      "exact_case": [
+        "Cypress"
+      ]
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright",
+      "category": "Testing and QA",
+      "aliases": [],
+      "exact_case": [
+        "Playwright"
+      ]
+    },
+    {
+      "id": "junit",
+      "name": "JUnit",
+      "category": "Testing and QA",
+      "aliases": [
+        "junit 5"
+      ]
+    },
+    {
+      "id": "testng",
+      "name": "TestNG",
+      "category": "Testing and QA",
+      "aliases": []
+    },
+    {
+      "id": "pytest",
+      "name": "pytest",
+      "category": "Testing and QA",
+      "aliases": []
+    },
+    {
+      "id": "jest",
+      "name": "Jest",
+      "category": "Testing and QA",
+      "aliases": [],
+      "exact_case": [
+        "Jest"
+      ]
+    },
+    {
+      "id": "appium",
+      "name": "Appium",
+      "category": "Testing and QA",
+      "aliases": [
+        "mobile testing"
+      ]
+    },
+    {
+      "id": "api-testing",
+      "name": "API Testing",
+      "category": "Testing and QA",
+      "aliases": [
+        "api automation",
+        "rest api testing"
+      ]
+    },
+    {
+      "id": "performance-testing",
+      "name": "Performance Testing",
+      "category": "Testing and QA",
+      "aliases": [
+        "load testing",
+        "stress testing"
+      ]
+    },
+    {
+      "id": "jmeter",
+      "name": "JMeter",
+      "category": "Testing and QA",
+      "aliases": [
+        "apache jmeter"
+      ]
+    },
+    {
+      "id": "test-cases",
+      "name": "Test Cases",
+      "category": "Testing and QA",
+      "aliases": [
+        "test case design",
+        "test case writing",
+        "writing test cases"
+      ]
+    },
+    {
+      "id": "test-plan",
+      "name": "Test Plan",
+      "category": "Testing and QA",
+      "aliases": [
+        "test planning",
+        "test strategy"
+      ]
+    },
+    {
+      "id": "bug-tracking",
+      "name": "Bug Tracking",
+      "category": "Testing and QA",
+      "aliases": [
+        "bug reporting",
+        "defect management",
+        "defect tracking"
+      ]
+    },
+    {
+      "id": "regression-testing",
+      "name": "Regression Testing",
+      "category": "Testing and QA",
+      "aliases": [
+        "sanity testing",
+        "smoke testing"
+      ]
+    },
+    {
+      "id": "cucumber",
+      "name": "Cucumber",
+      "category": "Testing and QA",
+      "aliases": [
+        "bdd",
+        "behavior driven development"
+      ]
+    },
+    {
+      "id": "integration-testing",
+      "name": "Integration Testing",
+      "category": "Testing and QA",
+      "aliases": [
+        "e2e testing",
+        "end-to-end testing",
+        "system testing"
+      ]
+    },
+    {
+      "id": "software-quality-assurance",
+      "name": "Software Quality Assurance",
+      "category": "Testing and QA",
+      "aliases": [
+        "quality assurance",
+        "software testing"
+      ]
+    },
+    {
+      "id": "operating-systems",
+      "name": "Operating Systems",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "operating system",
+        "os concepts",
+        "process scheduling"
+      ]
+    },
+    {
+      "id": "computer-networks",
+      "name": "Computer Networks",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "computer networking",
+        "network protocols",
+        "osi model",
+        "tcp/ip"
+      ]
+    },
+    {
+      "id": "dbms",
+      "name": "DBMS",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "database management system",
+        "database management systems",
+        "normalization"
+      ]
+    },
+    {
+      "id": "computer-architecture",
+      "name": "Computer Architecture",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "computer organisation",
+        "computer organization"
+      ]
+    },
+    {
+      "id": "cryptography",
+      "name": "Cryptography",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "encryption"
+      ]
+    },
+    {
+      "id": "compiler-design",
+      "name": "Compiler Design",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "compilers"
+      ]
+    },
+    {
+      "id": "cyber-security",
+      "name": "Cyber Security",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "cybersecurity",
+        "information security",
+        "infosec"
+      ]
+    },
+    {
+      "id": "network-security",
+      "name": "Network Security",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "firewalls",
+        "vpn"
+      ]
+    },
+    {
+      "id": "ethical-hacking",
+      "name": "Ethical Hacking",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "pen testing",
+        "penetration testing",
+        "vulnerability assessment"
+      ]
+    },
+    {
+      "id": "distributed-systems",
+      "name": "Distributed Systems",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "distributed computing"
+      ]
+    },
+    {
+      "id": "blockchain",
+      "name": "Blockchain",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "smart contracts",
+        "solidity"
+      ]
+    },
+    {
+      "id": "theory-of-computation",
+      "name": "Theory of Computation",
+      "category": "Computer science fundamentals",
+      "aliases": [
+        "automata theory"
+      ]
+    },
+    {
+      "id": "embedded-systems",
+      "name": "Embedded Systems",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "embedded development",
+        "embedded programming",
+        "embedded software",
+        "embedded system"
+      ]
+    },
+    {
+      "id": "microcontrollers",
+      "name": "Microcontrollers",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "mcu",
+        "microcontroller",
+        "microcontroller programming"
+      ]
+    },
+    {
+      "id": "arduino",
+      "name": "Arduino",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "arduino ide",
+        "arduino uno"
+      ]
+    },
+    {
+      "id": "raspberry-pi",
+      "name": "Raspberry Pi",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "raspberrypi"
+      ]
+    },
+    {
+      "id": "arm-cortex",
+      "name": "ARM Cortex",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "arm cortex m",
+        "arm cortex-m",
+        "cortex-m"
+      ]
+    },
+    {
+      "id": "stm32",
+      "name": "STM32",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "stm32cubeide",
+        "stm32f4"
+      ]
+    },
+    {
+      "id": "esp32",
+      "name": "ESP32",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "esp8266"
+      ]
+    },
+    {
+      "id": "8051-microcontroller",
+      "name": "8051 Microcontroller",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "8051"
+      ]
+    },
+    {
+      "id": "pic-microcontroller",
+      "name": "PIC Microcontroller",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "pic16f877a",
+        "pic18"
+      ]
+    },
+    {
+      "id": "avr",
+      "name": "AVR",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "atmega",
+        "atmega328"
+      ]
+    },
+    {
+      "id": "rtos",
+      "name": "RTOS",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "real time operating system",
+        "real-time operating system"
+      ]
+    },
+    {
+      "id": "freertos",
+      "name": "FreeRTOS",
+      "category": "Embedded and electronics",
+      "aliases": []
+    },
+    {
+      "id": "embedded-linux",
+      "name": "Embedded Linux",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "buildroot",
+        "yocto"
+      ]
+    },
+    {
+      "id": "device-drivers",
+      "name": "Device Drivers",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "driver development",
+        "linux device drivers"
+      ]
+    },
+    {
+      "id": "i2c",
+      "name": "I2C",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "i2c protocol"
+      ],
+      "exact_case": [
+        "I²C"
+      ]
+    },
+    {
+      "id": "spi",
+      "name": "SPI",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "spi protocol"
+      ],
+      "exact_case": [
+        "SPI"
+      ]
+    },
+    {
+      "id": "uart",
+      "name": "UART",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "uart communication",
+        "usart"
+      ]
+    },
+    {
+      "id": "can-bus",
+      "name": "CAN Bus",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "can communication",
+        "can protocol",
+        "canbus"
+      ],
+      "context_required": [
+        "CAN"
+      ]
+    },
+    {
+      "id": "modbus",
+      "name": "Modbus",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "modbus rtu",
+        "modbus tcp"
+      ]
+    },
+    {
+      "id": "mqtt",
+      "name": "MQTT",
+      "category": "Embedded and electronics",
+      "aliases": []
+    },
+    {
+      "id": "internet-of-things",
+      "name": "Internet of Things",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "iot",
+        "iot devices",
+        "iot projects"
+      ]
+    },
+    {
+      "id": "sensor-interfacing",
+      "name": "Sensor Interfacing",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "sensor integration",
+        "sensors interfacing"
+      ]
+    },
+    {
+      "id": "pcb-design",
+      "name": "PCB Design",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "pcb designing",
+        "pcb layout",
+        "printed circuit board design"
+      ],
+      "exact_case": [
+        "PCB"
+      ]
+    },
+    {
+      "id": "altium-designer",
+      "name": "Altium Designer",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "altium"
+      ]
+    },
+    {
+      "id": "kicad",
+      "name": "KiCad",
+      "category": "Embedded and electronics",
+      "aliases": []
+    },
+    {
+      "id": "proteus",
+      "name": "Proteus",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "proteus simulation"
+      ]
+    },
+    {
+      "id": "multisim",
+      "name": "Multisim",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "ni multisim"
+      ]
+    },
+    {
+      "id": "ltspice",
+      "name": "LTspice",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "pspice",
+        "spice simulation"
+      ]
+    },
+    {
+      "id": "analog-electronics",
+      "name": "Analog Electronics",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "analog circuit design",
+        "analog circuits",
+        "analog design"
+      ]
+    },
+    {
+      "id": "digital-electronics",
+      "name": "Digital Electronics",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "combinational circuits",
+        "digital circuits",
+        "digital logic",
+        "digital logic design"
+      ]
+    },
+    {
+      "id": "digital-signal-processing",
+      "name": "Digital Signal Processing",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "dsp",
+        "signal processing"
+      ]
+    },
+    {
+      "id": "firmware-development",
+      "name": "Firmware Development",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "firmware"
+      ]
+    },
+    {
+      "id": "jtag",
+      "name": "JTAG",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "jtag debugging"
+      ]
+    },
+    {
+      "id": "keil",
+      "name": "Keil",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "keil uvision",
+        "keil μvision"
+      ]
+    },
+    {
+      "id": "mplab",
+      "name": "MPLAB",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "mplab x"
+      ]
+    },
+    {
+      "id": "operational-amplifiers",
+      "name": "Operational Amplifiers",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "op amp",
+        "op-amp",
+        "op-amps",
+        "opamp"
+      ]
+    },
+    {
+      "id": "electronic-measurement",
+      "name": "Electronic Measurement",
+      "category": "Embedded and electronics",
+      "aliases": [
+        "function generator",
+        "logic analyzer",
+        "multimeter",
+        "oscilloscope"
+      ]
+    },
+    {
+      "id": "vlsi-design",
+      "name": "VLSI Design",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "very large scale integration",
+        "vlsi"
+      ]
+    },
+    {
+      "id": "verilog",
+      "name": "Verilog",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "verilog hdl"
+      ]
+    },
+    {
+      "id": "vhdl",
+      "name": "VHDL",
+      "category": "VLSI and chip design",
+      "aliases": []
+    },
+    {
+      "id": "systemverilog",
+      "name": "SystemVerilog",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "system verilog"
+      ]
+    },
+    {
+      "id": "rtl-design",
+      "name": "RTL Design",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "register transfer level",
+        "rtl",
+        "rtl coding"
+      ]
+    },
+    {
+      "id": "fpga",
+      "name": "FPGA",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "fpga design",
+        "fpga programming",
+        "fpga prototyping"
+      ]
+    },
+    {
+      "id": "xilinx-vivado",
+      "name": "Xilinx Vivado",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "vivado",
+        "xilinx",
+        "xilinx ise"
+      ]
+    },
+    {
+      "id": "intel-quartus",
+      "name": "Intel Quartus",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "quartus",
+        "quartus prime"
+      ]
+    },
+    {
+      "id": "cadence-virtuoso",
+      "name": "Cadence Virtuoso",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "virtuoso"
+      ],
+      "exact_case": [
+        "Cadence"
+      ]
+    },
+    {
+      "id": "synopsys-design-compiler",
+      "name": "Synopsys Design Compiler",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "design compiler"
+      ],
+      "exact_case": [
+        "Synopsys"
+      ]
+    },
+    {
+      "id": "static-timing-analysis",
+      "name": "Static Timing Analysis",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "primetime",
+        "timing closure"
+      ],
+      "exact_case": [
+        "STA"
+      ]
+    },
+    {
+      "id": "physical-design",
+      "name": "Physical Design",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "floorplanning",
+        "place and route",
+        "pnr"
+      ]
+    },
+    {
+      "id": "design-verification",
+      "name": "Design Verification",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "functional verification",
+        "verification engineer"
+      ]
+    },
+    {
+      "id": "uvm",
+      "name": "UVM",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "universal verification methodology"
+      ]
+    },
+    {
+      "id": "cmos-design",
+      "name": "CMOS Design",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "cmos",
+        "cmos circuits",
+        "cmos technology"
+      ]
+    },
+    {
+      "id": "ic-layout",
+      "name": "IC Layout",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "analog layout",
+        "ic layout design",
+        "layout design"
+      ]
+    },
+    {
+      "id": "asic-design",
+      "name": "ASIC Design",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "asic",
+        "asic flow"
+      ]
+    },
+    {
+      "id": "logic-synthesis",
+      "name": "Logic Synthesis",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "logic synthesis tools"
+      ]
+    },
+    {
+      "id": "modelsim",
+      "name": "ModelSim",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "questa",
+        "questasim"
+      ]
+    },
+    {
+      "id": "low-power-design",
+      "name": "Low Power Design",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "power optimization"
+      ]
+    },
+    {
+      "id": "design-for-testability",
+      "name": "Design for Testability",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "scan chain"
+      ],
+      "context_required": [
+        "DFT"
+      ]
+    },
+    {
+      "id": "tcl-scripting",
+      "name": "TCL Scripting",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "tcl/tk"
+      ],
+      "exact_case": [
+        "TCL",
+        "Tcl"
+      ]
+    },
+    {
+      "id": "semiconductor-devices",
+      "name": "Semiconductor Devices",
+      "category": "VLSI and chip design",
+      "aliases": [
+        "mosfet",
+        "semiconductor physics"
+      ]
+    },
+    {
+      "id": "wireless-communication",
+      "name": "Wireless Communication",
+      "category": "Communication systems",
+      "aliases": [
+        "wireless communications",
+        "wireless networks"
+      ]
+    },
+    {
+      "id": "5g",
+      "name": "5G",
+      "category": "Communication systems",
+      "aliases": [
+        "5g nr",
+        "5g technology"
+      ]
+    },
+    {
+      "id": "lte",
+      "name": "LTE",
+      "category": "Communication systems",
+      "aliases": [
+        "4g lte",
+        "lte networks"
+      ]
+    },
+    {
+      "id": "digital-communication",
+      "name": "Digital Communication",
+      "category": "Communication systems",
+      "aliases": [
+        "digital communications",
+        "modulation techniques"
+      ]
+    },
+    {
+      "id": "analog-communication",
+      "name": "Analog Communication",
+      "category": "Communication systems",
+      "aliases": [
+        "analog communications"
+      ]
+    },
+    {
+      "id": "antenna-design",
+      "name": "Antenna Design",
+      "category": "Communication systems",
+      "aliases": [
+        "antenna theory",
+        "antennas",
+        "hfss"
+      ]
+    },
+    {
+      "id": "rf-design",
+      "name": "RF Design",
+      "category": "Communication systems",
+      "aliases": [
+        "radio frequency",
+        "rf circuits",
+        "rf engineering"
+      ]
+    },
+    {
+      "id": "microwave-engineering",
+      "name": "Microwave Engineering",
+      "category": "Communication systems",
+      "aliases": [
+        "microwave"
+      ]
+    },
+    {
+      "id": "fiber-optics",
+      "name": "Fiber Optics",
+      "category": "Communication systems",
+      "aliases": [
+        "fibre optics",
+        "optical communication",
+        "optical fiber communication"
+      ]
+    },
+    {
+      "id": "satellite-communication",
+      "name": "Satellite Communication",
+      "category": "Communication systems",
+      "aliases": [
+        "satcom"
+      ]
+    },
+    {
+      "id": "wi-fi",
+      "name": "Wi-Fi",
+      "category": "Communication systems",
+      "aliases": [
+        "ieee 802.11",
+        "wifi",
+        "wlan"
+      ]
+    },
+    {
+      "id": "bluetooth",
+      "name": "Bluetooth",
+      "category": "Communication systems",
+      "aliases": [
+        "bluetooth low energy"
+      ],
+      "exact_case": [
+        "BLE"
+      ]
+    },
+    {
+      "id": "zigbee",
+      "name": "Zigbee",
+      "category": "Communication systems",
+      "aliases": []
+    },
+    {
+      "id": "lora",
+      "name": "LoRa",
+      "category": "Communication systems",
+      "aliases": [
+        "lorawan"
+      ]
+    },
+    {
+      "id": "signals-and-systems",
+      "name": "Signals and Systems",
+      "category": "Communication systems",
+      "aliases": [
+        "signals & systems"
+      ]
+    },
+    {
+      "id": "image-processing",
+      "name": "Image Processing",
+      "category": "Communication systems",
+      "aliases": [
+        "digital image processing"
+      ]
+    },
+    {
+      "id": "power-systems",
+      "name": "Power Systems",
+      "category": "Electrical engineering",
+      "aliases": [
+        "electrical power systems",
+        "power system",
+        "power system analysis"
+      ]
+    },
+    {
+      "id": "power-electronics",
+      "name": "Power Electronics",
+      "category": "Electrical engineering",
+      "aliases": [
+        "dc-dc converters",
+        "inverters",
+        "rectifiers",
+        "smps"
+      ]
+    },
+    {
+      "id": "electrical-machines",
+      "name": "Electrical Machines",
+      "category": "Electrical engineering",
+      "aliases": [
+        "dc machines",
+        "electric machines",
+        "induction motors",
+        "synchronous machines"
+      ]
+    },
+    {
+      "id": "transformers-electrical",
+      "name": "Transformers (Electrical)",
+      "category": "Electrical engineering",
+      "aliases": [
+        "distribution transformers",
+        "power transformers",
+        "transformer design"
+      ]
+    },
+    {
+      "id": "switchgear-and-protection",
+      "name": "Switchgear and Protection",
+      "category": "Electrical engineering",
+      "aliases": [
+        "power system protection",
+        "protective relaying",
+        "relay coordination",
+        "switchgear"
+      ]
+    },
+    {
+      "id": "control-systems",
+      "name": "Control Systems",
+      "category": "Electrical engineering",
+      "aliases": [
+        "control engineering",
+        "control theory",
+        "pid control",
+        "pid controller"
+      ]
+    },
+    {
+      "id": "plc",
+      "name": "PLC",
+      "category": "Electrical engineering",
+      "aliases": [
+        "ladder logic",
+        "plc programming",
+        "programmable logic controller",
+        "programmable logic controllers"
+      ]
+    },
+    {
+      "id": "scada",
+      "name": "SCADA",
+      "category": "Electrical engineering",
+      "aliases": [
+        "scada systems"
+      ]
+    },
+    {
+      "id": "hmi",
+      "name": "HMI",
+      "category": "Electrical engineering",
+      "aliases": [
+        "human machine interface"
+      ]
+    },
+    {
+      "id": "siemens-tia-portal",
+      "name": "Siemens TIA Portal",
+      "category": "Electrical engineering",
+      "aliases": [
+        "siemens s7",
+        "step 7",
+        "tia portal"
+      ]
+    },
+    {
+      "id": "autocad-electrical",
+      "name": "AutoCAD Electrical",
+      "category": "Electrical engineering",
+      "aliases": [
+        "autocad electrical"
+      ]
+    },
+    {
+      "id": "etap",
+      "name": "ETAP",
+      "category": "Electrical engineering",
+      "aliases": [
+        "etap software"
+      ]
+    },
+    {
+      "id": "pscad",
+      "name": "PSCAD",
+      "category": "Electrical engineering",
+      "aliases": []
+    },
+    {
+      "id": "matlab",
+      "name": "MATLAB",
+      "category": "Electrical engineering",
+      "aliases": [
+        "mathworks",
+        "matlab programming",
+        "matlab/simulink"
+      ]
+    },
+    {
+      "id": "simulink",
+      "name": "Simulink",
+      "category": "Electrical engineering",
+      "aliases": [
+        "simulink models"
+      ]
+    },
+    {
+      "id": "renewable-energy",
+      "name": "Renewable Energy",
+      "category": "Electrical engineering",
+      "aliases": [
+        "renewable energy systems",
+        "solar energy",
+        "wind energy"
+      ]
+    },
+    {
+      "id": "solar-pv-design",
+      "name": "Solar PV Design",
+      "category": "Electrical engineering",
+      "aliases": [
+        "photovoltaic systems",
+        "pvsyst",
+        "solar photovoltaic",
+        "solar pv"
+      ]
+    },
+    {
+      "id": "electric-vehicles",
+      "name": "Electric Vehicles",
+      "category": "Electrical engineering",
+      "aliases": [
+        "electric vehicle",
+        "ev charging",
+        "ev technology"
+      ]
+    },
+    {
+      "id": "battery-management-systems",
+      "name": "Battery Management Systems",
+      "category": "Electrical engineering",
+      "aliases": [
+        "battery systems"
+      ]
+    },
+    {
+      "id": "smart-grid",
+      "name": "Smart Grid",
+      "category": "Electrical engineering",
+      "aliases": [
+        "smart grids"
+      ]
+    },
+    {
+      "id": "load-flow-analysis",
+      "name": "Load Flow Analysis",
+      "category": "Electrical engineering",
+      "aliases": [
+        "load flow studies",
+        "power flow analysis"
+      ]
+    },
+    {
+      "id": "fault-analysis",
+      "name": "Fault Analysis",
+      "category": "Electrical engineering",
+      "aliases": [
+        "fault calculations",
+        "short circuit analysis"
+      ]
+    },
+    {
+      "id": "electrical-design",
+      "name": "Electrical Design",
+      "category": "Electrical engineering",
+      "aliases": [
+        "electrical drawings",
+        "electrical layouts",
+        "electrical schematics",
+        "single line diagrams",
+        "sld"
+      ]
+    },
+    {
+      "id": "earthing-and-lightning-protection",
+      "name": "Earthing and Lightning Protection",
+      "category": "Electrical engineering",
+      "aliases": [
+        "earthing",
+        "earthing design",
+        "grounding design",
+        "lightning protection"
+      ]
+    },
+    {
+      "id": "cable-sizing",
+      "name": "Cable Sizing",
+      "category": "Electrical engineering",
+      "aliases": [
+        "cable calculations",
+        "cable selection"
+      ]
+    },
+    {
+      "id": "motor-drives",
+      "name": "Motor Drives",
+      "category": "Electrical engineering",
+      "aliases": [
+        "ac drives",
+        "dc drives",
+        "variable frequency drive",
+        "variable frequency drives",
+        "vfd"
+      ]
+    },
+    {
+      "id": "instrumentation",
+      "name": "Instrumentation",
+      "category": "Electrical engineering",
+      "aliases": [
+        "instrumentation and control",
+        "process instrumentation"
+      ]
+    },
+    {
+      "id": "industrial-automation",
+      "name": "Industrial Automation",
+      "category": "Electrical engineering",
+      "aliases": [
+        "factory automation",
+        "process automation"
+      ]
+    },
+    {
+      "id": "energy-auditing",
+      "name": "Energy Auditing",
+      "category": "Electrical engineering",
+      "aliases": [
+        "energy audit",
+        "energy audits",
+        "energy conservation"
+      ]
+    },
+    {
+      "id": "power-quality",
+      "name": "Power Quality",
+      "category": "Electrical engineering",
+      "aliases": [
+        "harmonics",
+        "power factor correction"
+      ]
+    },
+    {
+      "id": "microgrids",
+      "name": "Microgrids",
+      "category": "Electrical engineering",
+      "aliases": [
+        "microgrid"
+      ]
+    },
+    {
+      "id": "electrical-safety",
+      "name": "Electrical Safety",
+      "category": "Electrical engineering",
+      "aliases": [
+        "electrical safety standards"
+      ]
+    },
+    {
+      "id": "illumination-design",
+      "name": "Illumination Design",
+      "category": "Electrical engineering",
+      "aliases": [
+        "dialux",
+        "lighting design"
+      ]
+    },
+    {
+      "id": "autocad",
+      "name": "AutoCAD",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "auto cad",
+        "autocad 2020",
+        "autocad 2d",
+        "autodesk autocad"
+      ]
+    },
+    {
+      "id": "solidworks",
+      "name": "SolidWorks",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "solid works",
+        "solidworks cad"
+      ]
+    },
+    {
+      "id": "catia",
+      "name": "CATIA",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "catia v5"
+      ]
+    },
+    {
+      "id": "creo",
+      "name": "Creo",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "creo parametric",
+        "pro-e",
+        "pro/e",
+        "pro/engineer",
+        "proe"
+      ]
+    },
+    {
+      "id": "siemens-nx",
+      "name": "Siemens NX",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "nx cad",
+        "unigraphics"
+      ],
+      "exact_case": [
+        "NX"
+      ]
+    },
+    {
+      "id": "autodesk-inventor",
+      "name": "Autodesk Inventor",
+      "category": "Mechanical design and manufacturing",
+      "aliases": []
+    },
+    {
+      "id": "fusion-360",
+      "name": "Fusion 360",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "autodesk fusion 360"
+      ]
+    },
+    {
+      "id": "ansys",
+      "name": "ANSYS",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "ansys fluent",
+        "ansys mechanical",
+        "ansys workbench"
+      ]
+    },
+    {
+      "id": "finite-element-analysis",
+      "name": "Finite Element Analysis",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "fea",
+        "fem",
+        "finite element",
+        "finite element method"
+      ]
+    },
+    {
+      "id": "computational-fluid-dynamics",
+      "name": "Computational Fluid Dynamics",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "cfd"
+      ]
+    },
+    {
+      "id": "3d-modeling",
+      "name": "3D Modeling",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "3d cad",
+        "3d modelling",
+        "cad modeling",
+        "cad modelling",
+        "solid modeling"
+      ]
+    },
+    {
+      "id": "engineering-drawing",
+      "name": "Engineering Drawing",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "2d drafting",
+        "drafting",
+        "engineering drawings",
+        "technical drawings"
+      ]
+    },
+    {
+      "id": "gdandt",
+      "name": "GD&T",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "gdt",
+        "geometric dimensioning and tolerancing"
+      ]
+    },
+    {
+      "id": "design-for-manufacturing",
+      "name": "Design for Manufacturing",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "design for assembly",
+        "dfm",
+        "dfma"
+      ]
+    },
+    {
+      "id": "machine-design",
+      "name": "Machine Design",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "design of machine elements",
+        "machine element design"
+      ]
+    },
+    {
+      "id": "strength-of-materials",
+      "name": "Strength of Materials",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "mechanics of materials",
+        "mechanics of solids"
+      ]
+    },
+    {
+      "id": "thermodynamics",
+      "name": "Thermodynamics",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "applied thermodynamics"
+      ]
+    },
+    {
+      "id": "heat-transfer",
+      "name": "Heat Transfer",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "heat exchanger design",
+        "heat exchangers"
+      ]
+    },
+    {
+      "id": "fluid-mechanics",
+      "name": "Fluid Mechanics",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "fluid dynamics",
+        "fluid flow"
+      ]
+    },
+    {
+      "id": "hvac",
+      "name": "HVAC",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "air conditioning",
+        "hvac design",
+        "refrigeration and air conditioning"
+      ]
+    },
+    {
+      "id": "manufacturing-processes",
+      "name": "Manufacturing Processes",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "machining",
+        "manufacturing technology",
+        "production engineering"
+      ]
+    },
+    {
+      "id": "cnc-machining",
+      "name": "CNC Machining",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "cnc",
+        "cnc machines",
+        "cnc programming"
+      ],
+      "exact_case": [
+        "VMC"
+      ]
+    },
+    {
+      "id": "welding",
+      "name": "Welding",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "arc welding",
+        "mig welding",
+        "tig welding",
+        "welding technology"
+      ]
+    },
+    {
+      "id": "sheet-metal-design",
+      "name": "Sheet Metal Design",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "sheet metal",
+        "sheet metal fabrication"
+      ]
+    },
+    {
+      "id": "3d-printing",
+      "name": "3D Printing",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "additive manufacturing",
+        "fdm printing",
+        "rapid prototyping"
+      ]
+    },
+    {
+      "id": "product-design",
+      "name": "Product Design",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "new product development",
+        "product development"
+      ]
+    },
+    {
+      "id": "mechatronics",
+      "name": "Mechatronics",
+      "category": "Mechanical design and manufacturing",
+      "aliases": []
+    },
+    {
+      "id": "robotics",
+      "name": "Robotics",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "robot programming",
+        "robotic systems"
+      ],
+      "exact_case": [
+        "ROS"
+      ]
+    },
+    {
+      "id": "hydraulics-and-pneumatics",
+      "name": "Hydraulics and Pneumatics",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "fluid power",
+        "hydraulic systems",
+        "hydraulics",
+        "pneumatics"
+      ]
+    },
+    {
+      "id": "automotive-engineering",
+      "name": "Automotive Engineering",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "automotive",
+        "automotive systems",
+        "vehicle dynamics"
+      ]
+    },
+    {
+      "id": "internal-combustion-engines",
+      "name": "Internal Combustion Engines",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "engine design",
+        "i.c. engines",
+        "ic engines"
+      ]
+    },
+    {
+      "id": "six-sigma",
+      "name": "Six Sigma",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "lean six sigma",
+        "six sigma green belt"
+      ]
+    },
+    {
+      "id": "lean-manufacturing",
+      "name": "Lean Manufacturing",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "5s",
+        "kaizen",
+        "value stream mapping"
+      ]
+    },
+    {
+      "id": "quality-control",
+      "name": "Quality Control",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "quality inspection",
+        "spc",
+        "statistical process control"
+      ]
+    },
+    {
+      "id": "fmea",
+      "name": "FMEA",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "failure mode and effects analysis"
+      ]
+    },
+    {
+      "id": "root-cause-analysis",
+      "name": "Root Cause Analysis",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "5 why",
+        "5 whys",
+        "fishbone diagram",
+        "rca"
+      ]
+    },
+    {
+      "id": "materials-science",
+      "name": "Materials Science",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "material science",
+        "materials engineering",
+        "metallurgy"
+      ]
+    },
+    {
+      "id": "vibration-analysis",
+      "name": "Vibration Analysis",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "modal analysis",
+        "vibrations"
+      ]
+    },
+    {
+      "id": "hypermesh",
+      "name": "HyperMesh",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "hypermesh"
+      ]
+    },
+    {
+      "id": "bill-of-materials",
+      "name": "Bill of Materials",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "bom",
+        "bom preparation"
+      ]
+    },
+    {
+      "id": "product-lifecycle-management",
+      "name": "Product Lifecycle Management",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "plm",
+        "teamcenter",
+        "windchill"
+      ]
+    },
+    {
+      "id": "maintenance-engineering",
+      "name": "Maintenance Engineering",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "predictive maintenance",
+        "preventive maintenance"
+      ]
+    },
+    {
+      "id": "production-planning",
+      "name": "Production Planning",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "production planning and control",
+        "production scheduling"
+      ]
+    },
+    {
+      "id": "industrial-engineering",
+      "name": "Industrial Engineering",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "plant layout",
+        "time and motion study",
+        "work study"
+      ]
+    },
+    {
+      "id": "supply-chain-management",
+      "name": "Supply Chain Management",
+      "category": "Mechanical design and manufacturing",
+      "aliases": [
+        "inventory management",
+        "logistics",
+        "supply chain"
+      ]
+    },
+    {
+      "id": "staad-pro",
+      "name": "STAAD.Pro",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "staad",
+        "staad pro",
+        "staadpro"
+      ]
+    },
+    {
+      "id": "etabs",
+      "name": "ETABS",
+      "category": "Civil and structural engineering",
+      "aliases": []
+    },
+    {
+      "id": "sap2000",
+      "name": "SAP2000",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "sap 2000"
+      ]
+    },
+    {
+      "id": "revit",
+      "name": "Revit",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "autodesk revit",
+        "revit architecture",
+        "revit structure"
+      ]
+    },
+    {
+      "id": "civil-3d",
+      "name": "Civil 3D",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "autocad civil 3d",
+        "autodesk civil 3d"
+      ]
+    },
+    {
+      "id": "primavera-p6",
+      "name": "Primavera P6",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "oracle primavera",
+        "primavera"
+      ]
+    },
+    {
+      "id": "microsoft-project",
+      "name": "Microsoft Project",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "ms project"
+      ]
+    },
+    {
+      "id": "sketchup",
+      "name": "SketchUp",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "google sketchup"
+      ]
+    },
+    {
+      "id": "structural-analysis",
+      "name": "Structural Analysis",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "analysis of structures",
+        "structural analysis and design"
+      ]
+    },
+    {
+      "id": "structural-design",
+      "name": "Structural Design",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "design of structures",
+        "structural designing"
+      ]
+    },
+    {
+      "id": "rcc-design",
+      "name": "RCC Design",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "rcc",
+        "rcc structures",
+        "reinforced cement concrete",
+        "reinforced concrete design"
+      ]
+    },
+    {
+      "id": "steel-structures",
+      "name": "Steel Structures",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "steel design",
+        "steel structure design",
+        "structural steel"
+      ]
+    },
+    {
+      "id": "concrete-technology",
+      "name": "Concrete Technology",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "concrete mix",
+        "concrete mix design",
+        "mix design"
+      ]
+    },
+    {
+      "id": "soil-mechanics",
+      "name": "Soil Mechanics",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "geotechnical engineering",
+        "geotechnics",
+        "soil testing"
+      ]
+    },
+    {
+      "id": "foundation-engineering",
+      "name": "Foundation Engineering",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "foundation design",
+        "pile foundations"
+      ]
+    },
+    {
+      "id": "surveying",
+      "name": "Surveying",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "field surveying",
+        "land surveying",
+        "levelling",
+        "surveying and levelling"
+      ]
+    },
+    {
+      "id": "total-station",
+      "name": "Total Station",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "dgps",
+        "total station survey"
+      ]
+    },
+    {
+      "id": "gis",
+      "name": "GIS",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "geographic information system",
+        "geographic information systems"
+      ]
+    },
+    {
+      "id": "arcgis",
+      "name": "ArcGIS",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "arcmap"
+      ]
+    },
+    {
+      "id": "qgis",
+      "name": "QGIS",
+      "category": "Civil and structural engineering",
+      "aliases": []
+    },
+    {
+      "id": "quantity-surveying",
+      "name": "Quantity Surveying",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "bill of quantities",
+        "boq",
+        "quantity estimation",
+        "quantity takeoff"
+      ]
+    },
+    {
+      "id": "cost-estimation",
+      "name": "Cost Estimation",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "cost estimating",
+        "estimation and costing",
+        "rate analysis"
+      ]
+    },
+    {
+      "id": "construction-management",
+      "name": "Construction Management",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "construction planning",
+        "construction project management"
+      ]
+    },
+    {
+      "id": "project-scheduling",
+      "name": "Project Scheduling",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "critical path method",
+        "gantt chart",
+        "gantt charts",
+        "project planning and scheduling"
+      ]
+    },
+    {
+      "id": "site-supervision",
+      "name": "Site Supervision",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "site engineer",
+        "site execution",
+        "site inspection",
+        "site management"
+      ]
+    },
+    {
+      "id": "highway-engineering",
+      "name": "Highway Engineering",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "highway design",
+        "pavement design",
+        "road construction",
+        "road design"
+      ]
+    },
+    {
+      "id": "transportation-engineering",
+      "name": "Transportation Engineering",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "traffic engineering",
+        "transportation planning"
+      ]
+    },
+    {
+      "id": "water-resources-engineering",
+      "name": "Water Resources Engineering",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "hydrology",
+        "irrigation engineering",
+        "water resources"
+      ]
+    },
+    {
+      "id": "environmental-engineering",
+      "name": "Environmental Engineering",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "eia",
+        "environmental impact assessment",
+        "wastewater treatment",
+        "water treatment"
+      ]
+    },
+    {
+      "id": "building-codes",
+      "name": "Building Codes",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "indian standard codes",
+        "irc codes",
+        "is 1893",
+        "is 456",
+        "is 800",
+        "is codes"
+      ]
+    },
+    {
+      "id": "bim",
+      "name": "BIM",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "building information modeling",
+        "building information modelling"
+      ]
+    },
+    {
+      "id": "construction-safety",
+      "name": "Construction Safety",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "hse",
+        "ohs",
+        "safety management",
+        "site safety"
+      ]
+    },
+    {
+      "id": "material-testing",
+      "name": "Material Testing",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "cube test",
+        "quality testing of materials",
+        "testing of materials"
+      ]
+    },
+    {
+      "id": "earthquake-engineering",
+      "name": "Earthquake Engineering",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "earthquake resistant design",
+        "seismic analysis",
+        "seismic design"
+      ]
+    },
+    {
+      "id": "contract-management",
+      "name": "Contract Management",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "contracts management",
+        "tender documents",
+        "tendering"
+      ]
+    },
+    {
+      "id": "building-design",
+      "name": "Building Design",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "architectural drawings",
+        "building construction",
+        "building planning"
+      ]
+    },
+    {
+      "id": "hydraulic-structures",
+      "name": "Hydraulic Structures",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "canal design",
+        "dams",
+        "hydraulic engineering"
+      ]
+    },
+    {
+      "id": "bridge-engineering",
+      "name": "Bridge Engineering",
+      "category": "Civil and structural engineering",
+      "aliases": [
+        "bridge construction",
+        "bridge design"
+      ]
+    },
+    {
+      "id": "business-analysis",
+      "name": "Business Analysis",
+      "category": "Business and analysis",
+      "aliases": [
+        "business analyst",
+        "business analytics"
+      ]
+    },
+    {
+      "id": "requirements-gathering",
+      "name": "Requirements Gathering",
+      "category": "Business and analysis",
+      "aliases": [
+        "requirement analysis",
+        "requirement gathering",
+        "requirements analysis",
+        "requirements elicitation"
+      ]
+    },
+    {
+      "id": "business-requirements-document",
+      "name": "Business Requirements Document",
+      "category": "Business and analysis",
+      "aliases": [
+        "functional requirements document"
+      ],
+      "exact_case": [
+        "BRD",
+        "FRD"
+      ]
+    },
+    {
+      "id": "user-stories",
+      "name": "User Stories",
+      "category": "Business and analysis",
+      "aliases": [
+        "acceptance criteria",
+        "user story"
+      ]
+    },
+    {
+      "id": "process-mapping",
+      "name": "Process Mapping",
+      "category": "Business and analysis",
+      "aliases": [
+        "bpmn",
+        "process improvement",
+        "process modeling",
+        "process modelling",
+        "workflow design"
+      ]
+    },
+    {
+      "id": "stakeholder-management",
+      "name": "Stakeholder Management",
+      "category": "Business and analysis",
+      "aliases": [
+        "stakeholder communication",
+        "stakeholder engagement"
+      ]
+    },
+    {
+      "id": "project-management",
+      "name": "Project Management",
+      "category": "Business and analysis",
+      "aliases": [
+        "pmp",
+        "project coordination",
+        "project planning"
+      ]
+    },
+    {
+      "id": "product-management",
+      "name": "Product Management",
+      "category": "Business and analysis",
+      "aliases": [
+        "product owner",
+        "product roadmap"
+      ]
+    },
+    {
+      "id": "market-research",
+      "name": "Market Research",
+      "category": "Business and analysis",
+      "aliases": [
+        "competitive analysis",
+        "competitor analysis",
+        "market analysis"
+      ]
+    },
+    {
+      "id": "swot-analysis",
+      "name": "SWOT Analysis",
+      "category": "Business and analysis",
+      "aliases": [
+        "swot"
+      ]
+    },
+    {
+      "id": "financial-analysis",
+      "name": "Financial Analysis",
+      "category": "Business and analysis",
+      "aliases": [
+        "financial modeling",
+        "financial modelling",
+        "financial statements",
+        "ratio analysis"
+      ]
+    },
+    {
+      "id": "accounting",
+      "name": "Accounting",
+      "category": "Business and analysis",
+      "aliases": [
+        "bookkeeping",
+        "financial accounting",
+        "tally erp",
+        "tally prime"
+      ],
+      "exact_case": [
+        "Tally"
+      ]
+    },
+    {
+      "id": "sap",
+      "name": "SAP",
+      "category": "Business and analysis",
+      "aliases": [
+        "sap erp",
+        "sap fico",
+        "sap mm",
+        "sap modules"
+      ],
+      "exact_case": [
+        "SAP"
+      ]
+    },
+    {
+      "id": "erp",
+      "name": "ERP",
+      "category": "Business and analysis",
+      "aliases": [
+        "enterprise resource planning",
+        "erp systems"
+      ]
+    },
+    {
+      "id": "salesforce",
+      "name": "Salesforce",
+      "category": "Business and analysis",
+      "aliases": [
+        "salesforce crm"
+      ]
+    },
+    {
+      "id": "crm",
+      "name": "CRM",
+      "category": "Business and analysis",
+      "aliases": [
+        "customer relationship management"
+      ],
+      "exact_case": [
+        "CRM"
+      ]
+    },
+    {
+      "id": "wireframing",
+      "name": "Wireframing",
+      "category": "Business and analysis",
+      "aliases": [
+        "balsamiq",
+        "mockups",
+        "wireframes"
+      ]
+    },
+    {
+      "id": "figma",
+      "name": "Figma",
+      "category": "Business and analysis",
+      "aliases": [
+        "figma design"
+      ]
+    },
+    {
+      "id": "use-case-modeling",
+      "name": "Use Case Modeling",
+      "category": "Business and analysis",
+      "aliases": [
+        "use case diagrams",
+        "use cases"
+      ]
+    },
+    {
+      "id": "gap-analysis",
+      "name": "Gap Analysis",
+      "category": "Business and analysis",
+      "aliases": [
+        "fit-gap analysis"
+      ]
+    },
+    {
+      "id": "risk-management",
+      "name": "Risk Management",
+      "category": "Business and analysis",
+      "aliases": [
+        "risk analysis",
+        "risk assessment"
+      ]
+    },
+    {
+      "id": "budgeting",
+      "name": "Budgeting",
+      "category": "Business and analysis",
+      "aliases": [
+        "budget management",
+        "budget planning"
+      ]
+    },
+    {
+      "id": "microsoft-excel",
+      "name": "Microsoft Excel",
+      "category": "Business and analysis",
+      "aliases": [
+        "advanced excel",
+        "excel formulas",
+        "ms excel",
+        "pivot tables",
+        "vlookup"
+      ],
+      "context_required": [
+        "Excel"
+      ]
+    },
+    {
+      "id": "microsoft-powerpoint",
+      "name": "Microsoft PowerPoint",
+      "category": "Business and analysis",
+      "aliases": [
+        "ms powerpoint",
+        "powerpoint",
+        "ppt"
+      ]
+    },
+    {
+      "id": "microsoft-word",
+      "name": "Microsoft Word",
+      "category": "Business and analysis",
+      "aliases": [
+        "ms word",
+        "word processing"
+      ]
+    },
+    {
+      "id": "google-sheets",
+      "name": "Google Sheets",
+      "category": "Business and analysis",
+      "aliases": [
+        "google spreadsheets"
+      ]
+    },
+    {
+      "id": "documentation",
+      "name": "Documentation",
+      "category": "Business and analysis",
+      "aliases": [
+        "documentation skills",
+        "technical documentation",
+        "technical writing"
+      ]
+    },
+    {
+      "id": "digital-marketing",
+      "name": "Digital Marketing",
+      "category": "Business and analysis",
+      "aliases": [
+        "content marketing",
+        "seo",
+        "social media marketing"
+      ]
+    },
+    {
+      "id": "communication-skills",
+      "name": "Communication Skills",
+      "category": "Professional skills",
+      "aliases": [
+        "communication abilities",
+        "effective communication",
+        "oral communication",
+        "verbal communication",
+        "written communication"
+      ]
+    },
+    {
+      "id": "public-speaking",
+      "name": "Public Speaking",
+      "category": "Professional skills",
+      "aliases": [
+        "oratory",
+        "presentation skills"
+      ]
+    },
+    {
+      "id": "teamwork",
+      "name": "Teamwork",
+      "category": "Professional skills",
+      "aliases": [
+        "team collaboration",
+        "team player",
+        "team work",
+        "working in teams"
+      ]
+    },
+    {
+      "id": "leadership",
+      "name": "Leadership",
+      "category": "Professional skills",
+      "aliases": [
+        "leadership skills",
+        "team lead",
+        "team leadership"
+      ]
+    },
+    {
+      "id": "problem-solving",
+      "name": "Problem Solving",
+      "category": "Professional skills",
+      "aliases": [
+        "problem solving skills",
+        "problem-solving",
+        "solving problems"
+      ]
+    },
+    {
+      "id": "analytical-skills",
+      "name": "Analytical Skills",
+      "category": "Professional skills",
+      "aliases": [
+        "analytical abilities",
+        "analytical mindset",
+        "analytical thinking"
+      ]
+    },
+    {
+      "id": "critical-thinking",
+      "name": "Critical Thinking",
+      "category": "Professional skills",
+      "aliases": [
+        "logical reasoning",
+        "logical thinking"
+      ]
+    },
+    {
+      "id": "time-management",
+      "name": "Time Management",
+      "category": "Professional skills",
+      "aliases": [
+        "managing time",
+        "meeting deadlines",
+        "prioritisation",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "adaptability",
+      "name": "Adaptability",
+      "category": "Professional skills",
+      "aliases": [
+        "adaptable",
+        "quick adaptability"
+      ]
+    },
+    {
+      "id": "creativity",
+      "name": "Creativity",
+      "category": "Professional skills",
+      "aliases": [
+        "creative thinking"
+      ]
+    },
+    {
+      "id": "decision-making",
+      "name": "Decision Making",
+      "category": "Professional skills",
+      "aliases": [
+        "decision-making",
+        "making decisions"
+      ]
+    },
+    {
+      "id": "negotiation",
+      "name": "Negotiation",
+      "category": "Professional skills",
+      "aliases": [
+        "negotiation skills"
+      ]
+    },
+    {
+      "id": "conflict-resolution",
+      "name": "Conflict Resolution",
+      "category": "Professional skills",
+      "aliases": [
+        "conflict management",
+        "resolving conflicts"
+      ]
+    },
+    {
+      "id": "emotional-intelligence",
+      "name": "Emotional Intelligence",
+      "category": "Professional skills",
+      "aliases": [
+        "emotional awareness"
+      ]
+    },
+    {
+      "id": "customer-service",
+      "name": "Customer Service",
+      "category": "Professional skills",
+      "aliases": [
+        "client handling",
+        "client interaction",
+        "customer handling",
+        "customer relations",
+        "customer support"
+      ]
+    },
+    {
+      "id": "interpersonal-skills",
+      "name": "Interpersonal Skills",
+      "category": "Professional skills",
+      "aliases": [
+        "people skills",
+        "relationship building"
+      ]
+    },
+    {
+      "id": "attention-to-detail",
+      "name": "Attention to Detail",
+      "category": "Professional skills",
+      "aliases": [
+        "attention to details",
+        "detail oriented",
+        "detail-oriented"
+      ]
+    },
+    {
+      "id": "event-management",
+      "name": "Event Management",
+      "category": "Professional skills",
+      "aliases": [
+        "event coordination",
+        "event organisation",
+        "event organization",
+        "organised events",
+        "organized events",
+        "organizing events"
+      ]
+    },
+    {
+      "id": "volunteering",
+      "name": "Volunteering",
+      "category": "Professional skills",
+      "aliases": [
+        "social service",
+        "volunteer",
+        "volunteer work"
+      ],
+      "exact_case": [
+        "NCC",
+        "NSS"
+      ]
+    },
+    {
+      "id": "mentoring",
+      "name": "Mentoring",
+      "category": "Professional skills",
+      "aliases": [
+        "mentorship",
+        "peer mentoring",
+        "peer tutoring",
+        "teaching assistant"
+      ]
+    },
+    {
+      "id": "report-writing",
+      "name": "Report Writing",
+      "category": "Professional skills",
+      "aliases": [
+        "reports preparation",
+        "technical report writing",
+        "writing reports"
+      ]
+    },
+    {
+      "id": "content-writing",
+      "name": "Content Writing",
+      "category": "Professional skills",
+      "aliases": [
+        "blog writing",
+        "copywriting",
+        "creative writing"
+      ]
+    },
+    {
+      "id": "active-listening",
+      "name": "Active Listening",
+      "category": "Professional skills",
+      "aliases": [
+        "listening skills"
+      ]
+    },
+    {
+      "id": "self-motivation",
+      "name": "Self-Motivation",
+      "category": "Professional skills",
+      "aliases": [
+        "proactive",
+        "self motivated",
+        "self-motivated"
+      ]
+    },
+    {
+      "id": "quick-learner",
+      "name": "Quick Learner",
+      "category": "Professional skills",
+      "aliases": [
+        "continuous learning",
+        "eager to learn",
+        "fast learner",
+        "learning agility"
+      ]
+    },
+    {
+      "id": "aptitude",
+      "name": "Aptitude",
+      "category": "Professional skills",
+      "aliases": [
+        "numerical aptitude",
+        "quantitative aptitude",
+        "reasoning ability"
+      ]
+    },
+    {
+      "id": "research-skills",
+      "name": "Research Skills",
+      "category": "Professional skills",
+      "aliases": [
+        "literature review",
+        "research methodology"
+      ]
+    },
+    {
+      "id": "entrepreneurship",
+      "name": "Entrepreneurship",
+      "category": "Professional skills",
+      "aliases": [
+        "entrepreneurial",
+        "startup experience",
+        "startups"
+      ]
+    },
+    {
+      "id": "multitasking",
+      "name": "Multitasking",
+      "category": "Professional skills",
+      "aliases": [
+        "handling multiple tasks",
+        "multi-tasking"
+      ]
+    },
+    {
+      "id": "stress-management",
+      "name": "Stress Management",
+      "category": "Professional skills",
+      "aliases": [
+        "handling pressure",
+        "work under pressure",
+        "working under pressure"
+      ]
+    },
+    {
+      "id": "cross-functional-collaboration",
+      "name": "Cross-functional Collaboration",
+      "category": "Professional skills",
+      "aliases": [
+        "cross functional collaboration",
+        "cross functional teams",
+        "cross-functional teams"
+      ]
+    },
+    {
+      "id": "presentation-design",
+      "name": "Presentation Design",
+      "category": "Professional skills",
+      "aliases": [
+        "presentation preparation",
+        "slide design"
+      ]
+    }
+  ]
+}

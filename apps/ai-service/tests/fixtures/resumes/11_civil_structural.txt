@@ -1,0 +1,36 @@
+ARJUN REDDY
+arjun.reddy@example.com | +91 99000 12121 | linkedin.com/in/arjun-reddy-civil
+
+OBJECTIVE
+Civil engineering graduate seeking a structural design position.
+
+EDUCATION
+B.Tech Civil Engineering, Example University, 2021 - 2025
+CGPA: 8.4/10
+
+TECHNICAL SKILLS
+Design software: STAAD.Pro, ETABS, AutoCAD, Revit
+Structural: Structural Analysis, Structural Design, RCC Design, Steel structures, Earthquake engineering
+Codes: IS 456, IS 800, IS 1893
+Materials and geotechnical: Concrete technology, Soil mechanics, Foundation engineering
+Planning: Primavera P6, MS Excel, Quantity surveying
+
+PROJECTS
+Design of a G+4 Residential Building
+- Analysed and designed the frame in STAAD.Pro and ETABS following IS 456 and IS 1893.
+- Detailed the RCC beams, columns and footings and prepared drawings in AutoCAD.
+
+Comparative Study of Steel and RCC Structures
+- Compared cost and weight using IS 800 provisions and Excel sheets.
+
+Bill of Quantities for a Community Hall
+- Prepared the BOQ and rate analysis for a 1,500 sq ft hall.
+
+INTERNSHIP
+Site Intern, Granite Builders (Jun 2024 - Jul 2024)
+- Observed concrete mix design tests and cube testing at the site laboratory.
+- Learned surveying with a total station and prepared the daily progress report.
+- Assisted with scheduling in Primavera P6.
+
+ACHIEVEMENTS
+- Paper presented on earthquake resistant design at an inter-college symposium.

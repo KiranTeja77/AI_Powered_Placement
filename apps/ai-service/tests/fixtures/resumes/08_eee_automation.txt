@@ -1,0 +1,36 @@
+Lakshmi Prasad
+lakshmi.prasad@example.com | +91 98123 45670
+
+SUMMARY
+EEE student with practical exposure to industrial automation and drives.
+
+EDUCATION
+B.Tech Electrical and Electronics Engineering, Example University, 2021 - 2025
+Percentage: 76%
+
+TECHNICAL SKILLS
+PLC programming (ladder logic), Siemens TIA Portal, SCADA, HMI design
+Variable frequency drives, Motor drives, Instrumentation, Industrial Automation
+Power Electronics, Renewable Energy, Energy Auditing
+Programming: Python, MATLAB
+
+INDUSTRIAL TRAINING
+Automation Trainee, Precision Packaging Plant (4 weeks)
+- Learned PLC programming for conveyor control using ladder logic.
+- Monitored the line through a SCADA screen and tuned a PID controller for a temperature loop.
+- Commissioned a variable frequency drive for a pump motor.
+
+PROJECTS
+Automatic Bottle Filling System
+- Programmed a Siemens PLC in TIA Portal and designed an HMI screen for operators.
+
+Energy Audit of the College Library
+- Carried out an energy audit and recommended LED and sensor based lighting, saving 22% energy.
+- Prepared the report and presented it to the principal.
+
+Solar Charge Controller
+- Simulated an MPPT converter in MATLAB.
+
+ACHIEVEMENTS
+- Runner up, state level project exhibition
+- Volunteer, NSS camp

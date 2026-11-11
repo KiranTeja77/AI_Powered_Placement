@@ -1,0 +1,36 @@
+VIKRAM SINGH
+vikram.singh@example.com | 9811122233 | linkedin.com/in/vikram-singh-mech
+
+OBJECTIVE
+Mechanical engineer looking for a product design role using CAD and analysis tools.
+
+EDUCATION
+B.Tech Mechanical Engineering, Example Institute of Technology, 2021 - 2025
+CGPA: 7.9/10
+
+SKILLS
+CAD: SolidWorks, CATIA V5, AutoCAD, Creo Parametric
+Analysis: ANSYS Workbench, Finite Element Analysis, Computational Fluid Dynamics
+Design: 3D modeling, Engineering drawing, GD&T, Machine Design, Sheet metal design
+Manufacturing: CNC machining, Welding, 3D printing, Manufacturing processes
+Subjects: Thermodynamics, Heat Transfer, Fluid Mechanics, Strength of Materials
+
+PROJECTS
+Gearbox Design for an Electric Vehicle
+- Modelled the gearbox assembly in SolidWorks and prepared drawings with GD&T.
+- Checked gear tooth stress with finite element analysis in ANSYS Workbench.
+
+Heat Sink Optimisation
+- Studied heat transfer through different fin designs using CFD and reduced temperature by 9 degrees.
+
+Low Cost Robotic Arm
+- Designed the links in CATIA, printed the parts on a 3D printer and assembled them.
+- Prepared a bill of materials for the build.
+
+INTERNSHIP
+Design Intern, Forgeline Engineering (May 2024 - Jul 2024)
+- Created 2D drawings in AutoCAD and 3D models in SolidWorks for sheet metal brackets.
+- Visited the CNC machining shop to understand design for manufacturing.
+
+ACHIEVEMENTS
+Member of the college Formula Student team, responsible for the chassis design.

@@ -1,0 +1,37 @@
+PRIYA NAIR
+priya.nair@example.com | 9845098450 | linkedin.com/in/priya-nair-qa
+
+CAREER OBJECTIVE
+To start my career as a software tester and grow into test automation.
+
+EDUCATION
+B.Tech Information Technology, Example Institute, 2025 | CGPA: 8.3/10
+
+SKILLS
+Testing: Manual Testing, Test Cases, Test Plan, Regression Testing, API Testing, Bug Tracking
+Automation: Selenium WebDriver, TestNG, Java
+Tools: Jira, Postman, JMeter, Git
+Database: SQL
+Process: Agile, SDLC
+
+PROJECTS
+Online Shopping Site Testing
+- Wrote 150 test cases covering login, cart and payment flows.
+- Logged defects in Jira with clear steps and screenshots.
+- Ran regression testing before each release.
+
+Selenium Test Suite for a Booking App
+- Automated 40 scenarios using Selenium WebDriver, Java and TestNG.
+- Reduced manual regression effort by 60%.
+
+REST API Testing
+- Tested REST endpoints in Postman and validated responses against the database using SQL.
+- Measured response times under load with JMeter.
+
+INTERNSHIP
+QA Intern, Cobalt Software (Feb 2025 - Apr 2025)
+- Took part in daily stand-ups and sprint planning in an Agile team.
+- Executed smoke testing on new builds and reported bugs.
+
+STRENGTHS
+Attention to detail, communication skills and teamwork.

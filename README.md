@@ -68,3 +68,14 @@ cd apps/ai-service && uv run ruff check . && uv run mypy app && uv run pytest
 - `pnpm e2e` runs the Playwright tests. They need the API and Postgres running
   (`docker compose up -d`) and install their browser once with `pnpm exec playwright install chromium`.
   `e2e/design-audit.spec.ts` also writes screenshots to `apps/web/e2e/screenshots` (not committed).
+
+## AI service
+
+The resume analyzer lives in `apps/ai-service` and is only reachable from the API container. How it
+works, how it is tested and what it cannot do are in [docs/resume-analyzer.md](docs/resume-analyzer.md).
+
+```sh
+cd apps/ai-service
+uv run pytest                          # 219 tests, including the 15-resume accuracy evaluation
+uv run ruff check . && uv run mypy app
+```
