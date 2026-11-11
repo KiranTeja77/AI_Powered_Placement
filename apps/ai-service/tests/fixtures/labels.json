@@ -1,0 +1,426 @@
+{
+  "_rule": "A skill is expected only if the resume names it (its name or a natural spelling of it). Skills merely implied by an activity are not labelled. 'applied' means named inside a project, internship or work section; 'listed' means named only elsewhere. Labels were written by reading each resume, not by running the engine.",
+  "resumes": {
+    "01_cse_fullstack": {
+      "branch": "CSE/IT",
+      "applied": [
+        "Java",
+        "React",
+        "Node.js",
+        "Express",
+        "REST API",
+        "MySQL",
+        "MongoDB",
+        "Git",
+        "Postman",
+        "Docker",
+        "AWS",
+        "JUnit",
+        "Object-Oriented Programming",
+        "Agile",
+        "Unit Testing"
+      ],
+      "listed": [
+        "JavaScript",
+        "Python",
+        "SQL",
+        "HTML",
+        "CSS",
+        "GitHub",
+        "Data Structures",
+        "Algorithms",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks",
+        "Competitive Programming",
+        "Leadership"
+      ]
+    },
+    "02_cse_data_ml": {
+      "branch": "CSE/IT",
+      "applied": [
+        "NumPy",
+        "Pandas",
+        "Scikit-learn",
+        "Feature Engineering",
+        "Model Evaluation",
+        "Neural Networks",
+        "TensorFlow",
+        "Keras",
+        "Natural Language Processing",
+        "Tableau",
+        "SQL",
+        "Matplotlib",
+        "Regression Analysis"
+      ],
+      "listed": [
+        "Python",
+        "R",
+        "Seaborn",
+        "Machine Learning",
+        "Deep Learning",
+        "Statistics",
+        "Git",
+        "Microsoft Excel",
+        "PyTorch"
+      ]
+    },
+    "03_it_devops": {
+      "branch": "CSE/IT",
+      "applied": [
+        "CI/CD",
+        "Jenkins",
+        "GitHub Actions",
+        "Docker",
+        "Kubernetes",
+        "Nginx",
+        "Terraform",
+        "AWS",
+        "Ansible",
+        "Bash",
+        "Prometheus",
+        "Grafana",
+        "Infrastructure as Code",
+        "Linux"
+      ],
+      "listed": [
+        "Python",
+        "Git",
+        "Computer Networks"
+      ]
+    },
+    "04_it_qa": {
+      "branch": "CSE/IT",
+      "applied": [
+        "Test Cases",
+        "Regression Testing",
+        "Selenium",
+        "Java",
+        "TestNG",
+        "Jira",
+        "API Testing",
+        "Postman",
+        "SQL",
+        "JMeter",
+        "Agile",
+        "Scrum"
+      ],
+      "listed": [
+        "Manual Testing",
+        "Test Plan",
+        "Bug Tracking",
+        "Git",
+        "Software Development Life Cycle",
+        "Attention to Detail",
+        "Communication Skills",
+        "Teamwork",
+        "Test Automation"
+      ]
+    },
+    "05_ece_embedded": {
+      "branch": "ECE",
+      "applied": [
+        "Embedded C",
+        "ESP32",
+        "MQTT",
+        "I2C",
+        "STM32",
+        "Electronic Measurement",
+        "Altium Designer",
+        "SPI",
+        "UART",
+        "FreeRTOS",
+        "Proteus",
+        "Firmware Development",
+        "Embedded Systems",
+        "PCB Design"
+      ],
+      "listed": [
+        "C",
+        "C++",
+        "Python",
+        "Assembly Language",
+        "8051 Microcontroller",
+        "AVR",
+        "Arduino",
+        "CAN Bus",
+        "Keil",
+        "MATLAB",
+        "Digital Electronics",
+        "Analog Electronics",
+        "RTOS",
+        "Internet of Things",
+        "Signals and Systems"
+      ],
+      "possible": [
+        "Algorithms"
+      ]
+    },
+    "06_ece_vlsi": {
+      "branch": "ECE",
+      "applied": [
+        "Verilog",
+        "ModelSim",
+        "FPGA",
+        "Xilinx Vivado",
+        "CMOS Design",
+        "Operational Amplifiers",
+        "Cadence Virtuoso",
+        "UART",
+        "SystemVerilog",
+        "Static Timing Analysis",
+        "RTL Design",
+        "Logic Synthesis",
+        "Synopsys Design Compiler",
+        "TCL Scripting",
+        "VLSI Design"
+      ],
+      "listed": [
+        "VHDL",
+        "Python",
+        "Linux",
+        "Digital Electronics",
+        "Analog Electronics",
+        "Low Power Design",
+        "Computer Architecture"
+      ]
+    },
+    "07_eee_power": {
+      "branch": "EEE",
+      "applied": [
+        "ETAP",
+        "Load Flow Analysis",
+        "Fault Analysis",
+        "Earthing and Lightning Protection",
+        "AutoCAD Electrical",
+        "Solar PV Design",
+        "Microsoft Excel",
+        "Simulink",
+        "Electrical Design",
+        "Switchgear and Protection"
+      ],
+      "listed": [
+        "MATLAB",
+        "Power Systems",
+        "Electrical Machines",
+        "Control Systems",
+        "Power Electronics",
+        "Cable Sizing"
+      ]
+    },
+    "08_eee_automation": {
+      "branch": "EEE",
+      "applied": [
+        "PLC",
+        "Siemens TIA Portal",
+        "SCADA",
+        "HMI",
+        "Control Systems",
+        "Motor Drives",
+        "Energy Auditing",
+        "MATLAB"
+      ],
+      "listed": [
+        "Instrumentation",
+        "Industrial Automation",
+        "Power Electronics",
+        "Renewable Energy",
+        "Python",
+        "Volunteering"
+      ]
+    },
+    "09_mech_cad": {
+      "branch": "Mechanical",
+      "applied": [
+        "SolidWorks",
+        "GD&T",
+        "Finite Element Analysis",
+        "ANSYS",
+        "Computational Fluid Dynamics",
+        "Heat Transfer",
+        "CATIA",
+        "Bill of Materials",
+        "AutoCAD",
+        "Sheet Metal Design",
+        "CNC Machining",
+        "Design for Manufacturing",
+        "Electric Vehicles"
+      ],
+      "listed": [
+        "Creo",
+        "3D Modeling",
+        "Engineering Drawing",
+        "Machine Design",
+        "Welding",
+        "3D Printing",
+        "Manufacturing Processes",
+        "Thermodynamics",
+        "Fluid Mechanics",
+        "Strength of Materials",
+        "Product Design"
+      ]
+    },
+    "10_mech_production": {
+      "branch": "Mechanical",
+      "applied": [
+        "Six Sigma",
+        "FMEA",
+        "Root Cause Analysis",
+        "Lean Manufacturing",
+        "Microsoft Excel",
+        "SAP",
+        "Maintenance Engineering",
+        "CNC Machining",
+        "AutoCAD",
+        "Industrial Engineering"
+      ],
+      "listed": [
+        "Quality Control",
+        "Production Planning",
+        "Supply Chain Management",
+        "Microsoft Project",
+        "Welding",
+        "Hydraulics and Pneumatics"
+      ]
+    },
+    "11_civil_structural": {
+      "branch": "Civil",
+      "applied": [
+        "STAAD.Pro",
+        "ETABS",
+        "Building Codes",
+        "RCC Design",
+        "AutoCAD",
+        "Microsoft Excel",
+        "Quantity Surveying",
+        "Cost Estimation",
+        "Concrete Technology",
+        "Surveying",
+        "Total Station",
+        "Primavera P6"
+      ],
+      "listed": [
+        "Revit",
+        "Structural Analysis",
+        "Structural Design",
+        "Steel Structures",
+        "Earthquake Engineering",
+        "Soil Mechanics",
+        "Foundation Engineering"
+      ]
+    },
+    "12_civil_site": {
+      "branch": "Civil",
+      "applied": [
+        "Highway Engineering",
+        "Civil 3D",
+        "ArcGIS",
+        "Project Scheduling",
+        "Microsoft Project",
+        "Cost Estimation",
+        "Microsoft Excel",
+        "Site Supervision",
+        "Material Testing",
+        "Construction Safety"
+      ],
+      "listed": [
+        "Construction Management",
+        "Quantity Surveying",
+        "Surveying",
+        "AutoCAD",
+        "Microsoft Word",
+        "Communication Skills",
+        "Teamwork",
+        "Time Management",
+        "Volunteering",
+        "Project Management"
+      ]
+    },
+    "13_business_analyst": {
+      "branch": "Non-technical",
+      "applied": [
+        "Business Analysis",
+        "User Stories",
+        "Power BI",
+        "SQL",
+        "Microsoft PowerPoint",
+        "Business Requirements Document",
+        "Wireframing",
+        "Figma",
+        "Jira",
+        "Scrum",
+        "Market Research",
+        "SWOT Analysis"
+      ],
+      "listed": [
+        "Requirements Gathering",
+        "Process Mapping",
+        "Stakeholder Management",
+        "Microsoft Excel",
+        "Communication Skills",
+        "Leadership",
+        "Teamwork",
+        "Problem Solving",
+        "Public Speaking"
+      ]
+    },
+    "14_general_trainee": {
+      "branch": "Non-technical",
+      "applied": [
+        "Microsoft Excel"
+      ],
+      "listed": [
+        "Communication Skills",
+        "Teamwork",
+        "Leadership",
+        "Time Management",
+        "Problem Solving",
+        "Adaptability",
+        "Customer Service",
+        "Public Speaking",
+        "Report Writing",
+        "Critical Thinking",
+        "Microsoft Word",
+        "Microsoft PowerPoint",
+        "Event Management",
+        "Volunteering",
+        "Mentoring",
+        "Quick Learner",
+        "Attention to Detail",
+        "Stress Management"
+      ]
+    },
+    "15_edge_cases": {
+      "branch": "Edge cases",
+      "applied": [
+        "Python",
+        "C++",
+        "Node.js",
+        "React",
+        "Firmware Development"
+      ],
+      "listed": [
+        "C",
+        "Go",
+        "R",
+        "TensorFlow",
+        "Teamwork"
+      ],
+      "possible": [
+        "JavaScript",
+        "Kubernetes",
+        "Elasticsearch",
+        "Algorithms",
+        "Microservices"
+      ],
+      "absent": [
+        "Swift",
+        "Rust",
+        "Microsoft Excel",
+        "Spring Framework",
+        "Research Skills",
+        "Express"
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+Siddharth Rao
+siddharth.rao@example.com | +91 99887 76655 | github.com/sid-rao
+
+EDUCATION
+B.E. Electronics and Communication Engineering, Example Institute of Technology, 2021 - 2025
+CGPA: 8.7/10
+
+SKILLS
+Languages: Embedded C, C, C++, Python, Assembly
+Microcontrollers: 8051, AVR (ATmega328), STM32, ESP32, Arduino
+Protocols: UART, I2C, SPI, CAN
+Tools: Keil uVision, Proteus, Altium Designer, MATLAB
+Concepts: Digital Electronics, Analog Electronics, RTOS, Internet of Things
+
+PROJECTS
+Smart Irrigation System
+- Interfaced soil moisture sensors with an ESP32 and sent readings over MQTT to a dashboard.
+- Programmed the firmware in Embedded C and used I2C to read a temperature sensor.
+
+Motor Speed Controller
+- Built a closed loop controller on an STM32 using PWM and a PID algorithm.
+- Debugged timing issues with a logic analyser and an oscilloscope.
+
+Data Logger PCB
+- Designed a two-layer PCB in Altium Designer and tested communication over SPI and UART.
+
+INTERNSHIP
+Embedded Systems Intern, Microlink Devices (Dec 2024 - Feb 2025)
+- Wrote drivers for an SPI display and tested firmware with FreeRTOS tasks.
+- Simulated circuits in Proteus before building hardware.
+
+COURSES
+Embedded Systems Design, Signals and Systems

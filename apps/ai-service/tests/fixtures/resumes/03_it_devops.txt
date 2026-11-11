@@ -1,0 +1,36 @@
+Mohammed Faizan
+faizan.m@example.com | +91 90000 11122 | github.com/faizan-m
+
+PROFILE
+Information Technology student with hands-on practice in Linux, containers and cloud deployments.
+
+EDUCATION
+B.Tech Information Technology, Example University, 2021-2025, CGPA 8.0/10
+
+TECHNICAL SKILLS
+Operating Systems: Linux (Ubuntu), Windows
+Scripting: Bash, Python
+DevOps: Docker, Kubernetes, Jenkins, Terraform, Ansible, GitHub Actions
+Cloud: AWS (EC2, S3, IAM)
+Monitoring: Prometheus, Grafana
+Other: Git, Nginx, Computer Networks
+
+PROJECTS
+Automated Deployment Pipeline
+- Set up a CI/CD pipeline with Jenkins and GitHub Actions that builds a Docker image on every commit.
+- Deployed the service to a Kubernetes cluster and exposed it through Nginx.
+
+Infrastructure as Code Lab
+- Provisioned AWS resources with Terraform and configured servers with Ansible playbooks.
+- Wrote Bash scripts to back up logs and rotate them daily.
+
+Monitoring Stack
+- Collected metrics with Prometheus and built Grafana dashboards for CPU and memory usage.
+
+INTERNSHIP
+Cloud Support Intern, Skyline Hosting (Jan 2025 - Mar 2025)
+- Troubleshot Linux server issues and resolved 40 tickets.
+- Documented fixes in the team wiki.
+
+CERTIFICATIONS
+AWS Cloud Practitioner

@@ -1,0 +1,35 @@
+Karthik Subramanian
+karthik.s@example.com | 9876123400 | linkedin.com/in/karthik-s
+
+OBJECTIVE
+Electrical engineering graduate seeking a design role in power distribution.
+
+EDUCATION
+B.E. Electrical and Electronics Engineering, Example College of Engineering, 2025
+CGPA: 8.1/10
+
+SKILLS
+Software: AutoCAD Electrical, ETAP, MATLAB, Simulink, MS Excel
+Core areas: Power Systems, Electrical Machines, Switchgear and Protection, Control Systems, Power Electronics
+Standards and design: Earthing design, Cable sizing, Single line diagrams
+
+PROJECTS
+Load Flow Study of a 33 kV Feeder
+- Modelled the network in ETAP and ran load flow analysis and short circuit analysis.
+- Proposed capacitor placement that reduced losses by 12%.
+
+Substation Earthing Design
+- Calculated earth grid dimensions and prepared earthing layouts in AutoCAD Electrical.
+
+Solar PV System for a College Hostel
+- Sized a 25 kW rooftop solar PV system and estimated payback using Excel.
+- Simulated the inverter control in Simulink.
+
+INTERNSHIP
+Electrical Design Intern, Voltedge Consultants (Jun 2024 - Jul 2024)
+- Prepared single line diagrams and cable schedules for a commercial building.
+- Selected transformers and switchgear ratings under supervision.
+
+ACTIVITIES
+- Coordinator, technical fest power quiz
+- Member, IEEE student branch

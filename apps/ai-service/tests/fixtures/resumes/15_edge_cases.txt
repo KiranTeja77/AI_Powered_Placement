@@ -1,0 +1,23 @@
+Rohan Das
+rohan.das@example.com | 9000011111
+
+SUMMARY
+Student at BMS College who likes to react to feedback quickly and Go to market with ideas. Excel in teamwork-heavy settings. Swift delivery of tasks is my habit. Spring 2023 was my best semester and my R&D club work earned a Grade C in nothing, only A grades.
+
+SKILLS
+Python, Javascipt, Kubernets, Elasticsearh
+C, C++, Go, R
+Tensorflow, Node.js
+
+PROJECTS
+Weather Station
+- Used Python to read sensors, stored data with Node.js and showed it with React.
+- Tested the C++ firmware on the board and reviewed code with the team.
+- Learned that the word Node can also mean a graph vertex, and kept a trust log of every test.
+
+EXPERIENCE
+Intern, Quill Works
+- Read about microservice design and wrote an algorithm for sorting invoices.
+
+INTERESTS
+Chess, travelling, photography

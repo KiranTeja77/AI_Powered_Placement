@@ -1,0 +1,35 @@
+RAHUL VERMA
+rahul.verma@example.com | +91 98450 12345 | github.com/rahulverma | linkedin.com/in/rahul-verma
+
+SUMMARY
+Final-year Computer Science student interested in web development.
+
+EDUCATION
+B.Tech in Computer Science and Engineering, Example Institute of Technology (2021 - 2025)
+CGPA: 8.45/10
+
+TECHNICAL SKILLS
+Languages: Java, JavaScript, Python, SQL
+Web: HTML5, CSS3, React, Node.js, Express.js, REST APIs
+Databases: MySQL, MongoDB
+Tools: Git, GitHub, Postman, Docker
+Core subjects: Data Structures and Algorithms, DBMS, Operating Systems, Computer Networks
+
+PROJECTS
+Campus Marketplace | React, Node.js, Express.js, MongoDB
+- Built a buy-and-sell web app for 1,200 students with login, listings and chat.
+- Designed REST APIs and tested them with Postman.
+- Containerised the app using Docker and deployed on AWS EC2.
+
+Expense Tracker | Java, MySQL
+- Developed a desktop expense tracker using Java and MySQL with object oriented design.
+- Wrote unit tests in JUnit covering 80% of the logic.
+
+INTERNSHIP
+Web Development Intern, Brightwave Labs (Jun 2024 - Aug 2024)
+- Fixed 25 UI bugs in a React dashboard and improved page load time by 30%.
+- Collaborated with a team of five using Git and Agile sprints.
+
+ACHIEVEMENTS
+- Solved 300+ problems on competitive programming platforms.
+- Team lead for the college hackathon.

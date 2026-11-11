@@ -1,0 +1,36 @@
+Meera Joshi
+meera.joshi@example.com | 9922334455
+
+SUMMARY
+Civil engineering student interested in site execution and project coordination.
+
+EDUCATION
+B.E. Civil Engineering, Example Institute, 2025
+CGPA: 7.8/10
+
+SKILLS
+Construction management, Site supervision, Project scheduling, Cost estimation, Quantity surveying
+Construction safety, Material testing, Surveying and levelling, Highway engineering
+Software: AutoCAD, Civil 3D, MS Project, ArcGIS, MS Excel, MS Word
+Soft skills: Communication skills, Teamwork, Time management
+
+PROJECTS
+Alignment Design of a Rural Road
+- Prepared the horizontal alignment and pavement design for a 2 km village road.
+- Used Civil 3D for the profile and quantities, and ArcGIS to study the terrain.
+
+Construction Schedule for a Warehouse
+- Built a Gantt chart in MS Project and updated progress every week.
+
+Cost Estimate of a School Building
+- Prepared the estimate and rate analysis using Excel and compared it with the market rates.
+
+INTERNSHIP
+Site Engineer Trainee, Horizon Infra (May 2024 - Jul 2024)
+- Supervised bar bending and shuttering work and checked levels with a dumpy level.
+- Conducted slump and cube tests on concrete as part of material testing.
+- Followed site safety rules and attended the weekly safety talk.
+- Coordinated with the contractor and the store team to avoid material delays.
+
+ACTIVITIES
+- Volunteer, NSS tree plantation drive

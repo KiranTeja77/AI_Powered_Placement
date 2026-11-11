@@ -1,0 +1,36 @@
+Ananya Iyer
+ananya.iyer@example.com | 9876501234 | linkedin.com/in/ananya-iyer
+
+OBJECTIVE
+Seeking a machine learning role where I can apply data skills to real problems.
+
+EDUCATION
+B.E. Information Science, Example College of Engineering, 2025
+CGPA: 9.1/10
+
+SKILLS
+Programming: Python, R, SQL
+Libraries: NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, TensorFlow, Keras
+Concepts: Machine Learning, Deep Learning, Statistics, Feature Engineering
+Tools: Jupyter, Git, Tableau, Excel
+
+PROJECTS
+House Price Prediction
+- Cleaned a 20,000 row dataset with Pandas and NumPy, and built regression models in Scikit-learn.
+- Used feature engineering and cross validation to reduce error by 18%.
+
+Sentiment Analysis of Product Reviews
+- Trained an LSTM with TensorFlow and Keras for text classification, reaching 91% accuracy.
+- Applied natural language processing steps such as tokenisation and stop-word removal.
+
+Sales Dashboard
+- Created an interactive dashboard in Tableau for monthly sales review.
+
+EXPERIENCE
+Data Science Intern, Northfield Analytics (May 2024 - Jul 2024)
+- Wrote SQL queries to extract customer data and visualised trends with Matplotlib.
+- Presented findings to the team every week.
+
+CERTIFICATIONS
+- Machine Learning Specialization (online course)
+- Deep Learning with PyTorch
