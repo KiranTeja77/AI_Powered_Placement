@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { getAccessToken, setAccessToken } from '@/lib/api/client'
-import { refreshSession } from './session'
+import { clearSharedSession, refreshSession } from './session'
 
 const user = { id: '1', email: 'a@b.c', fullName: 'A', role: 'STUDENT', status: 'ACTIVE' }
 const ok = () =>
@@ -13,6 +13,8 @@ describe('refreshSession', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
     setAccessToken(null)
+    // The module remembers the last session for other tabs; start each test from a clean slate.
+    clearSharedSession()
   })
 
   it('shares one request between simultaneous callers (rotation would otherwise look like replay)', async () => {
