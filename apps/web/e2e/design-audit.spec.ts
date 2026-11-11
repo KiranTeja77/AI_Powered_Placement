@@ -16,7 +16,7 @@ interface Violation {
   value: string
 }
 
-async function audit(page: Page): Promise<Violation[]> {
+export async function audit(page: Page): Promise<Violation[]> {
   return page.evaluate(() => {
     const found: { rule: string; where: string; value: string }[] = []
     const describe = (el: Element) => {
@@ -38,7 +38,9 @@ async function audit(page: Page): Promise<Violation[]> {
       if (cs.filter !== 'none' && cs.filter.includes('blur')) {
         found.push({ rule: 'no blur', where: describe(el), value: cs.filter })
       }
-      if (parseFloat(cs.fontSize) > 24) {
+      // Auth page titles may be 28px; nothing else may exceed 24px.
+      const allowedAuthTitle = el.classList.contains('text-auth') && cs.fontSize === '28px'
+      if (parseFloat(cs.fontSize) > 24 && !allowedAuthTitle) {
         found.push({ rule: 'type size max 24px', where: describe(el), value: cs.fontSize })
       }
       for (const corner of [
@@ -54,9 +56,15 @@ async function audit(page: Page): Promise<Violation[]> {
           break
         }
       }
-      const durations = cs.transitionDuration.split(',').map((d) => parseFloat(d) * (d.includes('ms') ? 0.001 : 1))
+      const durations = cs.transitionDuration
+        .split(',')
+        .map((d) => parseFloat(d) * (d.includes('ms') ? 0.001 : 1))
       if (durations.some((d) => d > 0.2)) {
-        found.push({ rule: 'transitions at most 200ms', where: describe(el), value: cs.transitionDuration })
+        found.push({
+          rule: 'transitions at most 200ms',
+          where: describe(el),
+          value: cs.transitionDuration,
+        })
       }
       if (cs.animationName !== 'none' && cs.animationDuration !== '0s') {
         found.push({ rule: 'no animation', where: describe(el), value: cs.animationName })
@@ -93,3 +101,74 @@ for (const viewport of VIEWPORTS) {
     })
   }
 }
+
+/** The real screens: sign-in, the app shell (with the mobile sheet) and account settings. */
+test.describe('app screens', () => {
+  const PASSWORD = 'AuditSecret42'
+  const id = `${Date.now().toString(36)}`
+  const email = `audit.${id}@college.edu`
+
+  test.beforeAll(async ({ request }) => {
+    const departments = await (await request.get('/api/v1/departments')).json()
+    const response = await request.post('/api/v1/auth/register', {
+      data: {
+        fullName: 'Audit Student',
+        email,
+        rollNo: `AUD${id}`.toUpperCase().slice(0, 20),
+        departmentId: departments[0].id,
+        graduationYear: 2027,
+        password: PASSWORD,
+      },
+    })
+    expect(response.status()).toBe(201)
+  })
+
+  for (const viewport of VIEWPORTS) {
+    for (const theme of THEMES) {
+      test(`screens at ${viewport.name}px, ${theme}`, async ({ page }) => {
+        await page.addInitScript((t) => localStorage.setItem('theme', t), theme)
+        await page.setViewportSize({ width: viewport.width, height: viewport.height })
+        const shot = (name: string) =>
+          page.screenshot({
+            path: `e2e/screenshots/${name}-${viewport.name}-${theme}.png`,
+            fullPage: true,
+          })
+
+        await page.goto('/login')
+        await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible()
+        await shot('login')
+        expect(await audit(page), 'login').toEqual([])
+
+        await page.goto('/register')
+        await expect(page.getByRole('heading', { name: 'Create your account' })).toBeVisible()
+        await shot('register')
+        expect(await audit(page), 'register').toEqual([])
+
+        await page.goto('/login')
+        await page.getByLabel('Email or roll number').fill(email)
+        await page.getByLabel('Password', { exact: true }).fill(PASSWORD)
+        await page.getByRole('button', { name: 'Sign in' }).click()
+        await expect(page).toHaveURL(/\/s$/)
+        await expect(page.getByRole('heading', { name: 'Overview' })).toBeVisible()
+        await shot('shell')
+        expect(await audit(page), 'shell').toEqual([])
+
+        if (viewport.width < 768) {
+          await page.getByRole('button', { name: 'Open navigation' }).click()
+          await expect(page.getByRole('dialog')).toBeVisible()
+          await shot('shell-nav-sheet')
+          await page.keyboard.press('Escape')
+        } else {
+          await page.getByRole('button', { name: 'Collapse sidebar' }).click()
+          await shot('shell-collapsed')
+          await page.getByRole('button', { name: 'Expand sidebar' }).click()
+        }
+
+        await page.goto('/settings/account')
+        await expect(page.getByRole('heading', { name: 'Account settings' })).toBeVisible()
+        await shot('account')
+        expect(await audit(page), 'account').toEqual([])
+      })
+    }
+  }
+})

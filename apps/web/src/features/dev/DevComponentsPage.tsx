@@ -9,7 +9,7 @@ import { DevOverlays } from './DevOverlays'
 export default function DevComponentsPage() {
   const { preference, setPreference } = useTheme()
   return (
-    <main className="mx-auto max-w-5xl px-4 py-6">
+    <main className="max-w-5xl px-4 py-6 sm:px-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-lg font-semibold text-text">Component catalogue</h1>
