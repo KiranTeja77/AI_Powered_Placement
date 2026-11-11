@@ -39,6 +39,8 @@ class SecurityConfig {
                                 "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        // Analyses belong to the student who made them. Faculty access comes later.
+                        .requestMatchers("/api/v1/resumes/**").hasRole("STUDENT")
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(problems)

@@ -9,7 +9,10 @@ import LoginPage from '@/features/auth/LoginPage'
 import RegisterPage from '@/features/auth/RegisterPage'
 import ResetPasswordPage from '@/features/auth/ResetPasswordPage'
 import { ROLE_HOME } from '@/features/auth/roles'
+import CareerPage from '@/features/career/CareerPage'
 import { ForbiddenPage, NotFoundPage, ServerErrorPage } from '@/features/errors/ErrorPages'
+import AnalysisPage from '@/features/resume/AnalysisPage'
+import ResumePage from '@/features/resume/ResumePage'
 import { ROLES } from '@/lib/api/types'
 
 // Development-only catalogue; excluded from production builds.
@@ -57,6 +60,13 @@ export default function App() {
       {ROLES.map((role) => (
         <Route key={role} element={<RequireRole roles={[role]} />}>
           <Route element={<AppShell />}>
+            {role === 'STUDENT' && (
+              <>
+                <Route path="/s/resume" element={<ResumePage />} />
+                <Route path="/s/resume/:id" element={<AnalysisPage />} />
+                <Route path="/s/career" element={<CareerPage />} />
+              </>
+            )}
             <Route path={`${ROLE_HOME[role]}/*`} element={<RolePlaceholder />} />
           </Route>
         </Route>

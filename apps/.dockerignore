@@ -1,0 +1,9 @@
+# The API image is built with ./apps as its context; keep everything it does not need out of it.
+web
+**/node_modules
+**/target
+**/.venv
+**/__pycache__
+**/.pytest_cache
+ai-service/tests
+ai-service/app

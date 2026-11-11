@@ -1,0 +1,764 @@
+{
+ "engine_version": "1.0.0",
+ "taxonomy_version": "1.0.0",
+ "text_length": 613,
+ "sections": [
+  {
+   "name": "header",
+   "heading": null,
+   "start": 0,
+   "end": 100
+  },
+  {
+   "name": "education",
+   "heading": "EDUCATION",
+   "start": 100,
+   "end": 213
+  },
+  {
+   "name": "skills",
+   "heading": "SKILLS",
+   "start": 213,
+   "end": 285
+  },
+  {
+   "name": "projects",
+   "heading": "PROJECTS",
+   "start": 285,
+   "end": 486
+  },
+  {
+   "name": "experience",
+   "heading": "INTERNSHIP",
+   "start": 486,
+   "end": 613
+  }
+ ],
+ "fields": {
+  "emails": [
+   {
+    "start": 11,
+    "end": 33,
+    "text": "kiran.teja@example.com"
+   }
+  ],
+  "phones": [
+   {
+    "start": 36,
+    "end": 46,
+    "text": "9876543210"
+   }
+  ],
+  "links": [
+   {
+    "kind": "github",
+    "start": 49,
+    "end": 69,
+    "text": "github.com/kiranteja"
+   },
+   {
+    "kind": "linkedin",
+    "start": 72,
+    "end": 98,
+    "text": "linkedin.com/in/kiran-teja"
+   }
+  ],
+  "education": [
+   {
+    "degree": "B.Tech",
+    "start": 110,
+    "end": 116,
+    "line": "B.Tech in Computer Science and Engineering, Example Institute of Technology, 2021 - 2025"
+   }
+  ],
+  "cgpa": {
+   "kind": "cgpa",
+   "value": 8.5,
+   "scale": 10.0,
+   "start": 199,
+   "end": 211,
+   "text": "CGPA: 8.5/10"
+  },
+  "project_titles": [
+   {
+    "start": 294,
+    "end": 317,
+    "text": "Campus Placement Portal"
+   }
+  ]
+ },
+ "skills": [
+  {
+   "id": "docker",
+   "name": "Docker",
+   "category": "Cloud and DevOps",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 3,
+   "evidence": [
+    {
+     "start": 333,
+     "end": 339,
+     "matched_text": "Docker",
+     "section": "projects",
+     "snippet": "Campus Placement Portal | Python, SQL, Docker",
+     "snippet_start": 294
+    },
+    {
+     "start": 456,
+     "end": 462,
+     "matched_text": "Docker",
+     "section": "projects",
+     "snippet": "Packaged the service with Docker and wrote unit tests.",
+     "snippet_start": 430
+    },
+    {
+     "start": 244,
+     "end": 250,
+     "matched_text": "Docker",
+     "section": "skills",
+     "snippet": "Python, Java, SQL, Git, Docker, Kubernets, Communication skills",
+     "snippet_start": 220
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "git",
+   "name": "Git",
+   "category": "Cloud and DevOps",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 2,
+   "evidence": [
+    {
+     "start": 577,
+     "end": 580,
+     "matched_text": "Git",
+     "section": "experience",
+     "snippet": "Wrote SQL reports and used Git for code reviews with the team.",
+     "snippet_start": 550
+    },
+    {
+     "start": 239,
+     "end": 242,
+     "matched_text": "Git",
+     "section": "skills",
+     "snippet": "Python, Java, SQL, Git, Docker, Kubernets, Communication skills",
+     "snippet_start": 220
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "communication-skills",
+   "name": "Communication Skills",
+   "category": "Professional skills",
+   "status": "detected",
+   "grade": "listed",
+   "strength": 0.5,
+   "counts_toward_score": true,
+   "mention_count": 1,
+   "evidence": [
+    {
+     "start": 263,
+     "end": 283,
+     "matched_text": "Communication skills",
+     "section": "skills",
+     "snippet": "Python, Java, SQL, Git, Docker, Kubernets, Communication skills",
+     "snippet_start": 220
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "java",
+   "name": "Java",
+   "category": "Programming languages",
+   "status": "detected",
+   "grade": "listed",
+   "strength": 0.5,
+   "counts_toward_score": true,
+   "mention_count": 1,
+   "evidence": [
+    {
+     "start": 228,
+     "end": 232,
+     "matched_text": "Java",
+     "section": "skills",
+     "snippet": "Python, Java, SQL, Git, Docker, Kubernets, Communication skills",
+     "snippet_start": 220
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "python",
+   "name": "Python",
+   "category": "Programming languages",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 3,
+   "evidence": [
+    {
+     "start": 320,
+     "end": 326,
+     "matched_text": "Python",
+     "section": "projects",
+     "snippet": "Campus Placement Portal | Python, SQL, Docker",
+     "snippet_start": 294
+    },
+    {
+     "start": 364,
+     "end": 370,
+     "matched_text": "Python",
+     "section": "projects",
+     "snippet": "Built a REST API with Python and SQL used by 300 students and tested it with Postman.",
+     "snippet_start": 342
+    },
+    {
+     "start": 220,
+     "end": 226,
+     "matched_text": "Python",
+     "section": "skills",
+     "snippet": "Python, Java, SQL, Git, Docker, Kubernets, Communication skills",
+     "snippet_start": 220
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "sql",
+   "name": "SQL",
+   "category": "Programming languages",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 4,
+   "evidence": [
+    {
+     "start": 328,
+     "end": 331,
+     "matched_text": "SQL",
+     "section": "projects",
+     "snippet": "Campus Placement Portal | Python, SQL, Docker",
+     "snippet_start": 294
+    },
+    {
+     "start": 375,
+     "end": 378,
+     "matched_text": "SQL",
+     "section": "projects",
+     "snippet": "Built a REST API with Python and SQL used by 300 students and tested it with Postman.",
+     "snippet_start": 342
+    },
+    {
+     "start": 556,
+     "end": 559,
+     "matched_text": "SQL",
+     "section": "experience",
+     "snippet": "Wrote SQL reports and used Git for code reviews with the team.",
+     "snippet_start": 550
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "code-review",
+   "name": "Code Review",
+   "category": "Software engineering",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 1,
+   "evidence": [
+    {
+     "start": 585,
+     "end": 597,
+     "matched_text": "code reviews",
+     "section": "experience",
+     "snippet": "Wrote SQL reports and used Git for code reviews with the team.",
+     "snippet_start": 550
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "postman",
+   "name": "Postman",
+   "category": "Software engineering",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 1,
+   "evidence": [
+    {
+     "start": 419,
+     "end": 426,
+     "matched_text": "Postman",
+     "section": "projects",
+     "snippet": "Built a REST API with Python and SQL used by 300 students and tested it with Postman.",
+     "snippet_start": 342
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "unit-testing",
+   "name": "Unit Testing",
+   "category": "Software engineering",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 1,
+   "evidence": [
+    {
+     "start": 473,
+     "end": 483,
+     "matched_text": "unit tests",
+     "section": "projects",
+     "snippet": "Packaged the service with Docker and wrote unit tests.",
+     "snippet_start": 430
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "rest-api",
+   "name": "REST API",
+   "category": "Web development",
+   "status": "detected",
+   "grade": "applied",
+   "strength": 1.0,
+   "counts_toward_score": true,
+   "mention_count": 1,
+   "evidence": [
+    {
+     "start": 350,
+     "end": 358,
+     "matched_text": "REST API",
+     "section": "projects",
+     "snippet": "Built a REST API with Python and SQL used by 300 students and tested it with Postman.",
+     "snippet_start": 342
+    }
+   ],
+   "similarity": null
+  },
+  {
+   "id": "kubernetes",
+   "name": "Kubernetes",
+   "category": "Cloud and DevOps",
+   "status": "possible",
+   "grade": "listed",
+   "strength": 0.5,
+   "counts_toward_score": false,
+   "mention_count": 1,
+   "evidence": [
+    {
+     "start": 252,
+     "end": 261,
+     "matched_text": "Kubernets",
+     "section": "skills",
+     "snippet": "Python, Java, SQL, Git, Docker, Kubernets, Communication skills",
+     "snippet_start": 220
+    }
+   ],
+   "similarity": 94.7
+  }
+ ],
+ "roles": [
+  {
+   "role_id": "backend-developer",
+   "name": "Backend Developer",
+   "score": 30.8,
+   "earned": 16.0,
+   "maximum": 52.0,
+   "by_importance": [
+    {
+     "importance": "core",
+     "weight": 3,
+     "matched": 3,
+     "partial": 0,
+     "possible": 0,
+     "missing": 3,
+     "earned": 9.0,
+     "maximum": 18.0
+    },
+    {
+     "importance": "important",
+     "weight": 2,
+     "matched": 3,
+     "partial": 1,
+     "possible": 0,
+     "missing": 8,
+     "earned": 7.0,
+     "maximum": 24.0
+    },
+    {
+     "importance": "bonus",
+     "weight": 1,
+     "matched": 0,
+     "partial": 0,
+     "possible": 1,
+     "missing": 9,
+     "earned": 0.0,
+     "maximum": 10.0
+    }
+   ],
+   "items": [
+    {
+     "skill_id": "git",
+     "name": "Git",
+     "importance": "core",
+     "weight": 3,
+     "status": "matched",
+     "strength": 1.0,
+     "points": 3.0
+    },
+    {
+     "skill_id": "rest-api",
+     "name": "REST API",
+     "importance": "core",
+     "weight": 3,
+     "status": "matched",
+     "strength": 1.0,
+     "points": 3.0
+    },
+    {
+     "skill_id": "sql",
+     "name": "SQL",
+     "importance": "core",
+     "weight": 3,
+     "status": "matched",
+     "strength": 1.0,
+     "points": 3.0
+    },
+    {
+     "skill_id": "algorithms",
+     "name": "Algorithms",
+     "importance": "core",
+     "weight": 3,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "data-structures",
+     "name": "Data Structures",
+     "importance": "core",
+     "weight": 3,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "database-design",
+     "name": "Database Design",
+     "importance": "core",
+     "weight": 3,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "docker",
+     "name": "Docker",
+     "importance": "important",
+     "weight": 2,
+     "status": "matched",
+     "strength": 1.0,
+     "points": 2.0
+    },
+    {
+     "skill_id": "python",
+     "name": "Python",
+     "importance": "important",
+     "weight": 2,
+     "status": "matched",
+     "strength": 1.0,
+     "points": 2.0
+    },
+    {
+     "skill_id": "unit-testing",
+     "name": "Unit Testing",
+     "importance": "important",
+     "weight": 2,
+     "status": "matched",
+     "strength": 1.0,
+     "points": 2.0
+    },
+    {
+     "skill_id": "java",
+     "name": "Java",
+     "importance": "important",
+     "weight": 2,
+     "status": "partial",
+     "strength": 0.5,
+     "points": 1.0
+    },
+    {
+     "skill_id": "django",
+     "name": "Django",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "microservices",
+     "name": "Microservices",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "mysql",
+     "name": "MySQL",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "node-js",
+     "name": "Node.js",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "operating-systems",
+     "name": "Operating Systems",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "postgresql",
+     "name": "PostgreSQL",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "spring-boot",
+     "name": "Spring Boot",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "system-design",
+     "name": "System Design",
+     "importance": "important",
+     "weight": 2,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "aws",
+     "name": "AWS",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "apache-kafka",
+     "name": "Apache Kafka",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "ci-cd",
+     "name": "CI/CD",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "design-patterns",
+     "name": "Design Patterns",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "graphql",
+     "name": "GraphQL",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "kubernetes",
+     "name": "Kubernetes",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "possible",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "linux",
+     "name": "Linux",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "mongodb",
+     "name": "MongoDB",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "redis",
+     "name": "Redis",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    },
+    {
+     "skill_id": "software-architecture",
+     "name": "Software Architecture",
+     "importance": "bonus",
+     "weight": 1,
+     "status": "missing",
+     "strength": 0.0,
+     "points": 0.0
+    }
+   ]
+  }
+ ],
+ "suggestions": [
+  {
+   "id": "missing-core-algorithms",
+   "kind": "skill_gap",
+   "priority": "high",
+   "message": "Learn Algorithms and show it in a project.",
+   "reason": "Algorithms is a core skill for Backend Developer and was not found in your resume.",
+   "skills": [
+    "algorithms"
+   ]
+  },
+  {
+   "id": "missing-core-data-structures",
+   "kind": "skill_gap",
+   "priority": "high",
+   "message": "Learn Data Structures and show it in a project.",
+   "reason": "Data Structures is a core skill for Backend Developer and was not found in your resume.",
+   "skills": [
+    "data-structures"
+   ]
+  },
+  {
+   "id": "missing-core-database-design",
+   "kind": "skill_gap",
+   "priority": "high",
+   "message": "Learn Database Design and show it in a project.",
+   "reason": "Database Design is a core skill for Backend Developer and was not found in your resume.",
+   "skills": [
+    "database-design"
+   ]
+  },
+  {
+   "id": "missing-important-django",
+   "kind": "skill_gap",
+   "priority": "medium",
+   "message": "Add Django if you have used it, or plan to learn it.",
+   "reason": "Django is an important skill for Backend Developer and was not found in your resume.",
+   "skills": [
+    "django"
+   ]
+  },
+  {
+   "id": "missing-important-microservices",
+   "kind": "skill_gap",
+   "priority": "medium",
+   "message": "Add Microservices if you have used it, or plan to learn it.",
+   "reason": "Microservices is an important skill for Backend Developer and was not found in your resume.",
+   "skills": [
+    "microservices"
+   ]
+  },
+  {
+   "id": "missing-important-mysql",
+   "kind": "skill_gap",
+   "priority": "medium",
+   "message": "Add MySQL if you have used it, or plan to learn it.",
+   "reason": "MySQL is an important skill for Backend Developer and was not found in your resume.",
+   "skills": [
+    "mysql"
+   ]
+  },
+  {
+   "id": "show-use-java",
+   "kind": "evidence",
+   "priority": "medium",
+   "message": "Show Java in a project or internship, not only in a list.",
+   "reason": "Java appears only in a list. Use in a project or job counts twice as much toward Backend Developer as a mention in a list.",
+   "skills": [
+    "java"
+   ]
+  },
+  {
+   "id": "confirm-kubernetes",
+   "kind": "confirm",
+   "priority": "medium",
+   "message": "Check whether \"Kubernets\" means Kubernetes, and fix the spelling.",
+   "reason": "\"Kubernets\" is close to Kubernetes but not an exact match, so it was not counted toward your score.",
+   "skills": [
+    "kubernetes"
+   ]
+  },
+  {
+   "id": "short-resume",
+   "kind": "structure",
+   "priority": "low",
+   "message": "Add more detail about what you built and which tools you used.",
+   "reason": "The resume has fewer than 120 words, which leaves little to assess.",
+   "skills": []
+  }
+ ]
+}

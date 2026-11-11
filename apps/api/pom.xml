@@ -135,6 +135,20 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<!-- The analyzer's own data files are the single source for the skill and role catalogue. -->
+			<resource>
+				<directory>../ai-service/data</directory>
+				<targetPath>catalogue</targetPath>
+				<includes>
+					<include>skills_taxonomy.json</include>
+					<include>roles.json</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -30,7 +32,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
         "app.jwt.secret=test-secret-test-secret-test-secret-0123456789",
         "app.auth.bcrypt-strength=4",
         "app.admin.email=",
-        "app.admin.password="
+        "app.admin.password=",
+        // The analyzer is replaced by AiStub; one second keeps the timeout tests quick.
+        "app.ai.timeout=1s"
 })
 public abstract class IntegrationTestBase {
 
@@ -41,8 +45,14 @@ public abstract class IntegrationTestBase {
     @Autowired protected RecordingMailer mailer;
     @Autowired protected PasswordEncoder encoder;
 
+    @DynamicPropertySource
+    static void analyzerStub(DynamicPropertyRegistry registry) {
+        registry.add("app.ai.base-url", AiStub.SHARED::url);
+    }
+
     @BeforeEach
     protected void cleanDatabase() {
+        AiStub.SHARED.reset();
         jdbc.execute("TRUNCATE login_attempt, password_reset_token, refresh_token, faculty_assignment, "
                 + "student, app_user RESTART IDENTITY CASCADE");
         mailer.clear();

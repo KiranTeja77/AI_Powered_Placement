@@ -40,6 +40,15 @@ public class ApiException extends RuntimeException {
         return new ApiException(HttpStatus.BAD_REQUEST, "validation_failed", detail, fieldErrors, null);
     }
 
+    public static ApiException notFound(String detail) {
+        return new ApiException(HttpStatus.NOT_FOUND, "not_found", detail, null, null);
+    }
+
+    /** A dependency (such as the resume analyzer) is down; tell the client when to try again. */
+    public static ApiException unavailable(String code, String detail, long retryAfterSeconds) {
+        return new ApiException(HttpStatus.SERVICE_UNAVAILABLE, code, detail, null, retryAfterSeconds);
+    }
+
     public static ApiException tooManyRequests(String detail, long retryAfterSeconds) {
         return new ApiException(HttpStatus.TOO_MANY_REQUESTS, "too_many_attempts", detail, null,
                 retryAfterSeconds);
