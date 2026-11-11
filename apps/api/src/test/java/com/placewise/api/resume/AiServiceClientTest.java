@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.placewise.api.common.AppProperties;
 import com.placewise.api.resume.AiServiceClient.AiUnavailableException;
-import com.placewise.api.resume.AiServiceClient.SkillStrength;
 import com.placewise.api.support.AiStub;
 import com.placewise.api.support.AiStub.Mode;
 import java.net.ServerSocket;
@@ -80,16 +79,43 @@ class AiServiceClientTest {
     }
 
     @Test
-    void compareSendsSkillIdsAndStrengthsAndReturnsTheRecomputedRoles() {
-        var roles = client(stub.url(), Duration.ofSeconds(5)).compare(
-                List.of(new SkillStrength("git", 1.0), new SkillStrength("sql", 0.5)), List.of("backend-developer"));
-        assertThat(stub.compareRequests()).singleElement().satisfies(body -> {
-            assertThat(body).contains("\"skill_id\":\"git\"").contains("\"strength\":0.5");
+    void reviseSendsTheStoredTextAndTheEditsAndReturnsSkillsScoresAndSuggestions() {
+        var revision = client(stub.url(), Duration.ofSeconds(5)).revise(AiStub.sampleResume(),
+                List.of("backend-developer"),
+                new AiServiceClient.Edits(List.of("kubernetes"), List.of("git"), List.of("typescript")));
+
+        assertThat(stub.reviseRequests()).singleElement().satisfies(body -> {
+            assertThat(body).contains("Campus Placement Portal");
+            assertThat(body).contains("\"confirmed_skill_ids\":[\"kubernetes\"]")
+                    .contains("\"removed_skill_ids\":[\"git\"]")
+                    .contains("\"added_skill_ids\":[\"typescript\"]")
+                    .contains("\"target_roles\":[\"backend-developer\"]");
         });
-        assertThat(roles).singleElement().satisfies(r -> {
-            assertThat(r.roleId()).isEqualTo("backend-developer");
-            assertThat(r.score()).isEqualTo(20.0);
-        });
+        assertThat(revision.skills()).extracting(ResumeDtos.EffectiveSkill::id)
+                .contains("kubernetes", "typescript").doesNotContain("git");
+        assertThat(revision.skills()).filteredOn(s -> s.id().equals("kubernetes"))
+                .singleElement().extracting(ResumeDtos.EffectiveSkill::source).isEqualTo("confirmed");
+        assertThat(revision.roles()).singleElement().satisfies(r -> assertThat(r.roleId()).isEqualTo("backend-developer"));
+        assertThat(revision.suggestions()).singleElement()
+                .satisfies(s -> assertThat(s.message()).isEqualTo("Stub suggestion for 11 skills"));
+    }
+
+    @Test
+    void editsTheAnalyzerRefusesAreReportedAsRejectedNotAsAnOutage() {
+        stub.mode(Mode.REJECT);
+        assertThatThrownBy(() -> client(stub.url(), Duration.ofSeconds(2)).revise(AiStub.sampleResume(), List.of(),
+                new AiServiceClient.Edits(List.of("git"), List.of(), List.of())))
+                .isInstanceOf(AiServiceClient.AiRejectedException.class);
+    }
+
+    @Test
+    void reviseFailsLikeAnalyzeWhenTheAnalyzerIsDown() {
+        for (Mode mode : List.of(Mode.ERROR_500, Mode.DROP, Mode.GARBAGE)) {
+            stub.mode(mode);
+            assertThatThrownBy(() -> client(stub.url(), Duration.ofSeconds(2)).revise(AiStub.sampleResume(), List.of(),
+                    new AiServiceClient.Edits(List.of(), List.of(), List.of())))
+                    .as(mode.name()).isInstanceOf(AiUnavailableException.class);
+        }
     }
 
     @Test

@@ -102,6 +102,10 @@ class ResumeControllerIntegrationTest extends IntegrationTestBase {
         String body = created.getResponse().getContentAsString();
         String id = JsonPath.read(body, "$.id");
         assertThat((List<String>) JsonPath.read(body, "$.effective.skills[*].id")).doesNotContain("kubernetes");
+        // before any edit the suggestions are the analyzer's own
+        assertThat((List<String>) JsonPath.read(body, "$.effective.suggestions[*].id"))
+                .isNotEmpty()
+                .isEqualTo((List<String>) JsonPath.read(body, "$.result.suggestions[*].id"));
         assertThat(AiStub.SHARED.analyzeRequests()).singleElement().satisfies(sent -> {
             assertThat(sent).contains("\"target_roles\":[\"backend-developer\"]").contains("Campus Placement Portal");
         });
@@ -152,10 +156,17 @@ class ResumeControllerIntegrationTest extends IntegrationTestBase {
         // the analyzer's own answer is untouched
         assertThat((List<Object>) JsonPath.read(patchedBody, "$.result.skills[?(@.id=='git')]")).hasSize(1);
 
-        assertThat(AiStub.SHARED.compareRequests()).singleElement().satisfies(sent -> {
-            assertThat(sent).contains("\"skill_id\":\"kubernetes\"").contains("\"skill_id\":\"typescript\"");
-            assertThat(sent).doesNotContain("\"skill_id\":\"git\"").contains("\"target_roles\":[\"backend-developer\"]");
+        // The API sends the stored text and the edits; the browser never resends the text.
+        assertThat(AiStub.SHARED.reviseRequests()).singleElement().satisfies(sent -> {
+            assertThat(sent).contains("Campus Placement Portal");
+            assertThat(sent).contains("\"confirmed_skill_ids\":[\"kubernetes\"]")
+                    .contains("\"removed_skill_ids\":[\"git\"]")
+                    .contains("\"added_skill_ids\":[\"typescript\"]")
+                    .contains("\"target_roles\":[\"backend-developer\"]");
         });
+        // The suggestions were rebuilt for the edited skills and are stored with them.
+        assertThat((List<String>) JsonPath.read(patchedBody, "$.effective.suggestions[*].message"))
+                .containsExactly("Stub suggestion for 11 skills");
         Map<String, Object> after = jdbc.queryForMap(
                 "select top_score, skill_count, confirmed_skills is not null as edited from resume_analysis where id = ?::uuid", id);
         assertThat(after.get("top_score").toString()).isEqualTo("100.0");
@@ -164,7 +175,8 @@ class ResumeControllerIntegrationTest extends IntegrationTestBase {
 
         // the edit survives a reload and shows in the history
         fetch(token, id).andExpect(jsonPath("$.effective.roles[0].score").value(100.0))
-                .andExpect(jsonPath("$.edits.confirmedSkillIds[0]").value("kubernetes"));
+                .andExpect(jsonPath("$.edits.confirmedSkillIds[0]").value("kubernetes"))
+                .andExpect(jsonPath("$.effective.suggestions[0].message").value("Stub suggestion for 11 skills"));
         mvc.perform(auth(get("/api/v1/resumes/analyses"), token))
                 .andExpect(jsonPath("$.items[0].edited").value(true))
                 .andExpect(jsonPath("$.items[0].topScore").value(100.0));
@@ -173,8 +185,13 @@ class ResumeControllerIntegrationTest extends IntegrationTestBase {
         edit(token, id, List.of(), List.of(), List.of()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.edits").doesNotExist())
                 .andExpect(jsonPath("$.effective.skills.length()").value(10))
-                .andExpect(jsonPath("$.effective.roles[0].score").value(30.8));
-        assertThat(AiStub.SHARED.compareRequests()).hasSize(1);
+                .andExpect(jsonPath("$.effective.roles[0].score").value(30.8))
+                // back to the analyzer's own suggestions
+                .andExpect(jsonPath("$.effective.suggestions.length()").value(
+                        ((List<?>) JsonPath.read(body, "$.result.suggestions")).size()))
+                .andExpect(jsonPath("$.effective.suggestions[0].id").value(
+                        (String) JsonPath.read(body, "$.result.suggestions[0].id")));
+        assertThat(AiStub.SHARED.reviseRequests()).hasSize(1);
     }
 
     @Test
@@ -252,7 +269,7 @@ class ResumeControllerIntegrationTest extends IntegrationTestBase {
         mvc.perform(auth(patch("/api/v1/resumes/analyses/" + id + "/skills"), token)
                         .contentType(MediaType.APPLICATION_JSON).content("{}"))
                 .andExpect(status().isBadRequest());
-        assertThat(AiStub.SHARED.compareRequests()).isEmpty();
+        assertThat(AiStub.SHARED.reviseRequests()).isEmpty();
     }
 
     // ------------------------------------------------------------------ who may see what
@@ -267,7 +284,7 @@ class ResumeControllerIntegrationTest extends IntegrationTestBase {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
                 .andExpect(jsonPath("$.code").value("forbidden"));
         edit(other, id, List.of("kubernetes"), List.of(), List.of()).andExpect(status().isForbidden());
-        assertThat(AiStub.SHARED.compareRequests()).isEmpty();
+        assertThat(AiStub.SHARED.reviseRequests()).isEmpty();
         assertThat(jdbc.queryForObject("select confirmed_skills is null from resume_analysis where id = ?::uuid",
                 Boolean.class, id)).isTrue();
 
@@ -341,6 +358,73 @@ class ResumeControllerIntegrationTest extends IntegrationTestBase {
         AiStub.SHARED.mode(Mode.DROP);
         fetch(token, id).andExpect(status().isOk());
         mvc.perform(auth(get("/api/v1/resumes/analyses"), token)).andExpect(status().isOk());
+    }
+
+    // ------------------------------------------------------------------ outdated analyses
+
+    @Test
+    void whenTheAnalyzerRefusesTheEditsTheStudentIsToldToAnalyzeAgain() throws Exception {
+        String token = student("old@college.edu", "21CS920");
+        String id = analyzeOk(token, "backend-developer");
+        AiStub.SHARED.mode(Mode.REJECT);
+        edit(token, id, List.of("kubernetes"), List.of(), List.of())
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.code").value("analysis_outdated"))
+                .andExpect(jsonPath("$.detail").value(org.hamcrest.Matchers.containsString("Analyze the resume again")));
+        AiStub.SHARED.mode(Mode.OK);
+        fetch(token, id).andExpect(jsonPath("$.edits").doesNotExist());
+    }
+
+    // ------------------------------------------------------------------ deleting
+
+    @Test
+    void anAnalysisCanBeDeletedByItsOwnerAndIsGoneForGood() throws Exception {
+        String token = student("del@college.edu", "21CS921");
+        String keep = analyzeOk(token, "backend-developer");
+        String drop = analyzeOk(token, "data-analyst");
+        edit(token, drop, List.of("kubernetes"), List.of(), List.of()).andExpect(status().isOk());
+
+        mvc.perform(auth(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/v1/resumes/analyses/" + drop), token))
+                .andExpect(status().isNoContent());
+
+        fetch(token, drop).andExpect(status().isNotFound());
+        fetch(token, keep).andExpect(status().isOk());
+        mvc.perform(auth(get("/api/v1/resumes/analyses"), token)).andExpect(jsonPath("$.totalItems").value(1));
+        // hard delete: the resume text is not kept anywhere
+        assertThat(jdbc.queryForObject("select count(*) from resume_analysis where id = ?::uuid", Integer.class, drop)).isZero();
+        assertThat(jdbc.queryForObject("select count(*) from resume_analysis", Integer.class)).isEqualTo(1);
+        // deleting again is a clear 404
+        mvc.perform(auth(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/v1/resumes/analyses/" + drop), token))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void aStudentCannotDeleteAnotherStudentsAnalysis() throws Exception {
+        String owner = student("delowner@college.edu", "21CS922");
+        String other = student("delother@college.edu", "21CS923");
+        String id = analyzeOk(owner, "backend-developer");
+
+        mvc.perform(auth(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/v1/resumes/analyses/" + id), other))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("forbidden"));
+        assertThat(analysisCount()).isEqualTo(1);
+        fetch(owner, id).andExpect(status().isOk());
+    }
+
+    @Test
+    void deletingNeedsASignedInStudent() throws Exception {
+        String id = UUID.randomUUID().toString();
+        mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/v1/resumes/analyses/" + id))
+                .andExpect(status().isUnauthorized());
+        insertUser("fac2@college.edu", "FACULTY", "ACTIVE");
+        mvc.perform(auth(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/v1/resumes/analyses/" + id), accessTokenFor("fac2@college.edu")))
+                .andExpect(status().isForbidden());
     }
 
     // ------------------------------------------------------------------ history

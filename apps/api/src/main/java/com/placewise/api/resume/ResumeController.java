@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +55,13 @@ class ResumeController {
     AnalysisDetail updateSkills(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID id,
             @Valid @RequestBody UpdateSkillsRequest request) {
         return resumes.updateSkills(studentId(jwt), id, request);
+    }
+
+    /** Permanently deletes the analysis and the resume text stored with it. */
+    @DeleteMapping("/analyses/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID id) {
+        resumes.delete(studentId(jwt), id);
     }
 
     private static UUID studentId(Jwt jwt) {
