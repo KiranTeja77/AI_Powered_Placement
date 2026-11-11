@@ -40,6 +40,10 @@ _HEADINGS: dict[SectionName, tuple[str, ...]] = {
         "skillset",
         "software skills",
         "professional skills",
+        "strengths",
+        "personal strengths",
+        "soft skills",
+        "personal skills",
     ),
     "projects": (
         "projects",
@@ -73,6 +77,8 @@ _HEADINGS: dict[SectionName, tuple[str, ...]] = {
         "industry experience",
         "internships and training",
         "training and internships",
+        "industrial internship",
+        "industrial internships",
     ),
     "education": (
         "education",
@@ -126,6 +132,7 @@ _HEADINGS: dict[SectionName, tuple[str, ...]] = {
         "spoken languages",
         "linguistic skills",
     ),
+    "other": ("declaration", "references", "personal details", "personal information"),
     "publications": ("publications", "research papers", "publications and patents"),
 }
 

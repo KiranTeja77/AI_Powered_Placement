@@ -95,10 +95,38 @@ def test_a_skill_found_exactly_is_never_also_reported_as_possible() -> None:
     assert {m.via for m in found if m.skill_id == "kubernetes"} == {"exact"}
 
 
-def test_singular_and_plural_forms_count_as_the_same_word() -> None:
+def test_the_singular_of_a_plural_skill_name_is_only_possible() -> None:
     found = {m.skill_id: m for m in mentions("Skills\nMicroservice, Algorithm")}
-    assert found["microservices"].via == "variant"
-    assert found["algorithms"].via == "variant"
+    assert found["microservices"].via == "fuzzy"
+    assert found["algorithms"].via == "fuzzy"
+
+
+def test_plural_or_singular_of_an_alias_is_not_evidence() -> None:
+    # "inverters" is an alias of Power Electronics, "robotic" is not a plural of "Robotics".
+    assert not ids("Skills\nInverter, Robotic Arm, Rectifier design")
+
+
+def test_a_label_that_introduces_a_list_is_not_a_skill_claim() -> None:
+    found = ids("Skills\nOperating Systems: Linux (Ubuntu), Windows\nMicrocontrollers: 8051, AVR")
+    assert "linux" in found and "avr" in found
+    assert not found & {"operating-systems", "microcontrollers"}
+
+
+def test_a_skill_followed_by_a_detail_rather_than_a_list_is_kept() -> None:
+    assert "python" in ids("Skills\nPython: advanced\nJava: intermediate")
+
+
+def test_short_names_are_never_fuzzy_matched() -> None:
+    # "testing" is one letter from "TestNG" and "OBJECTIVE" almost "Objective-C": both are ignored.
+    assert not ids("OBJECTIVE\nAfter cube testing at the site laboratory I wrote the report.")
+
+
+def test_an_ampersand_abbreviation_is_found_even_at_the_end_of_a_sentence() -> None:
+    text = "Projects\nPrepared drawings with GD&T. Reviewed them using GD&T, again."
+    found = [m for m in mentions(text) if m.skill_id == "gdandt"]
+    assert len(found) == 2
+    for m in found:
+        assert text[m.start : m.end] == "GD&T"
 
 
 def test_possible_matches_never_overlap_real_ones() -> None:

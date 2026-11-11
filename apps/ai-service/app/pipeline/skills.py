@@ -11,6 +11,7 @@ Two passes, and neither can add a skill that is not literally written in the res
 Every match keeps the exact characters it came from, as a start and end position in the text.
 """
 
+import re
 from collections import defaultdict
 from dataclasses import dataclass
 from functools import lru_cache
@@ -27,13 +28,20 @@ from app.data import load_data
 from app.pipeline.segment import section_at
 from app.schemas import Section, Taxonomy
 
-Via = Literal["exact", "variant", "fuzzy"]
+Via = Literal["exact", "fuzzy"]
 
-# Fuzzy matching ignores very short names: two letters of difference would be most of the word.
-_MIN_FUZZY_LEN = 6
+# Fuzzy matching only applies to words of 8 or more letters. On shorter names a one-letter slip is
+# a large share of the word, and "testing" would be taken for "TestNG".
+_MIN_FUZZY_LEN = 8
 _MAX_NGRAM = 3
 # A list-like neighbour: comma, semicolon, pipe, slash, bullets, brackets, colon, dash.
 _DELIMITERS = set(",;|/()[]:-•·")
+# Words that introduce a tool in a sentence ("using Excel") and ordinary words that follow a verb.
+_TOOL_PREPOSITIONS = frozenset({"using", "with", "via", "in", "on", "through", "use", "used"})
+_VERB_FOLLOWERS = frozenset({"to", "at", "in", "of", "for"})
+_TOOL_NOUNS = frozenset(
+    {"sheet", "sheets", "spreadsheet", "spreadsheets", "macro", "macros", "formula", "formulas"}
+)
 
 
 @dataclass(frozen=True)
@@ -58,6 +66,7 @@ class SkillMatcher:
         # lower-case alias -> skill id, for the fuzzy pass (case-insensitive aliases only)
         self.fuzzy_choices: dict[str, str] = {}
         self.all_phrases: set[str] = set()
+        self.canonical_names: set[str] = {skill.name.lower() for skill in taxonomy.skills}
 
         for skill in taxonomy.skills:
             strict = set(skill.exact_case) | set(skill.context_required)
@@ -89,6 +98,20 @@ def default_matcher() -> SkillMatcher:
     return SkillMatcher(load_data()[0])
 
 
+_WORDS = re.compile(r"[a-z0-9]+")
+_AMPERSAND_ABBREVIATION_DOT = re.compile(r"(?<=[A-Za-z]&[A-Za-z])\.")
+
+
+def _for_tokenizer(text: str) -> str:
+    """The same text, one character per character, with a quirk of spaCy's tokenizer removed.
+
+    spaCy keeps "GD&T." (an ampersand abbreviation followed by a full stop) as one token, so the
+    skill "GD&T" would be missed at the end of a sentence. The full stop becomes a space for
+    tokenising only; every position still refers to the original text.
+    """
+    return _AMPERSAND_ABBREVIATION_DOT.sub(" ", text)
+
+
 def _squash(value: str) -> str:
     return " ".join(value.split())
 
@@ -104,7 +127,34 @@ def _in_list_context(text: str, start: int, end: int, section: str) -> bool:
     after = text[end:line_end].lstrip()
     before_ok = not before or before[-1] in _DELIMITERS
     after_ok = not after or after[0] in _DELIMITERS
-    return before_ok and after_ok
+    if before_ok and after_ok:
+        return True
+    # A tool named in a sentence: "using Excel", "in R", "Excel sheets". The word before must be a
+    # preposition that introduces a tool, and the next word must not turn it into a verb phrase.
+    previous = re.search(r"([A-Za-z]+)$", before)
+    following = re.match(r"([A-Za-z]+)", after)
+    after_word = following.group(1).lower() if following else ""
+    if previous and previous.group(1).lower() in _TOOL_PREPOSITIONS:
+        return after_word not in _VERB_FOLLOWERS
+    return after_word in _TOOL_NOUNS
+
+
+_LIST_SEPARATORS = (",", ";", "|")
+
+
+def _is_category_label(text: str, start: int, end: int) -> bool:
+    """True for a heading-like label that introduces a list: "Operating Systems: Linux, Windows".
+
+    The label names a group of skills; the skills are the items after the colon. A line such as
+    "Python: advanced" (no list follows) is a claim about the skill and is kept.
+    """
+    line_start = text.rfind("\n", 0, start) + 1
+    line_end = text.find("\n", end)
+    line_end = len(text) if line_end == -1 else line_end
+    if text[line_start:start].strip(" \t-*>•·"):
+        return False  # something other than a bullet comes before it on the line
+    rest = text[end:line_end].lstrip()
+    return rest.startswith(":") and any(sep in rest for sep in _LIST_SEPARATORS)
 
 
 def _exact_mentions(
@@ -124,6 +174,8 @@ def _exact_mentions(
                 text, span.start_char, span.end_char, section_at(sections, span.start_char)
             ):
                 continue
+        if _is_category_label(text, span.start_char, span.end_char):
+            continue
         candidates.append(span)
 
     # Several matches can overlap ("AWS" inside "AWS Lambda"): keep the longest.
@@ -134,10 +186,21 @@ def _exact_mentions(
     return mentions
 
 
-def _is_plural_variant(candidate: str, choice: str) -> bool:
+def _differs_only_by_plural(candidate: str, choice: str) -> bool:
     """'microservice' vs 'microservices': the same word, singular or plural."""
     short, long_ = sorted((candidate, choice), key=len)
-    return long_ in (short + "s", short + "es") and len(short) >= _MIN_FUZZY_LEN - 1
+    return long_ in (short + "s", short + "es")
+
+
+def _is_singular_of_plural_name(candidate: str, choice: str) -> bool:
+    """The text has the singular of a plural skill name ('algorithm' for 'Algorithms').
+
+    Names that merely end in "-ics" are subjects, not plurals ('Robotics', 'Statistics')."""
+    return (
+        _differs_only_by_plural(candidate, choice)
+        and len(candidate) < len(choice)
+        and (not choice.endswith("ics"))
+    )
 
 
 def _fuzzy_mentions(
@@ -176,8 +239,14 @@ def _fuzzy_mentions(
             skill_id = matcher.fuzzy_choices[choice]
             if skill_id in found_skills:
                 continue
-            kind: Via = "variant" if _is_plural_variant(candidate, choice) else "fuzzy"
-            scored.append(Mention(skill_id, start, end, text[start:end], kind, score))
+            if len(_WORDS.findall(candidate)) != len(_WORDS.findall(choice)):
+                continue  # "objective" is not "objective c"
+            if _differs_only_by_plural(candidate, choice) and not (
+                choice in matcher.canonical_names and _is_singular_of_plural_name(candidate, choice)
+            ):
+                # A singular or plural of a mere alias ("inverters") is not evidence of the skill.
+                continue
+            scored.append(Mention(skill_id, start, end, text[start:end], "fuzzy", score))
 
     # 2. Keep the best-scoring candidates that do not overlap each other (higher score first).
     accepted: list[Mention] = []
@@ -185,18 +254,12 @@ def _fuzzy_mentions(
         if not any(mention.start < a.end and a.start < mention.end for a in accepted):
             accepted.append(mention)
 
-    # 3. A skill is either a plural/singular variant or a fuzzy match, decided by its first hit.
-    chosen: dict[str, Via] = {}
-    results: list[Mention] = []
-    for mention in sorted(accepted, key=lambda m: m.start):
-        if chosen.setdefault(mention.skill_id, mention.via) == mention.via:
-            results.append(mention)
-    return results
+    return sorted(accepted, key=lambda m: m.start)
 
 
 def find_mentions(text: str, sections: list[Section], matcher: SkillMatcher) -> list[Mention]:
     """All skill mentions in the text, sorted by position. Pure: same input, same output."""
-    doc = matcher.nlp.make_doc(text)
+    doc = matcher.nlp.make_doc(_for_tokenizer(text))
     exact = _exact_mentions(text, doc, sections, matcher)
     fuzzy = _fuzzy_mentions(text, doc, exact, matcher)
     return sorted([*exact, *fuzzy], key=lambda m: (m.start, m.end))

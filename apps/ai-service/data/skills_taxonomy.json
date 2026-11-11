@@ -213,6 +213,9 @@
       ],
       "exact_case": [
         "ASM"
+      ],
+      "context_required": [
+        "Assembly"
       ]
     },
     {
@@ -1100,8 +1103,7 @@
       "category": "Data and analytics",
       "aliases": [
         "business intelligence",
-        "dashboard development",
-        "dashboards"
+        "dashboard development"
       ],
       "context_required": [
         "BI"
@@ -1301,7 +1303,9 @@
       "category": "Machine learning and AI",
       "aliases": [
         "linear regression",
-        "logistic regression"
+        "logistic regression",
+        "regression model",
+        "regression models"
       ]
     },
     {
@@ -1318,12 +1322,7 @@
       "id": "data-structures",
       "name": "Data Structures",
       "category": "Software engineering",
-      "aliases": [
-        "data structures and algorithms"
-      ],
-      "exact_case": [
-        "DSA"
-      ]
+      "aliases": []
     },
     {
       "id": "algorithms",
@@ -1960,6 +1959,9 @@
         "can communication",
         "can protocol",
         "canbus"
+      ],
+      "context_required": [
+        "CAN"
       ]
     },
     {
@@ -2004,6 +2006,9 @@
         "pcb designing",
         "pcb layout",
         "printed circuit board design"
+      ],
+      "exact_case": [
+        "PCB"
       ]
     },
     {
@@ -2733,6 +2738,7 @@
       "aliases": [
         "ac drives",
         "dc drives",
+        "variable frequency drive",
         "variable frequency drives",
         "vfd"
       ]
@@ -4145,11 +4151,7 @@
       "category": "Professional skills",
       "aliases": [
         "literature review",
-        "research and development",
         "research methodology"
-      ],
-      "exact_case": [
-        "R&D"
       ]
     },
     {
