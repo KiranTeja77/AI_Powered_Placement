@@ -6,7 +6,11 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: { alias: { '@': path.resolve(import.meta.dirname, 'src') } },
-  server: { port: 5173 },
+  server: {
+    port: 5173,
+    // Same-origin API access in dev: the refresh cookie and CORS need no special handling.
+    proxy: { '/api': 'http://localhost:8080' },
+  },
   test: {
     environment: 'jsdom',
     globals: true,
