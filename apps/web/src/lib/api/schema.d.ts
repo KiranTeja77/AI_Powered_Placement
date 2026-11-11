@@ -4,6 +4,22 @@
  */
 
 export interface paths {
+    "/api/v1/resumes/analyze": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["analyze"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/password": {
         parameters: {
             query?: never;
@@ -116,6 +132,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/resumes/analyses/{id}/skills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateSkills"];
+        trace?: never;
+    };
+    "/api/v1/skills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["skills"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["roles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/resumes/analyses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/resumes/analyses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me": {
         parameters: {
             query?: never;
@@ -155,7 +251,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["list"];
+        get: operations["list_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -168,6 +264,183 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AnalyzeRequest: {
+            text: string;
+            targetRoles?: string[];
+        };
+        AnalysisBreakdown: {
+            importance?: string;
+            /** Format: int32 */
+            weight?: number;
+            /** Format: int32 */
+            matched?: number;
+            /** Format: int32 */
+            partial?: number;
+            /** Format: int32 */
+            possible?: number;
+            /** Format: int32 */
+            missing?: number;
+            /** Format: double */
+            earned?: number;
+            /** Format: double */
+            maximum?: number;
+        };
+        AnalysisCgpa: {
+            kind?: string;
+            /** Format: double */
+            value?: number;
+            /** Format: double */
+            scale?: number;
+            /** Format: int32 */
+            start?: number;
+            /** Format: int32 */
+            end?: number;
+            text?: string;
+        };
+        AnalysisDetail: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            targetRoles?: components["schemas"]["TargetRole"][];
+            result?: components["schemas"]["AnalysisResult"];
+            edits?: components["schemas"]["SkillEdits"];
+            effective?: components["schemas"]["EffectiveAnalysis"];
+        };
+        AnalysisEducation: {
+            degree?: string;
+            /** Format: int32 */
+            start?: number;
+            /** Format: int32 */
+            end?: number;
+            line?: string;
+        };
+        AnalysisEvidence: {
+            /** Format: int32 */
+            start?: number;
+            /** Format: int32 */
+            end?: number;
+            matchedText?: string;
+            section?: string;
+            snippet?: string;
+            /** Format: int32 */
+            snippetStart?: number;
+        };
+        AnalysisFields: {
+            emails?: components["schemas"]["AnalysisSpan"][];
+            phones?: components["schemas"]["AnalysisSpan"][];
+            links?: components["schemas"]["AnalysisLink"][];
+            education?: components["schemas"]["AnalysisEducation"][];
+            cgpa?: components["schemas"]["AnalysisCgpa"];
+            projectTitles?: components["schemas"]["AnalysisSpan"][];
+        };
+        AnalysisGapItem: {
+            skillId?: string;
+            name?: string;
+            importance?: string;
+            /** Format: int32 */
+            weight?: number;
+            status?: string;
+            /** Format: double */
+            strength?: number;
+            /** Format: double */
+            points?: number;
+        };
+        AnalysisLink: {
+            kind?: string;
+            /** Format: int32 */
+            start?: number;
+            /** Format: int32 */
+            end?: number;
+            text?: string;
+        };
+        AnalysisResult: {
+            engineVersion?: string;
+            taxonomyVersion?: string;
+            /** Format: int32 */
+            textLength?: number;
+            sections?: components["schemas"]["AnalysisSection"][];
+            fields?: components["schemas"]["AnalysisFields"];
+            skills?: components["schemas"]["AnalysisSkill"][];
+            roles?: components["schemas"]["RoleReadiness"][];
+            suggestions?: components["schemas"]["AnalysisSuggestion"][];
+        };
+        AnalysisSection: {
+            name?: string;
+            heading?: string;
+            /** Format: int32 */
+            start?: number;
+            /** Format: int32 */
+            end?: number;
+        };
+        AnalysisSkill: {
+            id?: string;
+            name?: string;
+            category?: string;
+            status?: string;
+            grade?: string;
+            /** Format: double */
+            strength?: number;
+            countsTowardScore?: boolean;
+            /** Format: int32 */
+            mentionCount?: number;
+            evidence?: components["schemas"]["AnalysisEvidence"][];
+            /** Format: double */
+            similarity?: number;
+        };
+        AnalysisSpan: {
+            /** Format: int32 */
+            start?: number;
+            /** Format: int32 */
+            end?: number;
+            text?: string;
+        };
+        AnalysisSuggestion: {
+            id?: string;
+            kind?: string;
+            priority?: string;
+            message?: string;
+            reason?: string;
+            skills?: string[];
+        };
+        EffectiveAnalysis: {
+            skills?: components["schemas"]["EffectiveSkill"][];
+            roles?: components["schemas"]["RoleReadiness"][];
+        };
+        EffectiveSkill: {
+            id?: string;
+            name?: string;
+            category?: string;
+            /** Format: double */
+            strength?: number;
+            grade?: string;
+            source?: string;
+        };
+        RoleReadiness: {
+            roleId?: string;
+            name?: string;
+            /** Format: double */
+            score?: number;
+            /** Format: double */
+            earned?: number;
+            /** Format: double */
+            maximum?: number;
+            byImportance?: components["schemas"]["AnalysisBreakdown"][];
+            items?: components["schemas"]["AnalysisGapItem"][];
+        };
+        SkillEdits: {
+            confirmedSkillIds?: string[];
+            removedSkillIds?: string[];
+            addedSkillIds?: string[];
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        TargetRole: {
+            slug?: string;
+            name?: string;
+        };
         ChangePasswordRequest: {
             currentPassword: string;
             newPassword?: string;
@@ -225,6 +498,54 @@ export interface components {
             /** Format: email */
             email: string;
         };
+        UpdateSkillsRequest: {
+            confirmedSkillIds: string[];
+            removedSkillIds: string[];
+            addedSkillIds: string[];
+        };
+        SkillResponse: {
+            slug?: string;
+            name?: string;
+            category?: string;
+        };
+        RoleResponse: {
+            slug?: string;
+            name?: string;
+            summary?: string;
+            branches?: string[];
+            skills?: components["schemas"]["RoleSkillResponse"][];
+        };
+        RoleSkillResponse: {
+            slug?: string;
+            name?: string;
+            category?: string;
+            importance?: string;
+        };
+        AnalysisSummary: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            targetRoles?: components["schemas"]["TargetRole"][];
+            topRole?: components["schemas"]["TargetRole"];
+            /** Format: double */
+            topScore?: number;
+            /** Format: int32 */
+            skillCount?: number;
+            edited?: boolean;
+            engineVersion?: string;
+        };
+        PageResponseAnalysisSummary: {
+            items?: components["schemas"]["AnalysisSummary"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            size?: number;
+            /** Format: int64 */
+            totalItems?: number;
+            /** Format: int32 */
+            totalPages?: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -234,6 +555,30 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    analyze: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyzeRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AnalysisDetail"];
+                };
+            };
+        };
+    };
     changePassword: {
         parameters: {
             query?: never;
@@ -390,6 +735,117 @@ export interface operations {
             };
         };
     };
+    updateSkills: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSkillsRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AnalysisDetail"];
+                };
+            };
+        };
+    };
+    skills: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["SkillResponse"][];
+                };
+            };
+        };
+    };
+    roles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["RoleResponse"][];
+                };
+            };
+        };
+    };
+    list: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageResponseAnalysisSummary"];
+                };
+            };
+        };
+    };
+    get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AnalysisDetail"];
+                };
+            };
+        };
+    };
     current: {
         parameters: {
             query?: never;
@@ -432,7 +888,7 @@ export interface operations {
             };
         };
     };
-    list: {
+    list_1: {
         parameters: {
             query?: never;
             header?: never;
