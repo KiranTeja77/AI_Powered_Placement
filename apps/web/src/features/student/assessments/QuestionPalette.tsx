@@ -41,7 +41,7 @@ export function QuestionPalette({ ids, current, answered, flagged, onGo }: Quest
                   isAnswered
                     ? 'border-primary bg-primary-subtle text-text'
                     : 'border-border bg-surface text-text',
-                  isCurrent && 'ring-2 ring-primary',
+                  isCurrent && 'outline-2 outline-offset-1 outline-primary',
                 )}
               >
                 {i + 1}

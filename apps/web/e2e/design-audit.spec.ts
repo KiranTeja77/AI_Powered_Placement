@@ -29,6 +29,9 @@ export async function audit(page: Page): Promise<Violation[]> {
       if (cs.display === 'none') continue
       // Toasts are popovers: they carry the popover shadow and sonner's own enter animation.
       if (el.closest('[data-sonner-toaster]')) continue
+      // The code editor is a third-party widget (cursor blink, hover widgets); its theme comes
+      // from our tokens, but its internal DOM is not ours to audit.
+      if (el.closest('.monaco-editor')) continue
       if (cs.backgroundImage.includes('gradient')) {
         found.push({ rule: 'no gradients', where: describe(el), value: cs.backgroundImage })
       }
@@ -254,6 +257,61 @@ test.describe('resume screens', () => {
         await expect(page.getByRole('dialog', { name: 'Delete this analysis' })).toBeVisible()
         await shot('resume-delete-dialog')
         expect(await audit(page), 'delete dialog').toEqual([])
+      })
+    }
+  }
+})
+
+/** Every student screen, with no data behind it: each must show its designed empty state. */
+const STUDENT_ROUTES = [
+  { name: 'overview', path: '/s' },
+  { name: 'onboarding', path: '/s/onboarding' },
+  { name: 'profile', path: '/s/profile' },
+  { name: 'roadmap', path: '/s/roadmap' },
+  { name: 'training-technical', path: '/s/training/technical' },
+  { name: 'training-non-technical', path: '/s/training/non-technical' },
+  { name: 'lesson', path: '/s/training/topic/lesson' },
+  { name: 'coding', path: '/s/practice/coding/problem' },
+  { name: 'assessments', path: '/s/assessments' },
+  { name: 'assessments-in-progress', path: '/s/assessments?tab=in_progress' },
+  { name: 'assessments-completed', path: '/s/assessments?tab=completed' },
+  { name: 'assessment-start', path: '/s/assessments/sample/start' },
+  { name: 'assessment-take', path: '/s/assessments/sample/take' },
+  { name: 'result', path: '/s/results/attempt' },
+  { name: 'progress', path: '/s/progress' },
+  { name: 'interviews', path: '/s/interviews' },
+  { name: 'drives', path: '/s/drives' },
+  { name: 'drive', path: '/s/drives/sample' },
+  { name: 'feedback', path: '/s/feedback' },
+] as const
+
+test.describe('student screens', () => {
+  for (const viewport of VIEWPORTS) {
+    for (const theme of THEMES) {
+      test(`student screens at ${viewport.name}px, ${theme}`, async ({ page, request }) => {
+        test.setTimeout(180_000)
+        const student = await registerViaApi(request)
+        await page.addInitScript((t) => localStorage.setItem('theme', t), theme)
+        await page.setViewportSize({ width: viewport.width, height: viewport.height })
+        await signIn(page, student.email)
+
+        const failures: Record<string, Violation[]> = {}
+        for (const route of STUDENT_ROUTES) {
+          await page.goto(route.path)
+          await expect(page.getByRole('heading', { level: 1 }), route.path).toBeVisible()
+          // Monaco is served unbundled by the dev server, so its first load is slow.
+          if (route.name === 'coding') {
+            await expect(page.locator('.monaco-editor')).toBeVisible({ timeout: 60_000 })
+          }
+          await page.waitForLoadState('networkidle')
+          await page.screenshot({
+            path: `e2e/screenshots/student-${route.name}-${viewport.name}-${theme}.png`,
+            fullPage: true,
+          })
+          const violations = await audit(page)
+          if (violations.length > 0) failures[route.path] = violations
+        }
+        expect(failures, JSON.stringify(failures, null, 2)).toEqual({})
       })
     }
   }

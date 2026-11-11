@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCodingProblem } from '@/lib/api/pending'
 import { Section } from '../common/Section'
 import type { EditorLanguage } from './CodeEditor'
@@ -32,18 +32,20 @@ const LANGUAGES: { value: EditorLanguage; label: string }[] = [
 /** A disabled button that still explains itself to mouse and keyboard users. */
 function Unavailable({ label, variant }: { label: string; variant?: 'primary' | 'secondary' }) {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        {/* The span takes focus and hover, because a disabled button does neither. */}
-        <span tabIndex={0} className="inline-flex rounded-md">
-          <Button variant={variant} disabled aria-disabled="true">
-            {label}
-            <span className="sr-only">, not available yet</span>
-          </Button>
-        </span>
-      </TooltipTrigger>
-      <TooltipContent>Not available yet</TooltipContent>
-    </Tooltip>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          {/* The span takes focus and hover, because a disabled button does neither. */}
+          <span tabIndex={0} className="inline-flex rounded-md">
+            <Button variant={variant} disabled aria-disabled="true">
+              {label}
+              <span className="sr-only">, not available yet</span>
+            </Button>
+          </span>
+        </TooltipTrigger>
+        <TooltipContent>Not available yet</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 
