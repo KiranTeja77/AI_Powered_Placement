@@ -108,3 +108,26 @@ test('forgot password always shows the same confirmation', async ({ page }) => {
   await page.getByRole('button', { name: 'Send reset link' }).click()
   await expect(page.getByText(/If an account exists for/)).toBeVisible()
 })
+
+test('two tabs refreshing at the same moment both stay signed in', async ({ context }) => {
+  const student = newStudent()
+  const first = await context.newPage()
+  await register(first, student)
+  await signIn(first, student.email)
+  await expect(first).toHaveURL(/\/s$/)
+
+  const second = await context.newPage()
+  await second.goto('/s')
+  await expect(second).toHaveURL(/\/s$/)
+
+  // Reload both at once: each starts a silent refresh with the same cookie.
+  await Promise.all([first.reload(), second.reload()])
+  await expect(first).toHaveURL(/\/s$/)
+  await expect(second).toHaveURL(/\/s$/)
+  await expect(first.getByRole('button', { name: 'Account menu' })).toBeVisible()
+  await expect(second.getByRole('button', { name: 'Account menu' })).toBeVisible()
+
+  // The session is still alive afterwards: the server never saw a replayed token.
+  await first.reload()
+  await expect(first).toHaveURL(/\/s$/)
+})
