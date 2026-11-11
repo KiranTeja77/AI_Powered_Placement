@@ -95,7 +95,7 @@ Dashboard, GitHub, Atlassian). It must NOT look AI-generated.
 | `--success`        | #1E7A4C                                         | #4FBF86        | Eligible, matched, passed                      |
 | `--warning`        | #A85B0A                                         | #E0A24A        | Partial, needs review, unknown                 |
 | `--danger`         | #B42318                                         | #F07167        | Missing, not eligible, errors                  |
-| `--chart-1..6`     | #1F5A7A #4C8F6B #C98A3A #7D5BA6 #B5524A #6A7A8C | +10% lightness | Max 6 series                                   |
+| `--chart-1..6`     | #1F5A7A #4C8F6B #C98A3A #7D8530 #B5524A #6A7A8C | +10% lightness | Max 6 series                                   |
 
 ### Type, spacing, shape
 
