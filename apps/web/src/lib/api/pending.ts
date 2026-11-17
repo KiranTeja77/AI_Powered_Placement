@@ -7,6 +7,17 @@
  */
 
 import type {
+  DepartmentReadiness,
+  EligibilityReport,
+  HeatmapCell,
+  ParticipationRow,
+  PlacementRow,
+  ShortlistReport,
+  TpDriveRow,
+  TrendPoint,
+  UpcomingDriveRow,
+} from './tp-types'
+import type {
   FollowUp,
   MentoredStudent,
   MentoringNote,
@@ -173,6 +184,41 @@ export const useProctorEvents = (attemptId: string | null) => {
   void attemptId
   return usePendingList<ProctorEvent>()
 }
+
+// T&P screens.
+
+/** TODO(api): GET /api/v1/tp/readiness/departments -> DepartmentReadiness[] */
+export const useDepartmentReadiness = () => usePendingList<DepartmentReadiness>()
+
+/** TODO(api): GET /api/v1/tp/participation -> ParticipationRow[] */
+export const useTestParticipation = () => usePendingList<ParticipationRow>()
+
+/** TODO(api): GET /api/v1/tp/drives?status=upcoming -> UpcomingDriveRow[] */
+export const useTpUpcomingDrives = () => usePendingList<UpcomingDriveRow>()
+
+/** TODO(api): GET /api/v1/tp/analytics/heatmap?department=&semester= -> HeatmapCell[] */
+export const useGapHeatmap = () => usePendingList<HeatmapCell>()
+
+/** TODO(api): GET /api/v1/tp/analytics/trends?department= -> TrendPoint[] */
+export const useSemesterTrends = () => usePendingList<TrendPoint>()
+
+/** TODO(api): GET /api/v1/tp/drives -> TpDriveRow[] */
+export const useTpDrives = () => usePendingList<TpDriveRow>()
+
+/** TODO(api): GET /api/v1/tp/drives/{id}/eligibility -> EligibilityReport */
+export const useDriveEligibility = (driveId: string) => {
+  void driveId
+  return usePendingItem<EligibilityReport>()
+}
+
+/** TODO(api): GET /api/v1/tp/drives/{id}/shortlist -> ShortlistReport */
+export const useDriveShortlist = (driveId: string) => {
+  void driveId
+  return usePendingItem<ShortlistReport>()
+}
+
+/** TODO(api): GET /api/v1/tp/placements -> PlacementRow[] */
+export const usePlacements = () => usePendingList<PlacementRow>()
 
 // Intended endpoints for the screens that use the hooks above. Each is a TODO(api) until built.
 // TODO(api): GET /api/v1/student/overview            -> StudentOverview
