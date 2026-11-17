@@ -118,7 +118,11 @@ test('two tabs refreshing at the same moment both stay signed in', async ({ cont
 
   const second = await context.newPage()
   await second.goto('/s')
-  await expect(second).toHaveURL(/\/s$/)
+  // The URL is /s while the page is still refreshing its session. Reloading then would abandon a
+  // refresh the server has already rotated, losing the new cookie, which is a different scenario
+  // from the one under test. Wait until the page is signed in, so both tabs start from rest.
+  await expect(second.getByRole('button', { name: 'Account menu' })).toBeVisible()
+  await expect(first.getByRole('button', { name: 'Account menu' })).toBeVisible()
 
   // Reload both at once: each starts a silent refresh with the same cookie.
   await Promise.all([first.reload(), second.reload()])
