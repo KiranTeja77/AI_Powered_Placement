@@ -13,6 +13,8 @@ import CareerPage from '@/features/career/CareerPage'
 import { ForbiddenPage, NotFoundPage, ServerErrorPage } from '@/features/errors/ErrorPages'
 import AnalysisPage from '@/features/resume/AnalysisPage'
 import FacultyOverviewPage from '@/features/faculty/overview/FacultyOverviewPage'
+import QuestionFormPage from '@/features/faculty/questions/QuestionFormPage'
+import QuestionsPage from '@/features/faculty/questions/QuestionsPage'
 import MentoringPage from '@/features/faculty/mentoring/MentoringPage'
 import Student360Page from '@/features/faculty/students/Student360Page'
 import StudentsPage from '@/features/faculty/students/StudentsPage'
@@ -113,6 +115,9 @@ export default function App() {
                 <Route path="/f/students" element={<StudentsPage />} />
                 <Route path="/f/students/:id" element={<Student360Page />} />
                 <Route path="/f/mentoring" element={<MentoringPage />} />
+                <Route path="/f/questions" element={<QuestionsPage />} />
+                <Route path="/f/questions/new" element={<QuestionFormPage />} />
+                <Route path="/f/questions/:id" element={<QuestionFormPage />} />
               </>
             )}
             <Route path={`${ROLE_HOME[role]}/*`} element={<RolePlaceholder />} />
