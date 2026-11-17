@@ -20,7 +20,7 @@ export function HeatmapGrid({ cells }: { cells: HeatmapCell[] }) {
 
   return (
     <div className="space-y-3">
-      <div className="overflow-x-auto">
+      <div className="relative overflow-x-auto">
         <table className="w-full border-collapse text-base">
           <caption className="sr-only">
             Average score by department and topic. Lower scores are bigger gaps.
