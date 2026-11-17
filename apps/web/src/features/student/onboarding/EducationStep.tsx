@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TextField } from '@/components/TextField'
 import { Button } from '@/components/ui/button'
-import { notifyUnavailable } from '../common/notify'
+import { notifyUnavailable } from '@/lib/notify'
 import { educationSchema, type EducationValues } from '../profile/schemas'
 
 /** Step 2. Self-reported education. Your college's verified record is separate. */

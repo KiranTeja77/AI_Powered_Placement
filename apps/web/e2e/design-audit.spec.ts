@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { chooseRole, registerViaApi, sampleResume, signIn } from './helpers.ts'
+import { chooseRole, registerAs, registerViaApi, sampleResume, signIn } from './helpers.ts'
 
 /**
  * Screenshots /dev/components at 375 and 1280 px in light and dark, and checks the rendered DOM
@@ -316,3 +316,59 @@ test.describe('student screens', () => {
     }
   }
 })
+
+/**
+ * Audits a list of routes at both widths and both themes. Each route must show a level-1 heading
+ * (so a crash or a blank page fails) and pass the design rules.
+ */
+function auditRoutes(
+  title: string,
+  role: 'FACULTY' | 'TP_HEAD',
+  routes: readonly { name: string; path: string }[],
+  prefix: string,
+) {
+  test.describe(title, () => {
+    for (const viewport of VIEWPORTS) {
+      for (const theme of THEMES) {
+        test(`${title} at ${viewport.name}px, ${theme}`, async ({ page, request }) => {
+          test.setTimeout(240_000)
+          const user = await registerAs(request, role)
+          await page.addInitScript((t) => localStorage.setItem('theme', t), theme)
+          await page.setViewportSize({ width: viewport.width, height: viewport.height })
+          await signIn(page, user.email, user.home)
+
+          const failures: Record<string, Violation[]> = {}
+          for (const route of routes) {
+            await page.goto(route.path)
+            await expect(page.getByRole('heading', { level: 1 }), route.path).toBeVisible()
+            await page.waitForLoadState('networkidle')
+            await page.screenshot({
+              path: `e2e/screenshots/${prefix}-${route.name}-${viewport.name}-${theme}.png`,
+              fullPage: true,
+            })
+            const violations = await audit(page)
+            if (violations.length > 0) failures[route.path] = violations
+          }
+          expect(failures, JSON.stringify(failures, null, 2)).toEqual({})
+        })
+      }
+    }
+  })
+}
+
+auditRoutes(
+  'faculty screens',
+  'FACULTY',
+  [
+    { name: 'overview', path: '/f' },
+    { name: 'students', path: '/f/students' },
+    { name: 'student', path: '/f/students/sample' },
+    { name: 'mentoring', path: '/f/mentoring' },
+    { name: 'questions', path: '/f/questions' },
+    { name: 'question-new', path: '/f/questions/new' },
+    { name: 'question-edit', path: '/f/questions/sample' },
+    { name: 'assessment-new', path: '/f/assessments/new' },
+    { name: 'proctoring', path: '/f/proctoring' },
+  ],
+  'faculty',
+)

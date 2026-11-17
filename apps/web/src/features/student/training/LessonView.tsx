@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import type { Lesson, PracticeQuestion } from '@/lib/api/student-types'
-import { Section } from '../common/Section'
+import { Section } from '@/components/Section'
 
 /** Hints open one at a time, gentlest first, so the student can stop as soon as they are unstuck. */
 function Hints({ hints }: { hints: string[] }) {

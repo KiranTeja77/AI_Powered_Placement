@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { TextField } from '@/components/TextField'
 import { Button } from '@/components/ui/button'
 import { useCurrentUser } from '@/features/auth/auth-context'
-import { notifyUnavailable } from '../common/notify'
+import { notifyUnavailable } from '@/lib/notify'
 import { DepartmentField } from '../profile/DepartmentField'
 import { basicsSchema, type BasicsValues } from '../profile/schemas'
 

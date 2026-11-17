@@ -7,6 +7,16 @@
  */
 
 import type {
+  FollowUp,
+  MentoredStudent,
+  MentoringNote,
+  ProctorAttempt,
+  ProctorEvent,
+  QuestionRow,
+  RecentResult,
+  Student360,
+} from './faculty-types'
+import type {
   Assessment,
   AssessmentQuestion,
   AttemptResult,
@@ -122,6 +132,47 @@ export const useDrive = (id: string) => {
 
 /** TODO(api): GET /api/v1/student/feedback -> FeedbackNote[] */
 export const useFeedback = () => usePendingList<FeedbackNote>()
+
+// Faculty screens.
+
+/** TODO(api): GET /api/v1/faculty/students -> MentoredStudent[] (the faculty member's mentees) */
+export const useMentoredStudents = () => usePendingList<MentoredStudent>()
+
+/** TODO(api): GET /api/v1/faculty/students?status=needs_attention -> MentoredStudent[] */
+export const useStudentsNeedingAttention = () => usePendingList<MentoredStudent>()
+
+/** TODO(api): GET /api/v1/faculty/results?limit=10 -> RecentResult[] */
+export const useRecentResults = () => usePendingList<RecentResult>()
+
+/** TODO(api): GET /api/v1/faculty/follow-ups?due=soon -> FollowUp[] */
+export const useFollowUpsDue = () => usePendingList<FollowUp>()
+
+/** TODO(api): GET /api/v1/faculty/students/{id} -> Student360 */
+export const useStudent360 = (id: string) => {
+  void id
+  return usePendingItem<Student360>()
+}
+
+/** TODO(api): GET /api/v1/faculty/mentoring/notes -> MentoringNote[] */
+export const useMentoringNotes = () => usePendingList<MentoringNote>()
+
+/** TODO(api): GET /api/v1/questions -> QuestionRow[] */
+export const useQuestionBank = () => usePendingList<QuestionRow>()
+
+/** TODO(api): GET /api/v1/questions/{id} -> QuestionRow (full form values) */
+export const useQuestion = (id: string) => {
+  void id
+  return usePendingItem<QuestionRow>()
+}
+
+/** TODO(api): GET /api/v1/proctoring/attempts?status=pending -> ProctorAttempt[] */
+export const useProctorQueue = () => usePendingList<ProctorAttempt>()
+
+/** TODO(api): GET /api/v1/proctoring/attempts/{id}/events -> ProctorEvent[] */
+export const useProctorEvents = (attemptId: string | null) => {
+  void attemptId
+  return usePendingList<ProctorEvent>()
+}
 
 // Intended endpoints for the screens that use the hooks above. Each is a TODO(api) until built.
 // TODO(api): GET /api/v1/student/overview            -> StudentOverview

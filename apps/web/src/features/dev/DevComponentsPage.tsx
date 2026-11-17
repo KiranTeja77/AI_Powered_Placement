@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme/theme-context'
 import { DevComposites } from './DevComposites'
 import { DevControls } from './DevControls'
+import { DevFaculty } from './DevFaculty'
 import { DevOverlays } from './DevOverlays'
 import { DevStudent } from './DevStudent'
 
@@ -42,6 +43,7 @@ export default function DevComponentsPage() {
       <DevOverlays />
       <DevComposites />
       <DevStudent />
+      <DevFaculty />
     </main>
   )
 }

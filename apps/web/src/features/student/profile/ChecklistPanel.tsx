@@ -2,7 +2,7 @@ import { Check, Circle } from 'lucide-react'
 import { Link } from 'react-router'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Section } from '../common/Section'
+import { Section } from '@/components/Section'
 import { useProfileChecklist } from './completeness'
 
 /** The checklist behind the profile completeness figure. */

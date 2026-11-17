@@ -1,6 +1,6 @@
 import { PageHeader } from '@/components/PageHeader'
 import { useWeeklyTasks } from '@/lib/api/pending'
-import { notifyUnavailable } from '../common/notify'
+import { notifyUnavailable } from '@/lib/notify'
 import { RoadmapView } from './RoadmapView'
 
 export default function RoadmapPage() {

@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/PageHeader'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAssessments } from '@/lib/api/pending'
 import type { Assessment, AssessmentStatus } from '@/lib/api/student-types'
-import { formatDateTime, formatMinutes } from '../common/format'
+import { formatDateTime, formatMinutes } from '@/lib/format'
 
 const TABS: {
   status: AssessmentStatus

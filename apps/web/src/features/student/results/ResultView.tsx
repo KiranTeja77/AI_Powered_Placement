@@ -4,8 +4,8 @@ import { StatCard } from '@/components/StatCard'
 import { StatusBadge } from '@/components/StatusBadge'
 import { Progress } from '@/components/ui/progress'
 import type { AttemptResult } from '@/lib/api/student-types'
-import { formatClock, percent } from '../common/format'
-import { Section } from '../common/Section'
+import { formatClock, percent } from '@/lib/format'
+import { Section } from '@/components/Section'
 
 /** The result of one attempt: totals, accuracy by topic, the answer review and what to practise. */
 export function ResultView({ result }: { result: AttemptResult }) {
