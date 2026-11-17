@@ -5,7 +5,7 @@ import { ErrorState } from '@/components/ErrorState'
 import { PageHeader } from '@/components/PageHeader'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAssessment, useAssessmentQuestions } from '@/lib/api/pending'
-import { notifyUnavailable } from '../common/notify'
+import { notifyUnavailable } from '@/lib/notify'
 import { TestPlayer } from './TestPlayer'
 
 export default function TakePage() {

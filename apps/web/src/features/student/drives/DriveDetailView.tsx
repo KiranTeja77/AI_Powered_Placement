@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import type { CriterionStatus, Drive } from '@/lib/api/student-types'
-import { formatDate } from '../common/format'
-import { notifyUnavailable } from '../common/notify'
-import { Section } from '../common/Section'
+import { formatDate } from '@/lib/format'
+import { notifyUnavailable } from '@/lib/notify'
+import { Section } from '@/components/Section'
 
 const STATUS: Record<CriterionStatus, { label: string; tone: StatusTone }> = {
   met: { label: 'Met', tone: 'success' },

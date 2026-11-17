@@ -5,8 +5,8 @@ import { EmptyState } from '@/components/EmptyState'
 import { PageHeader } from '@/components/PageHeader'
 import { useTopicProgress } from '@/lib/api/pending'
 import type { TopicProgress } from '@/lib/api/student-types'
-import { formatDate } from '../common/format'
-import { Section } from '../common/Section'
+import { formatDate } from '@/lib/format'
+import { Section } from '@/components/Section'
 
 function Trend({ points }: { points: number | null }) {
   if (points === null) return <span className="text-text-muted">First attempt</span>

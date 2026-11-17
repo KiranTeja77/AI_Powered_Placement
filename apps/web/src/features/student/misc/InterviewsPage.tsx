@@ -6,7 +6,7 @@ import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge, type StatusTone } from '@/components/StatusBadge'
 import { useInterviews } from '@/lib/api/pending'
 import type { Interview } from '@/lib/api/student-types'
-import { formatDateTime } from '../common/format'
+import { formatDateTime } from '@/lib/format'
 
 const STATUS: Record<Interview['status'], { label: string; tone: StatusTone }> = {
   scheduled: { label: 'Scheduled', tone: 'info' },

@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge, type StatusTone } from '@/components/StatusBadge'
 import { useDrives } from '@/lib/api/pending'
 import type { DriveRow } from '@/lib/api/student-types'
-import { formatDate } from '../common/format'
+import { formatDate } from '@/lib/format'
 
 const ELIGIBILITY: Record<DriveRow['eligibility'], { label: string; tone: StatusTone }> = {
   eligible: { label: 'Eligible', tone: 'success' },

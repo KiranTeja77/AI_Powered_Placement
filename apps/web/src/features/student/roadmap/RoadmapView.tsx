@@ -5,8 +5,8 @@ import { StatusBadge, type StatusTone } from '@/components/StatusBadge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { Priority, WeeklyTask } from '@/lib/api/student-types'
-import { formatMinutes } from '../common/format'
-import { Section } from '../common/Section'
+import { formatMinutes } from '@/lib/format'
+import { Section } from '@/components/Section'
 
 const PRIORITY: Record<Priority, { label: string; tone: StatusTone }> = {
   high: { label: 'High priority', tone: 'danger' },

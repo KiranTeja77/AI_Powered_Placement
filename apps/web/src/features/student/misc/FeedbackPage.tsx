@@ -4,8 +4,8 @@ import { ErrorState } from '@/components/ErrorState'
 import { PageHeader } from '@/components/PageHeader'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFeedback } from '@/lib/api/pending'
-import { formatDate } from '../common/format'
-import { Section } from '../common/Section'
+import { formatDate } from '@/lib/format'
+import { Section } from '@/components/Section'
 
 export default function FeedbackPage() {
   const feedback = useFeedback()

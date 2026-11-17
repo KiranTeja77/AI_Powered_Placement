@@ -8,8 +8,8 @@ import { Label } from '@/components/ui/label'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { TrainingGroup } from '@/lib/api/student-types'
-import { percent } from '../common/format'
-import { Section } from '../common/Section'
+import { percent } from '@/lib/format'
+import { Section } from '@/components/Section'
 
 interface TrackViewProps {
   groups: TrainingGroup[]

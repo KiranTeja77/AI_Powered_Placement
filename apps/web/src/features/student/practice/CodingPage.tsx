@@ -16,7 +16,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCodingProblem } from '@/lib/api/pending'
-import { Section } from '../common/Section'
+import { Section } from '@/components/Section'
 import type { EditorLanguage } from './CodeEditor'
 
 // Monaco is large, so it loads only on this page.
