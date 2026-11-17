@@ -2,7 +2,11 @@ import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
   testDir: './e2e',
-  timeout: 30_000,
+  // The tests run against the real stack. Some steps legitimately take several seconds on a laptop
+  // (BCrypt at strength 12, the resume analyzer, Vite compiling a page on first visit), so the
+  // assertion timeout is 15 s. It only bounds how long a check polls; passing tests are not slower.
+  timeout: 60_000,
+  expect: { timeout: 15_000 },
   fullyParallel: false,
   workers: 1,
   reporter: [['list']],
