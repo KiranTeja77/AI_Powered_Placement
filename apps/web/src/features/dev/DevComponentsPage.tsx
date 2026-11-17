@@ -5,6 +5,7 @@ import { DevComposites } from './DevComposites'
 import { DevControls } from './DevControls'
 import { DevFaculty } from './DevFaculty'
 import { DevOverlays } from './DevOverlays'
+import { DevTp } from './DevTp'
 import { DevStudent } from './DevStudent'
 
 /** Development-only catalogue of every component and state. Not linked from the app. */
@@ -44,6 +45,7 @@ export default function DevComponentsPage() {
       <DevComposites />
       <DevStudent />
       <DevFaculty />
+      <DevTp />
     </main>
   )
 }

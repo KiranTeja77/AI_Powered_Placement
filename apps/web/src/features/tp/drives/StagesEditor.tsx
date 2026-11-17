@@ -21,7 +21,7 @@ export function StagesEditor({ control, register, errors }: StagesEditorProps) {
   const groupError = errors.stages?.root?.message ?? errors.stages?.message
   return (
     <fieldset className="grid gap-2">
-      <legend className="mb-1 text-sm font-medium text-text">Recruitment stages</legend>
+      <legend className="sr-only">Recruitment stages</legend>
       <ol className="grid gap-2">
         {fields.map((field, i) => {
           const nameError = errors.stages?.[i]?.name?.message

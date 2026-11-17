@@ -372,3 +372,19 @@ auditRoutes(
   ],
   'faculty',
 )
+
+auditRoutes(
+  'T&P screens',
+  'TP_HEAD',
+  [
+    { name: 'overview', path: '/tp' },
+    { name: 'analytics', path: '/tp/analytics' },
+    { name: 'drives', path: '/tp/drives' },
+    { name: 'drive-new', path: '/tp/drives/new' },
+    { name: 'eligibility', path: '/tp/drives/sample/eligibility' },
+    { name: 'shortlist', path: '/tp/drives/sample/shortlist' },
+    { name: 'academic-import', path: '/tp/academic-import' },
+    { name: 'placements', path: '/tp/placements' },
+  ],
+  'tp',
+)
