@@ -20,6 +20,14 @@ import ProctoringPage from '@/features/faculty/proctoring/ProctoringPage'
 import MentoringPage from '@/features/faculty/mentoring/MentoringPage'
 import Student360Page from '@/features/faculty/students/Student360Page'
 import StudentsPage from '@/features/faculty/students/StudentsPage'
+import AnalyticsPage from '@/features/tp/analytics/AnalyticsPage'
+import DriveFormPage from '@/features/tp/drives/DriveFormPage'
+import EligibilityPage from '@/features/tp/drives/EligibilityPage'
+import ShortlistPage from '@/features/tp/drives/ShortlistPage'
+import TpDrivesPage from '@/features/tp/drives/TpDrivesPage'
+import ImportPage from '@/features/tp/import/ImportPage'
+import TpOverviewPage from '@/features/tp/overview/TpOverviewPage'
+import PlacementsPage from '@/features/tp/placements/PlacementsPage'
 import AssessmentsPage from '@/features/student/assessments/AssessmentsPage'
 import StartPage from '@/features/student/assessments/StartPage'
 import TakePage from '@/features/student/assessments/TakePage'
@@ -122,6 +130,18 @@ export default function App() {
                 <Route path="/f/questions" element={<QuestionsPage />} />
                 <Route path="/f/questions/new" element={<QuestionFormPage />} />
                 <Route path="/f/questions/:id" element={<QuestionFormPage />} />
+              </>
+            )}
+            {role === 'TP_HEAD' && (
+              <>
+                <Route path="/tp" element={<TpOverviewPage />} />
+                <Route path="/tp/analytics" element={<AnalyticsPage />} />
+                <Route path="/tp/drives" element={<TpDrivesPage />} />
+                <Route path="/tp/drives/new" element={<DriveFormPage />} />
+                <Route path="/tp/drives/:id/eligibility" element={<EligibilityPage />} />
+                <Route path="/tp/drives/:id/shortlist" element={<ShortlistPage />} />
+                <Route path="/tp/academic-import" element={<ImportPage />} />
+                <Route path="/tp/placements" element={<PlacementsPage />} />
               </>
             )}
             <Route path={`${ROLE_HOME[role]}/*`} element={<RolePlaceholder />} />
