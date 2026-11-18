@@ -14,11 +14,7 @@ export default function RecruiterDrivePage() {
   return (
     <>
       <PageHeader
-        breadcrumbs={[
-          { label: 'Home', to: '/r' },
-          { label: 'Drives', to: '/r/drives' },
-          { label: d ? d.company : 'Drive' },
-        ]}
+        breadcrumbs={[{ label: 'Home', to: '/r' }, { label: d ? d.company : 'Drive' }]}
         title={d ? `${d.company}, ${d.role}` : 'Drive'}
         description={
           d

@@ -4,6 +4,7 @@ import { useTheme } from '@/lib/theme/theme-context'
 import { DevComposites } from './DevComposites'
 import { DevControls } from './DevControls'
 import { DevFaculty } from './DevFaculty'
+import { DevOps } from './DevOps'
 import { DevOverlays } from './DevOverlays'
 import { DevTp } from './DevTp'
 import { DevStudent } from './DevStudent'
@@ -46,6 +47,7 @@ export default function DevComponentsPage() {
       <DevStudent />
       <DevFaculty />
       <DevTp />
+      <DevOps />
     </main>
   )
 }

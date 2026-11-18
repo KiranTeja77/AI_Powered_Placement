@@ -39,10 +39,15 @@ export async function registerViaApi(request: APIRequestContext, student = newSt
   return student
 }
 
-export async function signIn(page: Page, identifier: string, home = /\/s$/) {
+export async function signIn(
+  page: Page,
+  identifier: string,
+  home: RegExp = /\/s$/,
+  password: string = PASSWORD,
+) {
   await page.goto('/login')
   await page.getByLabel('Email or roll number').fill(identifier)
-  await page.getByLabel('Password', { exact: true }).fill(PASSWORD)
+  await page.getByLabel('Password', { exact: true }).fill(password)
   await page.getByRole('button', { name: 'Sign in' }).click()
   await expect(page).toHaveURL(home)
 }
@@ -65,7 +70,7 @@ export type StaffRole = keyof typeof HOMES
 const MAILPIT = 'http://localhost:8025'
 
 /** The seeded administrator's credentials, from the same .env the stack runs with. */
-function adminCredentials() {
+export function adminCredentials() {
   const text = readFileSync(fileURLToPath(new URL('../../../.env', import.meta.url)), 'utf-8')
   const value = (key: string) => new RegExp(`^${key}=(.*)$`, 'm').exec(text)?.[1]?.trim() ?? ''
   return { email: value('ADMIN_EMAIL'), password: value('ADMIN_PASSWORD') }
@@ -121,4 +126,10 @@ export async function registerAs(request: APIRequestContext, role: StaffRole) {
   })
   expect(reset.status()).toBe(204)
   return { email, name: `E2E ${role}`, home: HOMES[role] }
+}
+
+/** Signs the seeded administrator in through the sign-in form. */
+export async function signInAsAdmin(page: Page) {
+  const { email, password } = adminCredentials()
+  await signIn(page, email, HOMES.ADMIN, password)
 }

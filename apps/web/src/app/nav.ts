@@ -74,10 +74,7 @@ export const NAV: Record<Role, NavItem[]> = {
     { label: 'Audit log', to: '/admin/audit', icon: ScrollText },
     { label: 'Settings', to: '/admin/settings', icon: Settings },
   ],
-  RECRUITER: [
-    { label: 'Overview', to: '/r', icon: LayoutDashboard, end: true },
-    { label: 'Drives', to: '/r/drives', icon: Briefcase },
-  ],
+  RECRUITER: [{ label: 'Overview', to: '/r', icon: LayoutDashboard, end: true }],
 }
 
 /** The nav item whose path is the longest prefix of the given pathname. */
