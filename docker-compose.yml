@@ -2,6 +2,7 @@ name: placewise
 
 services:
   postgres:
+    restart: unless-stopped
     image: postgres:18
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -19,6 +20,7 @@ services:
     networks: [backend]
 
   mailpit:
+    restart: unless-stopped
     image: axllent/mailpit:latest
     ports:
       - "8025:8025" # web UI
@@ -26,6 +28,7 @@ services:
     networks: [backend]
 
   ai-service:
+    restart: unless-stopped
     build: ./apps/ai-service
     # No published ports: reachable only from the api container on the internal network.
     expose:
@@ -33,6 +36,7 @@ services:
     networks: [internal]
 
   api:
+    restart: unless-stopped
     build:
       # Context is ./apps so the image can read ai-service/data (the shared skill and role catalogue).
       context: ./apps

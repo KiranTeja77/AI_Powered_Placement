@@ -23,6 +23,8 @@ public final class AdminDtos {
             String fullName,
             Role role,
             UserStatus status,
+            /** An admin-created account whose owner has not chosen a password yet. */
+            boolean invitePending,
             DepartmentRef department,
             String rollNo,
             Instant lastLoginAt,
@@ -36,4 +38,26 @@ public final class AdminDtos {
             UUID departmentId) {}
 
     public record UpdateStatusRequest(@NotNull UserStatus status) {}
+
+    /** Account counts for the admin overview. */
+    public record RoleCount(Role role, long total, long active) {}
+
+    public record AdminOverview(
+            long totalUsers,
+            long activeUsers,
+            long inactiveUsers,
+            long pendingInvites,
+            java.util.List<RoleCount> usersByRole) {}
+
+    /** What each role may do, derived from the rules the API enforces. */
+    public record PermissionMatrix(
+            java.util.List<RoleRef> roles,
+            java.util.List<PermissionRow> permissions,
+            java.util.Map<String, java.util.List<String>> grants) {}
+
+    public record RoleRef(String id, String label) {}
+
+    /** {@code access} is "public", "signed_in" or "roles". */
+    public record PermissionRow(String id, String label, String group, String access,
+            java.util.List<String> endpoints) {}
 }

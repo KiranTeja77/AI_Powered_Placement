@@ -291,4 +291,134 @@ class AdminUserControllerIntegrationTest extends IntegrationTestBase {
         setStatus(admin, second, "INACTIVE").andExpect(status().isOk());
         list(secondToken, "").andExpect(status().isUnauthorized());
     }
+
+    // ---- pending invites
+
+    private ResultActions resend(String token, UUID id) throws Exception {
+        return mvc.perform(post(USERS + "/" + id + "/resend-invite").header("Authorization", "Bearer " + token));
+    }
+
+    private UUID createStaff(String email, String role) throws Exception {
+        MvcResult created = create(admin, staff("New Staff", email, role, null)).andExpect(status().isCreated()).andReturn();
+        return UUID.fromString(read(created, "$.id"));
+    }
+
+    private void choosePassword(String token) throws Exception {
+        mvc.perform(postJson("/api/v1/auth/reset-password",
+                json("{\"token\":\"%s\",\"newPassword\":\"Chosen123Pass\"}", token))).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void anInvitedAccountIsPendingUntilItsOwnerChoosesAPassword() throws Exception {
+        createStaff("pending@college.edu", "RECRUITER");
+        list(admin, "?q=pending@").andExpect(jsonPath("$.items[0].invitePending").value(true));
+
+        choosePassword(mailer.lastToken());
+        list(admin, "?q=pending@").andExpect(jsonPath("$.items[0].invitePending").value(false));
+
+        // Accounts that registered or were never invited are not pending.
+        register("student@college.edu", "21CS001");
+        list(admin, "?q=student@").andExpect(jsonPath("$.items[0].invitePending").value(false));
+        list(admin, "?q=admin@").andExpect(jsonPath("$.items[0].invitePending").value(false));
+    }
+
+    @Test
+    void resendingInvalidatesTheOldLinkAndEmailsANewOneThatLastsADay() throws Exception {
+        UUID id = createStaff("resend@college.edu", "TP_HEAD");
+        String oldToken = mailer.lastToken();
+
+        resend(admin, id).andExpect(status().isOk()).andExpect(jsonPath("$.invitePending").value(true))
+                .andExpect(jsonPath("$.password").doesNotExist());
+        assertThat(mailer.sent()).hasSize(2);
+        assertThat(mailer.sent().get(1).to()).isEqualTo("resend@college.edu");
+        assertThat(mailer.sent().get(1).link()).contains("/set-password?token=");
+        String newToken = mailer.lastToken();
+        assertThat(newToken).isNotEqualTo(oldToken);
+
+        long hours = jdbc.queryForObject(
+                "select extract(epoch from (expires_at - created_at)) / 3600 from password_reset_token where used_at is null",
+                Long.class);
+        assertThat(hours).isEqualTo(24);
+
+        // The first link no longer works, the second does.
+        mvc.perform(postJson("/api/v1/auth/reset-password",
+                json("{\"token\":\"%s\",\"newPassword\":\"Chosen123Pass\"}", oldToken))).andExpect(status().isBadRequest());
+        choosePassword(newToken);
+    }
+
+    @Test
+    void thereIsNothingToResendOnceAPasswordIsChosenOrForAccountsThatNeverNeededOne() throws Exception {
+        UUID id = createStaff("done@college.edu", "RECRUITER");
+        choosePassword(mailer.lastToken());
+        int before = mailer.sent().size();
+        resend(admin, id).andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("no_pending_invite"));
+        resend(admin, adminId).andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("no_pending_invite"));
+        register("student@college.edu", "21CS001");
+        UUID student = jdbc.queryForObject("select id from app_user where email = 'student@college.edu'", UUID.class);
+        resend(admin, student).andExpect(status().isConflict());
+        resend(admin, UUID.randomUUID()).andExpect(status().isNotFound());
+        assertThat(mailer.sent()).hasSize(before);
+    }
+
+    @Test
+    void anInactiveAccountMustBeActivatedBeforeAnInviteIsResent() throws Exception {
+        UUID id = createStaff("inactive@college.edu", "RECRUITER");
+        setStatus(admin, id, "INACTIVE").andExpect(status().isOk()).andExpect(jsonPath("$.invitePending").value(true));
+        resend(admin, id).andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("account_inactive"));
+        setStatus(admin, id, "ACTIVE").andExpect(status().isOk());
+        resend(admin, id).andExpect(status().isOk());
+    }
+
+    @Test
+    void ifTheResentEmailFailsTheOldLinkStillWorks() throws Exception {
+        UUID id = createStaff("fail@college.edu", "RECRUITER");
+        String oldToken = mailer.lastToken();
+        mailer.failInvites(true);
+        resend(admin, id).andExpect(status().isServiceUnavailable()).andExpect(jsonPath("$.code").value("mail_unavailable"));
+        mailer.failInvites(false);
+        choosePassword(oldToken);
+    }
+
+    @Test
+    void onlyAdminsMayResendInvites() throws Exception {
+        UUID id = createStaff("target@college.edu", "RECRUITER");
+        insertUser("faculty@college.edu", "FACULTY", "ACTIVE");
+        resend(accessTokenFor("faculty@college.edu"), id).andExpect(status().isForbidden());
+        mvc.perform(post(USERS + "/" + id + "/resend-invite")).andExpect(status().isUnauthorized());
+    }
+
+    // ---- overview
+
+    @Test
+    void theOverviewCountsAccountsByRoleAndStatus() throws Exception {
+        register("s1@college.edu", "21CS001");
+        register("s2@college.edu", "21CS002");
+        insertUser("f1@college.edu", "FACULTY", "ACTIVE");
+        insertUser("f2@college.edu", "FACULTY", "INACTIVE");
+        createStaff("p1@college.edu", "RECRUITER");
+        createStaff("p2@college.edu", "RECRUITER");
+        UUID inactivePending = createStaff("p3@college.edu", "TP_HEAD");
+        setStatus(admin, inactivePending, "INACTIVE").andExpect(status().isOk());
+
+        mvc.perform(get("/api/v1/admin/overview").header("Authorization", "Bearer " + admin))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalUsers").value(8))
+                .andExpect(jsonPath("$.activeUsers").value(6))
+                .andExpect(jsonPath("$.inactiveUsers").value(2))
+                // Only active accounts count as waiting: an inactive one cannot use its link.
+                .andExpect(jsonPath("$.pendingInvites").value(2))
+                .andExpect(jsonPath("$.usersByRole.length()").value(5))
+                .andExpect(jsonPath("$.usersByRole[?(@.role=='STUDENT')].total").value(2))
+                .andExpect(jsonPath("$.usersByRole[?(@.role=='FACULTY')].total").value(2))
+                .andExpect(jsonPath("$.usersByRole[?(@.role=='FACULTY')].active").value(1))
+                .andExpect(jsonPath("$.usersByRole[?(@.role=='ADMIN')].total").value(1));
+    }
+
+    @Test
+    void theOverviewIsForAdminsOnly() throws Exception {
+        mvc.perform(get("/api/v1/admin/overview")).andExpect(status().isUnauthorized());
+        insertUser("faculty@college.edu", "FACULTY", "ACTIVE");
+        mvc.perform(get("/api/v1/admin/overview").header("Authorization", "Bearer " + accessTokenFor("faculty@college.edu")))
+                .andExpect(status().isForbidden());
+    }
 }
