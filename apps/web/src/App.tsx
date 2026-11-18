@@ -9,6 +9,7 @@ import LoginPage from '@/features/auth/LoginPage'
 import RegisterPage from '@/features/auth/RegisterPage'
 import ResetPasswordPage from '@/features/auth/ResetPasswordPage'
 import SetPasswordPage from '@/features/auth/SetPasswordPage'
+import AdminOverviewPage from '@/features/admin/overview/AdminOverviewPage'
 import AuditPage from '@/features/admin/audit/AuditPage'
 import DepartmentsPage from '@/features/admin/departments/DepartmentsPage'
 import RolesPage from '@/features/admin/roles/RolesPage'
@@ -144,6 +145,7 @@ export default function App() {
             )}
             {role === 'ADMIN' && (
               <>
+                <Route path="/admin" element={<AdminOverviewPage />} />
                 <Route path="/admin/users" element={<UsersPage />} />
                 <Route path="/admin/departments" element={<DepartmentsPage />} />
                 <Route path="/admin/roles" element={<RolesPage />} />

@@ -34,18 +34,22 @@ class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(a -> a
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/v1/health", "/api/v1/departments").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login",
-                                "/api/v1/auth/refresh", "/api/v1/auth/logout",
-                                "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password").permitAll()
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                        // Analyses belong to the student who made them. Faculty access comes later.
-                        .requestMatchers("/api/v1/resumes/**").hasRole("STUDENT")
-                        .requestMatchers("/api/v1/me/career-interests").hasRole("STUDENT")
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests(a -> {
+                    a.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                    // The rules in AccessRules, in order. The same list feeds the permissions screen.
+                    for (AccessRules.Rule rule : AccessRules.RULES) {
+                        var matched = rule.method() == null
+                                ? a.requestMatchers(rule.patterns().toArray(String[]::new))
+                                : a.requestMatchers(rule.method(), rule.patterns().toArray(String[]::new));
+                        switch (rule.access()) {
+                            case PUBLIC -> matched.permitAll();
+                            case SIGNED_IN -> matched.authenticated();
+                            case ROLES -> matched.hasAnyRole(
+                                    rule.roles().stream().map(Enum::name).toArray(String[]::new));
+                        }
+                    }
+                    a.anyRequest().authenticated();
+                })
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(problems)
                         .accessDeniedHandler(problems))

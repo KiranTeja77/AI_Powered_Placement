@@ -51,6 +51,11 @@ class AdminUserController {
         return service.create(request);
     }
 
+    @PostMapping("/{id}/resend-invite")
+    AdminUserRow resendInvite(@PathVariable UUID id) {
+        return service.resendInvite(id);
+    }
+
     @PatchMapping("/{id}/status")
     AdminUserRow setStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID id,
             @Valid @RequestBody UpdateStatusRequest request) {

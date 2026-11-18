@@ -39,6 +39,9 @@ public class AppUser {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @Column(name = "invite_pending")
+    private boolean invitePending;
+
     @Column(name = "last_login_at")
     private Instant lastLoginAt;
 
@@ -97,9 +100,20 @@ public class AppUser {
         return createdAt;
     }
 
+    /** Choosing a password, by any route, ends the invite. */
     public void changePassword(String newHash, Instant now) {
         this.passwordHash = newHash;
+        this.invitePending = false;
         this.updatedAt = now;
+    }
+
+    /** True until the owner of an admin-created account has chosen a password. */
+    public boolean isInvitePending() {
+        return invitePending;
+    }
+
+    public void markInvitePending() {
+        this.invitePending = true;
     }
 
     public void recordLogin(Instant now) {

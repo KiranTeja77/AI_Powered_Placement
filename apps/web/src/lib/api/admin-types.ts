@@ -6,6 +6,8 @@ export interface AdminUser {
   fullName: string
   role: Role
   status: 'ACTIVE' | 'INACTIVE'
+  /** Created by an admin; the owner has not chosen a password yet. */
+  invitePending: boolean
   department: { id: string; code: string; name: string } | null
   rollNo: string | null
   lastLoginAt: string | null
@@ -36,4 +38,13 @@ export interface CreateUserInput {
   email: string
   role: StaffRole
   departmentId?: string
+}
+
+export interface AdminOverview {
+  totalUsers: number
+  activeUsers: number
+  inactiveUsers: number
+  /** Active accounts whose owner has not yet chosen a password. */
+  pendingInvites: number
+  usersByRole: { role: Role; total: number; active: number }[]
 }

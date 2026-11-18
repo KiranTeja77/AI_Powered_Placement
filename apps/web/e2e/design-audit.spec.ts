@@ -393,6 +393,7 @@ auditRoutes(
   'admin screens',
   'ADMIN',
   [
+    { name: 'overview', path: '/admin' },
     { name: 'users', path: '/admin/users' },
     { name: 'departments', path: '/admin/departments' },
     { name: 'roles', path: '/admin/roles' },

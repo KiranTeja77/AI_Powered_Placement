@@ -17,7 +17,6 @@ import AuditPage from '../audit/AuditPage'
 import DepartmentsPage from '../departments/DepartmentsPage'
 import { departmentSchema } from '../departments/schemas'
 import { PermissionGrid } from '../roles/PermissionGrid'
-import RolesPage from '../roles/RolesPage'
 import { settingsSchema } from '../settings/schemas'
 import SettingsPage from '../settings/SettingsPage'
 import { createUserSchema } from '../users/schemas'
@@ -26,7 +25,14 @@ import UsersPage from '../users/UsersPage'
 const toast = vi.hoisted(() => Object.assign(vi.fn(), { error: vi.fn() }))
 vi.mock('sonner', () => ({ toast }))
 vi.mock('@/lib/api/admin-api', () => ({
-  adminApi: { users: vi.fn(), createUser: vi.fn(), setStatus: vi.fn() },
+  adminApi: {
+    users: vi.fn(),
+    createUser: vi.fn(),
+    setStatus: vi.fn(),
+    resendInvite: vi.fn(),
+    overview: vi.fn(),
+    permissions: vi.fn(),
+  },
 }))
 vi.mock('@/lib/api/auth-api', () => ({
   authApi: { departments: vi.fn(), resetPassword: vi.fn() },
@@ -41,6 +47,7 @@ const user = (n: number, overrides: Partial<AdminUser> = {}): AdminUser => ({
   fullName: `Person ${n}`,
   role: 'FACULTY',
   status: 'ACTIVE',
+  invitePending: false,
   department: { id: 'd1', code: 'CSE', name: 'Computer Science' },
   rollNo: null,
   lastLoginAt: null,
@@ -331,15 +338,9 @@ describe('admin pages without a backend', () => {
     expect(await screen.findByText('Departments could not be loaded')).toBeInTheDocument()
   })
 
-  it('audit log and roles show empty states without a request', () => {
-    const a = renderScreen(<AuditPage />)
+  it('the audit log shows an empty state without a request', () => {
+    renderScreen(<AuditPage />)
     expect(screen.getByText('No audit entries yet')).toBeInTheDocument()
-    a.unmount()
-    renderScreen(<RolesPage />)
-    expect(screen.getByText('No permission matrix to show')).toBeInTheDocument()
-    expect(screen.getByRole('note')).toHaveTextContent(
-      'Changes to permissions are not available yet',
-    )
     expect(fetchMock).not.toHaveBeenCalled()
   })
 
@@ -366,7 +367,15 @@ describe('admin pages without a backend', () => {
             { id: 'a', label: 'Admin' },
             { id: 's', label: 'Student' },
           ],
-          permissions: [{ id: 'p', label: 'Manage users', group: 'Administration' }],
+          permissions: [
+            {
+              id: 'p',
+              label: 'Manage users',
+              group: 'Administration',
+              access: 'roles',
+              endpoints: ['/api/v1/admin/**'],
+            },
+          ],
           grants: { p: ['a'] },
         }}
       />,

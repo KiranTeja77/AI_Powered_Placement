@@ -105,8 +105,12 @@ class AdminUserService {
             throw ApiException.conflict("An account with this email already exists.",
                     Map.of("email", "An account with this email already exists."));
         }
-        AppUser user = users.save(new AppUser(email, encoder.encode(TokenCodec.newToken()),
-                request.fullName().trim(), role, department, clock.instant()));
+        AppUser account = new AppUser(email, encoder.encode(TokenCodec.newToken()),
+                request.fullName().trim(), role, department, clock.instant());
+        account.markInvitePending();
+        AppUser user = users.save(account);
+        // The row is built first: sending the invite clears the persistence context.
+        AdminUserRow row = toRow(user, null);
         try {
             invites.invite(user, roleLabel(role));
         } catch (RuntimeException e) {
@@ -115,7 +119,50 @@ class AdminUserService {
             throw ApiException.unavailable("mail_unavailable",
                     "The email could not be sent, so the account was not created. Try again in a moment.", 30);
         }
-        return toRow(user, null);
+        return row;
+    }
+
+    /**
+     * Sends a new set-password link to a staff member who has not chosen a password yet. The old
+     * link stops working. An account that already has a password has nothing to resend.
+     */
+    @Transactional
+    AdminUserRow resendInvite(UUID id) {
+        AppUser user = users.findById(id).orElseThrow(() -> ApiException.notFound("No such user."));
+        if (!user.isInvitePending()) {
+            throw new ApiException(HttpStatus.CONFLICT, "no_pending_invite",
+                    "This account has already set a password.", null, null);
+        }
+        if (!user.isActive()) {
+            throw new ApiException(HttpStatus.CONFLICT, "account_inactive",
+                    "Activate the account before sending a new invite.", null, null);
+        }
+        AdminUserRow row = toRow(user, null);
+        try {
+            invites.invite(user, roleLabel(user.getRole()));
+        } catch (RuntimeException e) {
+            log.warn("Account invite could not be sent ({})", e.getClass().getSimpleName());
+            throw ApiException.unavailable("mail_unavailable",
+                    "The email could not be sent. The old link still works. Try again in a moment.", 30);
+        }
+        return row;
+    }
+
+    /** Counts for the admin home. */
+    @Transactional(readOnly = true)
+    AdminDtos.AdminOverview overview() {
+        List<AdminDtos.RoleCount> byRole = new ArrayList<>();
+        long active = 0;
+        long inactive = 0;
+        for (Role role : Role.values()) {
+            long a = users.countByRoleAndStatus(role, UserStatus.ACTIVE);
+            long i = users.countByRoleAndStatus(role, UserStatus.INACTIVE);
+            byRole.add(new AdminDtos.RoleCount(role, a + i, a));
+            active += a;
+            inactive += i;
+        }
+        return new AdminDtos.AdminOverview(active + inactive, active, inactive,
+                users.countByInvitePendingTrueAndStatus(UserStatus.ACTIVE), byRole);
     }
 
     /** Deactivating also ends every session the person has. An admin cannot lock themselves out. */
@@ -140,7 +187,7 @@ class AdminUserService {
     private AdminUserRow toRow(AppUser u, Student student) {
         Department d = u.getDepartment();
         return new AdminUserRow(u.getId(), u.getEmail(), u.getFullName(), u.getRole(), u.getStatus(),
-                d == null ? null : new DepartmentRef(d.getId(), d.getCode(), d.getName()),
+                u.isInvitePending(), d == null ? null : new DepartmentRef(d.getId(), d.getCode(), d.getName()),
                 student == null ? null : student.getRollNo(), u.getLastLoginAt(), u.getCreatedAt());
     }
 

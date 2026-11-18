@@ -12,6 +12,10 @@ public interface AppUserRepository extends JpaRepository<AppUser, UUID>, JpaSpec
     @Query("select u from AppUser u where lower(u.email) = lower(:email)")
     Optional<AppUser> findByEmailIgnoreCase(@Param("email") String email);
 
+    long countByRoleAndStatus(Role role, UserStatus status);
+
+    long countByInvitePendingTrueAndStatus(UserStatus status);
+
     @Query("select count(u) > 0 from AppUser u where lower(u.email) = lower(:email)")
     boolean existsByEmailIgnoreCase(@Param("email") String email);
 }
