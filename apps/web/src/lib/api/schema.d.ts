@@ -148,6 +148,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["list"];
+        put?: never;
+        post: operations["create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/resumes/analyses/{id}/skills": {
         parameters: {
             query?: never;
@@ -162,6 +178,22 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["updateSkills"];
+        trace?: never;
+    };
+    "/api/v1/admin/users/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["setStatus"];
         trace?: never;
     };
     "/api/v1/skills": {
@@ -203,7 +235,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["list"];
+        get: operations["list_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -267,7 +299,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["list_1"];
+        get: operations["list_2"];
         put?: never;
         post?: never;
         delete?: never;
@@ -521,10 +553,45 @@ export interface components {
             /** Format: email */
             email: string;
         };
+        CreateUserRequest: {
+            fullName: string;
+            /** Format: email */
+            email: string;
+            /** @enum {string} */
+            role: "STUDENT" | "FACULTY" | "TP_HEAD" | "ADMIN" | "RECRUITER";
+            /** Format: uuid */
+            departmentId?: string;
+        };
+        AdminUserRow: {
+            /** Format: uuid */
+            id?: string;
+            email?: string;
+            fullName?: string;
+            /** @enum {string} */
+            role?: "STUDENT" | "FACULTY" | "TP_HEAD" | "ADMIN" | "RECRUITER";
+            /** @enum {string} */
+            status?: "ACTIVE" | "INACTIVE";
+            department?: components["schemas"]["DepartmentRef"];
+            rollNo?: string;
+            /** Format: date-time */
+            lastLoginAt?: string;
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        DepartmentRef: {
+            /** Format: uuid */
+            id?: string;
+            code?: string;
+            name?: string;
+        };
         UpdateSkillsRequest: {
             confirmedSkillIds: string[];
             removedSkillIds: string[];
             addedSkillIds: string[];
+        };
+        UpdateStatusRequest: {
+            /** @enum {string} */
+            status: "ACTIVE" | "INACTIVE";
         };
         SkillResponse: {
             slug?: string;
@@ -560,6 +627,17 @@ export interface components {
         };
         PageResponseAnalysisSummary: {
             items?: components["schemas"]["AnalysisSummary"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            size?: number;
+            /** Format: int64 */
+            totalItems?: number;
+            /** Format: int32 */
+            totalPages?: number;
+        };
+        PageResponseAdminUserRow: {
+            items?: components["schemas"]["AdminUserRow"][];
             /** Format: int32 */
             page?: number;
             /** Format: int32 */
@@ -802,6 +880,57 @@ export interface operations {
             };
         };
     };
+    list: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                role?: "STUDENT" | "FACULTY" | "TP_HEAD" | "ADMIN" | "RECRUITER";
+                departmentId?: string;
+                status?: "ACTIVE" | "INACTIVE";
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageResponseAdminUserRow"];
+                };
+            };
+        };
+    };
+    create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUserRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminUserRow"];
+                };
+            };
+        };
+    };
     updateSkills: {
         parameters: {
             query?: never;
@@ -824,6 +953,32 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["AnalysisDetail"];
+                };
+            };
+        };
+    };
+    setStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateStatusRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminUserRow"];
                 };
             };
         };
@@ -868,7 +1023,7 @@ export interface operations {
             };
         };
     };
-    list: {
+    list_1: {
         parameters: {
             query?: {
                 page?: number;
@@ -975,7 +1130,7 @@ export interface operations {
             };
         };
     };
-    list_1: {
+    list_2: {
         parameters: {
             query?: never;
             header?: never;

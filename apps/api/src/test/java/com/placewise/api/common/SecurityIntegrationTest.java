@@ -35,8 +35,8 @@ class SecurityIntegrationTest extends IntegrationTestBase {
     @Test
     void adminsPassAuthorizationAndReachRouting() throws Exception {
         insertUser("admin@college.edu", "ADMIN", "ACTIVE");
-        // No admin endpoint exists yet, so a 404 (not 401/403) proves authorization let the request through.
-        mvc.perform(get("/api/v1/admin/users")
+        // This admin path does not exist, so a 404 (not 401/403) proves authorization let the request through.
+        mvc.perform(get("/api/v1/admin/no-such-endpoint")
                         .header("Authorization", "Bearer " + accessTokenFor("admin@college.edu")))
                 .andExpect(status().isNotFound());
     }

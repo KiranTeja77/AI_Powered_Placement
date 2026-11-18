@@ -27,7 +27,9 @@ public record AppProperties(
              * ending the session. Covers two tabs of one browser refreshing at the same moment.
              * Zero turns it off, so any reuse ends the session.
              */
-            @DefaultValue("10s") Duration refreshGrace) {}
+            @DefaultValue("10s") Duration refreshGrace,
+            /** How long the set-password link emailed to a new staff account works. */
+            @DefaultValue("24h") Duration inviteTtl) {}
 
     public record Cookie(@DefaultValue("true") boolean secure) {}
 

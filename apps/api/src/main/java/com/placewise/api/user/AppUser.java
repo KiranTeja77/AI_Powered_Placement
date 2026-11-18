@@ -93,6 +93,10 @@ public class AppUser {
         return lastLoginAt;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
     public void changePassword(String newHash, Instant now) {
         this.passwordHash = newHash;
         this.updatedAt = now;

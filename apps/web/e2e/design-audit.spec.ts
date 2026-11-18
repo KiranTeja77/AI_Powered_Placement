@@ -323,7 +323,7 @@ test.describe('student screens', () => {
  */
 function auditRoutes(
   title: string,
-  role: 'FACULTY' | 'TP_HEAD',
+  role: 'FACULTY' | 'TP_HEAD' | 'ADMIN' | 'RECRUITER',
   routes: readonly { name: string; path: string }[],
   prefix: string,
 ) {
@@ -387,4 +387,31 @@ auditRoutes(
     { name: 'placements', path: '/tp/placements' },
   ],
   'tp',
+)
+
+auditRoutes(
+  'admin screens',
+  'ADMIN',
+  [
+    { name: 'users', path: '/admin/users' },
+    { name: 'departments', path: '/admin/departments' },
+    { name: 'roles', path: '/admin/roles' },
+    { name: 'audit', path: '/admin/audit' },
+    { name: 'settings', path: '/admin/settings' },
+    { name: 'notifications', path: '/notifications' },
+    { name: 'notifications-unread', path: '/notifications?tab=unread' },
+    { name: 'set-password', path: '/set-password?token=sample' },
+  ],
+  'admin',
+)
+
+auditRoutes(
+  'recruiter screens',
+  'RECRUITER',
+  [
+    { name: 'overview', path: '/r' },
+    { name: 'drive', path: '/r/drives/sample' },
+    { name: 'notifications', path: '/notifications' },
+  ],
+  'recruiter',
 )

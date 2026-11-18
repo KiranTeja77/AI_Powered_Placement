@@ -8,6 +8,15 @@ import ForgotPasswordPage from '@/features/auth/ForgotPasswordPage'
 import LoginPage from '@/features/auth/LoginPage'
 import RegisterPage from '@/features/auth/RegisterPage'
 import ResetPasswordPage from '@/features/auth/ResetPasswordPage'
+import SetPasswordPage from '@/features/auth/SetPasswordPage'
+import AuditPage from '@/features/admin/audit/AuditPage'
+import DepartmentsPage from '@/features/admin/departments/DepartmentsPage'
+import RolesPage from '@/features/admin/roles/RolesPage'
+import SettingsPage from '@/features/admin/settings/SettingsPage'
+import UsersPage from '@/features/admin/users/UsersPage'
+import NotificationsPage from '@/features/notifications/NotificationsPage'
+import RecruiterDrivePage from '@/features/recruiter/RecruiterDrivePage'
+import RecruiterOverviewPage from '@/features/recruiter/RecruiterOverviewPage'
 import { ROLE_HOME } from '@/features/auth/roles'
 import CareerPage from '@/features/career/CareerPage'
 import { ForbiddenPage, NotFoundPage, ServerErrorPage } from '@/features/errors/ErrorPages'
@@ -64,6 +73,7 @@ export default function App() {
       </Route>
       {/* Reachable whether or not someone is signed in: the link comes from an email. */}
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/set-password" element={<SetPasswordPage />} />
 
       <Route path="/403" element={<ForbiddenPage />} />
       <Route path="/404" element={<NotFoundPage />} />
@@ -84,7 +94,7 @@ export default function App() {
       <Route element={<RequireRole />}>
         <Route element={<AppShell />}>
           <Route path="/settings/account" element={<AccountSettingsPage />} />
-          <Route path="/notifications" element={<RolePlaceholder title="Notifications" />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
         </Route>
       </Route>
 
@@ -130,6 +140,21 @@ export default function App() {
                 <Route path="/f/questions" element={<QuestionsPage />} />
                 <Route path="/f/questions/new" element={<QuestionFormPage />} />
                 <Route path="/f/questions/:id" element={<QuestionFormPage />} />
+              </>
+            )}
+            {role === 'ADMIN' && (
+              <>
+                <Route path="/admin/users" element={<UsersPage />} />
+                <Route path="/admin/departments" element={<DepartmentsPage />} />
+                <Route path="/admin/roles" element={<RolesPage />} />
+                <Route path="/admin/audit" element={<AuditPage />} />
+                <Route path="/admin/settings" element={<SettingsPage />} />
+              </>
+            )}
+            {role === 'RECRUITER' && (
+              <>
+                <Route path="/r" element={<RecruiterOverviewPage />} />
+                <Route path="/r/drives/:id" element={<RecruiterDrivePage />} />
               </>
             )}
             {role === 'TP_HEAD' && (

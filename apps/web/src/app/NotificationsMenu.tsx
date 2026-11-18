@@ -1,41 +1,26 @@
-import { Bell, BellOff } from 'lucide-react'
+import { Bell } from 'lucide-react'
 import { Link } from 'react-router'
-import { EmptyState } from '@/components/EmptyState'
 import { Button } from '@/components/ui/button'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { usePendingList } from '@/lib/api/pending'
+import { useNotifications } from '@/lib/api/pending'
 
-interface NotificationItem {
-  id: string
-  title: string
-}
-
+/** The bell in the top bar. It opens the notifications inbox, and shows a dot when something is unread. */
 export function NotificationsMenu() {
-  // TODO(api): GET /api/v1/notifications -> Page<Notification>
-  const { data } = usePendingList<NotificationItem>()
+  const { data } = useNotifications()
+  const unread = data.filter((n) => !n.read).length
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label="Notifications">
-          <Bell />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent align="end" className="w-80 p-0">
-        <div className="flex items-center justify-between border-b border-border px-3 py-2">
-          <p className="text-base font-medium">Notifications</p>
-          <Link to="/notifications" className="text-sm text-primary hover:underline">
-            View all
-          </Link>
-        </div>
-        {data.length === 0 && (
-          <EmptyState
-            icon={BellOff}
-            title="No notifications yet"
-            description="Updates about assessments, drives and mentoring will appear here."
-            className="py-8"
+    <Button asChild variant="ghost" size="icon" className="relative">
+      <Link
+        to="/notifications"
+        aria-label={unread > 0 ? `Notifications, ${unread} unread` : 'Notifications'}
+      >
+        <Bell />
+        {unread > 0 && (
+          <span
+            aria-hidden="true"
+            className="absolute top-1.5 right-1.5 size-2 rounded-full bg-primary"
           />
         )}
-      </PopoverContent>
-    </Popover>
+      </Link>
+    </Button>
   )
 }

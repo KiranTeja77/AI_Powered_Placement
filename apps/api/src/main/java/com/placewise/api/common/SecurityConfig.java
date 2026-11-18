@@ -1,5 +1,6 @@
 package com.placewise.api.common;
 
+import com.placewise.api.user.AppUserRepository;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -26,7 +28,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 class SecurityConfig {
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, ProblemSecurityHandlers problems) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, ProblemSecurityHandlers problems,
+            AppUserRepository users) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -50,6 +53,8 @@ class SecurityConfig {
                         .jwt(j -> j.jwtAuthenticationConverter(jwtAuthenticationConverter()))
                         .authenticationEntryPoint(problems)
                         .accessDeniedHandler(problems))
+                // After the bearer token is read, so a deactivated account stops working at once.
+                .addFilterAfter(new ActiveUserFilter(users, problems), BearerTokenAuthenticationFilter.class)
                 .build();
     }
 

@@ -33,7 +33,7 @@ class AiServiceClientTest {
     private AiServiceClient client(String baseUrl, Duration timeout) {
         AppProperties props = new AppProperties("http://localhost",
                 new AppProperties.Jwt("x".repeat(32), Duration.ofMinutes(15)),
-                new AppProperties.Auth(Duration.ofDays(7), Duration.ofMinutes(30), 4, 5, Duration.ofMinutes(15), Duration.ofSeconds(10)),
+                new AppProperties.Auth(Duration.ofDays(7), Duration.ofMinutes(30), 4, 5, Duration.ofMinutes(15), Duration.ofSeconds(10), Duration.ofHours(24)),
                 new AppProperties.Cookie(true), new AppProperties.Mail("a@b.c"), new AppProperties.Admin(null, null),
                 new AppProperties.Ai(baseUrl, timeout));
         return new AiServiceClient(props, JsonMapper.builder().build());
