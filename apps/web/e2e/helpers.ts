@@ -1,4 +1,3 @@
-import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { expect, type APIRequestContext, type Page } from '@playwright/test'
@@ -55,32 +54,71 @@ export async function chooseRole(page: Page, name: string) {
   await page.keyboard.press('Escape')
 }
 
-const HOMES = { FACULTY: /\/f$/, TP_HEAD: /\/tp$/ } as const
+const HOMES = {
+  FACULTY: /\/f$/,
+  TP_HEAD: /\/tp$/,
+  RECRUITER: /\/r$/,
+  ADMIN: /\/admin$/,
+} as const
+export type StaffRole = keyof typeof HOMES
+
+const MAILPIT = 'http://localhost:8025'
+
+/** The seeded administrator's credentials, from the same .env the stack runs with. */
+function adminCredentials() {
+  const text = readFileSync(fileURLToPath(new URL('../../../.env', import.meta.url)), 'utf-8')
+  const value = (key: string) => new RegExp(`^${key}=(.*)$`, 'm').exec(text)?.[1]?.trim() ?? ''
+  return { email: value('ADMIN_EMAIL'), password: value('ADMIN_PASSWORD') }
+}
+
+/** Signs in as the seeded administrator through the API and returns an access token. */
+export async function adminToken(request: APIRequestContext): Promise<string> {
+  const { email, password } = adminCredentials()
+  const response = await request.post('/api/v1/auth/login', {
+    data: { identifier: email, password },
+  })
+  expect(response.status(), 'the seeded admin must be able to sign in').toBe(200)
+  return (await response.json()).accessToken as string
+}
+
+/** Waits for the set-password email to arrive in Mailpit and returns the token in its link. */
+export async function setPasswordToken(request: APIRequestContext, email: string): Promise<string> {
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const found = await request.get(
+      `${MAILPIT}/api/v1/search?query=${encodeURIComponent(`to:${email}`)}`,
+    )
+    const messages = ((await found.json()).messages ?? []) as { ID: string }[]
+    if (messages.length > 0) {
+      const message = await (
+        await request.get(`${MAILPIT}/api/v1/message/${messages[0]!.ID}`)
+      ).json()
+      const token = /set-password\?token=([A-Za-z0-9_-]+)/.exec(message.Text as string)?.[1]
+      if (token) return token
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250))
+  }
+  throw new Error(`No set-password email reached Mailpit for ${email}`)
+}
 
 /**
- * Registers a student, then changes the role of that one account in the local test database.
- * Faculty and T&P accounts are normally created by an admin, and there is no admin screen for it
- * yet. Only an account this test just created is touched, found by its unique email.
+ * Creates a staff account the way an administrator does: through the admin API, signed in as the
+ * seeded admin. The account gets no password from us. The set-password email lands in Mailpit, and
+ * the token from its link is used to choose one, exactly as the person would.
  */
-export async function registerAs(request: APIRequestContext, role: keyof typeof HOMES) {
-  const student = await registerViaApi(request)
-  if (!/^[a-z0-9.]+@college\.edu$/.test(student.email)) throw new Error('unexpected test email')
-  const env = Object.fromEntries(
-    readFileSync(fileURLToPath(new URL('../../../.env', import.meta.url)), 'utf-8')
-      .split(/\r?\n/)
-      .filter((l) => /^[A-Z_]+=/.test(l))
-      .map((l) => [l.slice(0, l.indexOf('=')), l.slice(l.indexOf('=') + 1)]),
-  )
-  execFileSync('docker', [
-    'exec',
-    'placewise-postgres-1',
-    'psql',
-    '-U',
-    env.POSTGRES_USER!,
-    '-d',
-    env.POSTGRES_DB!,
-    '-c',
-    `update app_user set role = '${role}' where email = '${student.email}'`,
-  ])
-  return { ...student, home: HOMES[role] }
+export async function registerAs(request: APIRequestContext, role: StaffRole) {
+  const token = await adminToken(request)
+  const id = `${Date.now().toString(36)}${Math.floor(Math.random() * 1000)}`
+  const email = `e2e.${role.toLowerCase()}.${id}@college.edu`
+  const departmentId =
+    role === 'FACULTY' ? (await (await request.get('/api/v1/departments')).json())[0].id : undefined
+  const created = await request.post('/api/v1/admin/users', {
+    headers: { Authorization: `Bearer ${token}` },
+    data: { fullName: `E2E ${role}`, email, role, departmentId },
+  })
+  expect(created.status(), await created.text()).toBe(201)
+  const reset = await request.post('/api/v1/auth/reset-password', {
+    data: { token: await setPasswordToken(request, email), newPassword: PASSWORD },
+  })
+  expect(reset.status()).toBe(204)
+  return { email, name: `E2E ${role}`, home: HOMES[role] }
 }
