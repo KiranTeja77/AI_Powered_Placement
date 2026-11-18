@@ -165,7 +165,7 @@ export default function AssessmentBuilderPage() {
               onAdd={(rows, sectionId) =>
                 setValue('questions', [
                   ...getValues('questions'),
-                  ...rows.map((r) => ({ id: r.id, text: r.text, sectionId })),
+                  ...rows.map((r) => ({ id: r.id, text: r.text, sectionId, marks: r.marks })),
                 ])
               }
             />
