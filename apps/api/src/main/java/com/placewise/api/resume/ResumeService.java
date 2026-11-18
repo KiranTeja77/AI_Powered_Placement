@@ -13,7 +13,7 @@ import com.placewise.api.resume.ResumeDtos.AnalysisSummary;
 import com.placewise.api.resume.ResumeDtos.AnalyzeRequest;
 import com.placewise.api.resume.ResumeDtos.EffectiveAnalysis;
 import com.placewise.api.resume.ResumeDtos.EffectiveSkill;
-import com.placewise.api.resume.ResumeDtos.PageResponse;
+import com.placewise.api.common.PageResponse;
 import com.placewise.api.resume.ResumeDtos.SkillEdits;
 import com.placewise.api.resume.ResumeDtos.StoredEdits;
 import com.placewise.api.resume.ResumeDtos.TargetRole;

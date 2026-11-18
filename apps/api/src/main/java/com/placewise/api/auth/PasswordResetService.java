@@ -26,6 +26,7 @@ public class PasswordResetService {
     private final PasswordEncoder encoder;
     private final Clock clock;
     private final Duration ttl;
+    private final Duration inviteTtl;
     private final String webOrigin;
 
     PasswordResetService(AppUserRepository users, PasswordResetTokenRepository resetTokens,
@@ -38,6 +39,7 @@ public class PasswordResetService {
         this.encoder = encoder;
         this.clock = clock;
         this.ttl = props.auth().resetTtl();
+        this.inviteTtl = props.auth().inviteTtl();
         this.webOrigin = props.webOrigin();
     }
 
@@ -61,6 +63,23 @@ public class PasswordResetService {
         } catch (RuntimeException e) {
             log.warn("Password reset email could not be sent ({})", e.getClass().getSimpleName());
         }
+    }
+
+    /**
+     * Emails a newly created staff member a single-use link to choose their password. It is the
+     * password-reset mechanism with a longer life: the same token table, the same single-use rule
+     * and the same {@code /reset-password} endpoint. The admin never sees the token or a password.
+     * A failure to send is thrown, so the caller can undo the account rather than leave one nobody
+     * can get into.
+     */
+    @Transactional
+    public void invite(AppUser user, String roleLabel) {
+        Instant now = clock.instant();
+        resetTokens.invalidateAllForUser(user.getId(), now);
+        String raw = TokenCodec.newToken();
+        resetTokens.save(new PasswordResetToken(user.getId(), TokenCodec.hash(raw), now.plus(inviteTtl), now));
+        mailer.sendAccountInvite(user.getEmail(), user.getFullName(), roleLabel,
+                webOrigin + "/set-password?token=" + raw);
     }
 
     /** Sets a new password with a single-use token, and ends all of the user's sessions. */

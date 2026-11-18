@@ -28,4 +28,18 @@ class SmtpAuthMailer implements AuthMailer {
                 + "If you did not ask for this, you can ignore this email. Your password has not changed.\n");
         sender.send(message);
     }
+
+    @Override
+    public void sendAccountInvite(String toEmail, String fullName, String roleLabel, String setPasswordLink) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(toEmail);
+        message.setSubject("Your PlaceWise account");
+        message.setText("Hello " + fullName + ",\n\n"
+                + "An administrator created a PlaceWise account for you as " + roleLabel + ". "
+                + "Use this link to choose your password. It works once and expires in 24 hours.\n\n"
+                + setPasswordLink + "\n\n"
+                + "If you were not expecting this, you can ignore this email and no one can sign in to the account.\n");
+        sender.send(message);
+    }
 }

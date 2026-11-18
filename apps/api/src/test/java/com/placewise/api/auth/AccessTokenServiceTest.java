@@ -33,7 +33,7 @@ class AccessTokenServiceTest {
 
     private static AccessTokenService service(Clock clock) {
         AppProperties props = new AppProperties("http://localhost", new AppProperties.Jwt(SECRET, Duration.ofMinutes(15)),
-                new AppProperties.Auth(Duration.ofDays(7), Duration.ofMinutes(30), 4, 5, Duration.ofMinutes(15), Duration.ofSeconds(10)),
+                new AppProperties.Auth(Duration.ofDays(7), Duration.ofMinutes(30), 4, 5, Duration.ofMinutes(15), Duration.ofSeconds(10), Duration.ofHours(24)),
                 new AppProperties.Cookie(true), new AppProperties.Mail("a@b.c"), new AppProperties.Admin(null, null),
                 new AppProperties.Ai("http://localhost:8000", Duration.ofSeconds(10)));
         return new AccessTokenService(new NimbusJwtEncoder(new ImmutableSecret<>(key(SECRET))), clock, props);

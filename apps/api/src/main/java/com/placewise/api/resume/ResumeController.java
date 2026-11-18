@@ -3,7 +3,7 @@ package com.placewise.api.resume;
 import com.placewise.api.resume.ResumeDtos.AnalysisDetail;
 import com.placewise.api.resume.ResumeDtos.AnalysisSummary;
 import com.placewise.api.resume.ResumeDtos.AnalyzeRequest;
-import com.placewise.api.resume.ResumeDtos.PageResponse;
+import com.placewise.api.common.PageResponse;
 import com.placewise.api.resume.ResumeDtos.UpdateSkillsRequest;
 import jakarta.validation.Valid;
 import java.util.UUID;

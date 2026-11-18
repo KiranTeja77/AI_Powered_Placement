@@ -85,8 +85,6 @@ public final class ResumeDtos {
             boolean edited,
             String engineVersion) {}
 
-    public record PageResponse<T>(List<T> items, int page, int size, long totalItems, int totalPages) {}
-
     /** What is stored in resume_analysis.confirmed_skills. */
     record StoredEdits(
             List<String> confirmedSkillIds,
