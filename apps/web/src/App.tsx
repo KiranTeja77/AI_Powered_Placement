@@ -8,6 +8,8 @@ import ForgotPasswordPage from '@/features/auth/ForgotPasswordPage'
 import LoginPage from '@/features/auth/LoginPage'
 import RegisterPage from '@/features/auth/RegisterPage'
 import ResetPasswordPage from '@/features/auth/ResetPasswordPage'
+import SetPasswordPage from '@/features/auth/SetPasswordPage'
+import UsersPage from '@/features/admin/users/UsersPage'
 import { ROLE_HOME } from '@/features/auth/roles'
 import CareerPage from '@/features/career/CareerPage'
 import { ForbiddenPage, NotFoundPage, ServerErrorPage } from '@/features/errors/ErrorPages'
@@ -64,6 +66,7 @@ export default function App() {
       </Route>
       {/* Reachable whether or not someone is signed in: the link comes from an email. */}
       <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route path="/set-password" element={<SetPasswordPage />} />
 
       <Route path="/403" element={<ForbiddenPage />} />
       <Route path="/404" element={<NotFoundPage />} />
@@ -132,6 +135,7 @@ export default function App() {
                 <Route path="/f/questions/:id" element={<QuestionFormPage />} />
               </>
             )}
+            {role === 'ADMIN' && <Route path="/admin/users" element={<UsersPage />} />}
             {role === 'TP_HEAD' && (
               <>
                 <Route path="/tp" element={<TpOverviewPage />} />
