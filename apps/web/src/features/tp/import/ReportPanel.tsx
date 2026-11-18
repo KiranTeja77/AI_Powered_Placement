@@ -22,11 +22,11 @@ export function ReportPanel({ report }: { report: ValidationReport }) {
         <StatCard label="Rows in file" value={report.totalRows} />
         <StatCard label="Valid rows" value={report.validRows} />
         <StatCard label="Rows with errors" value={rowsWithIssues} />
-        <StatCard label="Unknown roll numbers" value={report.unknownRolls.length} />
+        <StatCard label="Invalid format" value={report.invalidFormat.length} />
       </div>
       <p className="text-sm text-text-muted">
-        These checks use the file alone. Matching roll numbers to registered students happens when
-        the import runs.
+        These checks use the file alone. Whether a roll number belongs to a registered student is
+        checked against the registered students when the import runs.
       </p>
 
       <Section
@@ -64,10 +64,13 @@ export function ReportPanel({ report }: { report: ValidationReport }) {
         )}
       </Section>
 
-      {report.unknownRolls.length > 0 && (
-        <Section title="Unknown roll numbers" description="These do not look like roll numbers.">
+      {report.invalidFormat.length > 0 && (
+        <Section
+          title="Invalid format"
+          description="These roll numbers do not look like a roll number."
+        >
           <ul className="flex flex-wrap gap-x-4 gap-y-1 px-4 py-3 font-mono text-sm text-text">
-            {report.unknownRolls.slice(0, SHOWN).map((r) => (
+            {report.invalidFormat.slice(0, SHOWN).map((r) => (
               <li key={r.line}>
                 line {r.line}: {r.rollNo || '(empty)'}
               </li>
