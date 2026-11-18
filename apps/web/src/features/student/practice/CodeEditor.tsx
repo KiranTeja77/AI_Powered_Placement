@@ -7,6 +7,7 @@ import 'monaco-editor/languages/definitions/python/register'
 import EditorWorker from 'monaco-editor/editor/editor.worker?worker'
 import { useEffect } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
+import { toHex } from './colour'
 import { useTheme } from '@/lib/theme/theme-context'
 
 // Bundle Monaco with the app instead of loading it from a CDN, and give it its one worker.
@@ -17,7 +18,7 @@ export type EditorLanguage = 'python' | 'java' | 'cpp' | 'javascript'
 
 /** Reads a design token. Monaco needs concrete colours, so they come from the same tokens. */
 function token(name: string): string {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+  return toHex(getComputedStyle(document.documentElement).getPropertyValue(name))
 }
 const noHash = (colour: string) => colour.replace('#', '')
 

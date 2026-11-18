@@ -13,7 +13,8 @@
     "test": "vitest run",
     "preview": "vite preview",
     "gen:api": "openapi-typescript http://localhost:8080/v3/api-docs -o src/lib/api/schema.d.ts",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "e2e:csp": "playwright test -c playwright.csp.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.5",
