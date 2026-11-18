@@ -44,12 +44,20 @@ test('an admin creates a faculty user, who sets a password from the email and la
   ).toBeVisible()
   await expect(dialog).toHaveCount(0)
 
-  // The new account is in the list, active, and has never signed in.
+  // The new account is in the list, waiting for its owner to choose a password.
   await page.getByLabel('Search users').fill(email)
   const row = page.getByRole('row', { name: new RegExp(email) })
   await expect(row).toContainText('Faculty')
-  await expect(row).toContainText('Active')
+  await expect(row).toContainText('Invite pending')
   await expect(row).toContainText('Never')
+
+  // Resending emails a new link and kills the first one.
+  const firstToken = await setPasswordToken(request, email)
+  await row.getByRole('button', { name: /Resend invite/ }).click()
+  await expect(page.getByText(/The old link no longer works/)).toBeVisible()
+  await expect
+    .poll(async () => await setPasswordToken(request, email), { timeout: 15_000 })
+    .not.toBe(firstToken)
 
   // Before the link is used nobody can sign in.
   const other = await browser.newContext()
@@ -61,7 +69,13 @@ test('an admin creates a faculty user, who sets a password from the email and la
   await expect(faculty.getByRole('alert')).toBeVisible()
   await expect(faculty).toHaveURL(/\/login$/)
 
-  // The email is in Mailpit. Its link opens the set-password page.
+  // The first link is dead, the newest one opens the set-password page.
+  await faculty.goto(`/set-password?token=${firstToken}`)
+  await faculty.getByLabel('New password', { exact: true }).fill(PASSWORD)
+  await faculty.getByLabel('Confirm new password').fill(PASSWORD)
+  await faculty.getByRole('button', { name: 'Set password' }).click()
+  await expect(faculty.getByRole('heading', { name: 'This link is not valid' })).toBeVisible()
+
   const token = await setPasswordToken(request, email)
   await faculty.goto(`/set-password?token=${token}`)
   await expect(faculty.getByRole('heading', { name: 'Set your password' })).toBeVisible()
@@ -190,4 +204,44 @@ test.describe('review screenshots', () => {
     await expect(section.getByText('Sample Student A').first()).toBeVisible()
     await section.screenshot({ path: 'e2e/screenshots/dev-recruiter-candidates-1280-light.png' })
   })
+})
+
+test('the admin home shows real counts, and the roles screen shows what the API enforces', async ({
+  page,
+}) => {
+  await signInAsAdmin(page)
+  await expect(page.getByRole('heading', { name: 'Overview', level: 1 })).toBeVisible()
+  await expect(page.getByText('Invites pending')).toBeVisible()
+  // The seeded admin means there is at least one account, so the admin row is never zero.
+  await expect(page.getByRole('row', { name: /^Admin/ })).toContainText(/[1-9]/)
+  await expect(page.getByRole('table', { name: 'Accounts by role' })).toContainText('Admin')
+  await page
+    .getByRole('link', { name: /Departments/ })
+    .first()
+    .click()
+  await expect(page).toHaveURL(/\/admin\/departments$/)
+
+  await page.goto('/admin/roles')
+  await expect(page.getByRole('note')).toContainText('Changing permissions is not available yet')
+  // Managing accounts is an admin-only rule; only the admin column is switched on.
+  await expect(
+    page.getByRole('switch', {
+      name: 'Admin: Manage accounts and see platform information, allowed',
+    }),
+  ).toBeChecked()
+  await expect(
+    page.getByRole('switch', {
+      name: 'Student: Manage accounts and see platform information, not allowed',
+    }),
+  ).not.toBeChecked()
+  await expect(
+    page.getByRole('switch', {
+      name: 'Student: Analyze a resume and manage your analyses, allowed',
+    }),
+  ).toBeChecked()
+  await expect(
+    page.getByRole('switch', {
+      name: 'Faculty: Analyze a resume and manage your analyses, not allowed',
+    }),
+  ).not.toBeChecked()
 })

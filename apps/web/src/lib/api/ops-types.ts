@@ -17,6 +17,10 @@ export interface Permission {
   label: string
   /** Heading the permission is listed under. */
   group: string
+  /** Open to everyone, to any signed-in account, or only to the roles that hold it. */
+  access: 'public' | 'signed_in' | 'roles'
+  /** The API paths the rule covers, with the method where it is limited to one. */
+  endpoints: string[]
 }
 
 export interface PermissionMatrix {

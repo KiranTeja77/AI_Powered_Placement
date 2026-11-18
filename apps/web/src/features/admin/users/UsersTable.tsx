@@ -25,14 +25,47 @@ interface UsersTableProps {
   filtered: boolean
   selfId: string
   onToggle: (user: AdminUser) => void
+  onResend: (user: AdminUser) => void
+  /** The account whose invite is being sent right now, if any. */
+  resendingId: string | null
   onPage: (page: number) => void
 }
 
 function StatusCell({ user }: { user: AdminUser }) {
-  return user.status === 'ACTIVE' ? (
-    <StatusBadge tone="success" label="Active" />
-  ) : (
-    <StatusBadge tone="neutral" label="Inactive" />
+  if (user.status === 'INACTIVE') return <StatusBadge tone="neutral" label="Inactive" />
+  // An admin-created account that has not chosen a password yet cannot sign in.
+  if (user.invitePending) return <StatusBadge tone="warning" label="Invite pending" />
+  return <StatusBadge tone="success" label="Active" />
+}
+
+function Actions({
+  user,
+  selfId,
+  onToggle,
+  onResend,
+  resendingId,
+}: {
+  user: AdminUser
+  selfId: string
+  onToggle: (user: AdminUser) => void
+  onResend: (user: AdminUser) => void
+  resendingId: string | null
+}) {
+  return (
+    <span className="inline-flex flex-wrap justify-end gap-2">
+      {user.invitePending && user.status === 'ACTIVE' && (
+        <Button
+          variant="secondary"
+          size="sm"
+          disabled={resendingId === user.id}
+          onClick={() => onResend(user)}
+        >
+          {resendingId === user.id ? 'Sending' : 'Resend invite'}
+          <span className="sr-only"> to {user.fullName}</span>
+        </Button>
+      )}
+      <ToggleButton user={user} selfId={selfId} onToggle={onToggle} />
+    </span>
   )
 }
 
@@ -74,6 +107,8 @@ export function UsersTable({
   filtered,
   selfId,
   onToggle,
+  onResend,
+  resendingId,
   onPage,
 }: UsersTableProps) {
   if (!data && loading) {
@@ -132,7 +167,13 @@ export function UsersTable({
                   {u.lastLoginAt ? formatDateTime(u.lastLoginAt) : 'Never'}
                 </TableCell>
                 <TableCell className="text-right">
-                  <ToggleButton user={u} selfId={selfId} onToggle={onToggle} />
+                  <Actions
+                    user={u}
+                    selfId={selfId}
+                    onToggle={onToggle}
+                    onResend={onResend}
+                    resendingId={resendingId}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -154,7 +195,13 @@ export function UsersTable({
               {u.department ? `, ${u.department.code}` : ''}
               {u.rollNo ? `, ${u.rollNo}` : ''}
             </p>
-            <ToggleButton user={u} selfId={selfId} onToggle={onToggle} />
+            <Actions
+              user={u}
+              selfId={selfId}
+              onToggle={onToggle}
+              onResend={onResend}
+              resendingId={resendingId}
+            />
           </li>
         ))}
       </ul>

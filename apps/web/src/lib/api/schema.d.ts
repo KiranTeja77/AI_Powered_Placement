@@ -164,6 +164,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/users/{id}/resend-invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["resendInvite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/resumes/analyses/{id}/skills": {
         parameters: {
             query?: never;
@@ -300,6 +316,38 @@ export interface paths {
             cookie?: never;
         };
         get: operations["list_2"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/permissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["permissions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["overview"];
         put?: never;
         post?: never;
         delete?: never;
@@ -571,6 +619,7 @@ export interface components {
             role?: "STUDENT" | "FACULTY" | "TP_HEAD" | "ADMIN" | "RECRUITER";
             /** @enum {string} */
             status?: "ACTIVE" | "INACTIVE";
+            invitePending?: boolean;
             department?: components["schemas"]["DepartmentRef"];
             rollNo?: string;
             /** Format: date-time */
@@ -646,6 +695,43 @@ export interface components {
             totalItems?: number;
             /** Format: int32 */
             totalPages?: number;
+        };
+        PermissionMatrix: {
+            roles?: components["schemas"]["RoleRef"][];
+            permissions?: components["schemas"]["PermissionRow"][];
+            grants?: {
+                [key: string]: string[];
+            };
+        };
+        PermissionRow: {
+            id?: string;
+            label?: string;
+            group?: string;
+            access?: string;
+            endpoints?: string[];
+        };
+        RoleRef: {
+            id?: string;
+            label?: string;
+        };
+        AdminOverview: {
+            /** Format: int64 */
+            totalUsers?: number;
+            /** Format: int64 */
+            activeUsers?: number;
+            /** Format: int64 */
+            inactiveUsers?: number;
+            /** Format: int64 */
+            pendingInvites?: number;
+            usersByRole?: components["schemas"]["RoleCount"][];
+        };
+        RoleCount: {
+            /** @enum {string} */
+            role?: "STUDENT" | "FACULTY" | "TP_HEAD" | "ADMIN" | "RECRUITER";
+            /** Format: int64 */
+            total?: number;
+            /** Format: int64 */
+            active?: number;
         };
     };
     responses: never;
@@ -931,6 +1017,28 @@ export interface operations {
             };
         };
     };
+    resendInvite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminUserRow"];
+                };
+            };
+        };
+    };
     updateSkills: {
         parameters: {
             query?: never;
@@ -1146,6 +1254,46 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["DepartmentResponse"][];
+                };
+            };
+        };
+    };
+    permissions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PermissionMatrix"];
+                };
+            };
+        };
+    };
+    overview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["AdminOverview"];
                 };
             };
         };

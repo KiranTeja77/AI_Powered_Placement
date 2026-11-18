@@ -2,11 +2,13 @@ import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { PageHeader } from '@/components/PageHeader'
 import { SelectField } from '@/components/SelectField'
+import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { useCurrentUser } from '@/features/auth/auth-context'
 import type { AdminUser } from '@/lib/api/admin-types'
 import { useDepartmentOptions } from '@/lib/api/useDepartments'
-import { useAdminUsers } from '../queries'
+import { describeError } from '@/lib/api/errors'
+import { useAdminUsers, useResendInvite } from '../queries'
 import { CreateUserDialog } from './CreateUserDialog'
 import { ROLE_LABEL } from './schemas'
 import { StatusDialog } from './StatusDialog'
@@ -34,6 +36,20 @@ export default function UsersPage() {
   const [q, setQ] = useState('')
   const [page, setPage] = useState(0)
   const [toggling, setToggling] = useState<AdminUser | null>(null)
+  const [resendingId, setResendingId] = useState<string | null>(null)
+  const resend = useResendInvite()
+
+  const sendInvite = async (user: AdminUser) => {
+    setResendingId(user.id)
+    try {
+      await resend.mutateAsync(user.id)
+      toast(`A new set-password link was emailed to ${user.email}. The old link no longer works.`)
+    } catch (error) {
+      toast.error(`The invite could not be sent. ${describeError(error)}`)
+    } finally {
+      setResendingId(null)
+    }
+  }
 
   // Wait for the typing to pause before asking the server, and go back to the first page.
   useEffect(() => {
@@ -114,6 +130,8 @@ export default function UsersPage() {
           filtered={filtered}
           selfId={me.id}
           onToggle={setToggling}
+          onResend={(u) => void sendInvite(u)}
+          resendingId={resendingId}
           onPage={setPage}
         />
       </div>

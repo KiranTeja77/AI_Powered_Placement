@@ -9,7 +9,6 @@
 import type {
   AuditEntry,
   NotificationItem,
-  PermissionMatrix,
   RecruiterCandidate,
   RecruiterDrive,
   RecruiterDriveRow,
@@ -232,9 +231,6 @@ export const usePlacements = () => usePendingList<PlacementRow>()
 
 /** TODO(api): GET /api/v1/admin/audit?action=&from=&to= -> Page<AuditEntry> */
 export const useAuditLog = () => usePendingList<AuditEntry>()
-
-/** TODO(api): GET /api/v1/admin/permissions -> PermissionMatrix */
-export const usePermissionMatrix = () => usePendingItem<PermissionMatrix>()
 
 /** TODO(api): GET /api/v1/recruiter/drives -> RecruiterDriveRow[] (drives assigned to this recruiter) */
 export const useRecruiterDrives = () => usePendingList<RecruiterDriveRow>()
