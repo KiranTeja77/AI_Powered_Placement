@@ -9,7 +9,14 @@ import LoginPage from '@/features/auth/LoginPage'
 import RegisterPage from '@/features/auth/RegisterPage'
 import ResetPasswordPage from '@/features/auth/ResetPasswordPage'
 import SetPasswordPage from '@/features/auth/SetPasswordPage'
+import AuditPage from '@/features/admin/audit/AuditPage'
+import DepartmentsPage from '@/features/admin/departments/DepartmentsPage'
+import RolesPage from '@/features/admin/roles/RolesPage'
+import SettingsPage from '@/features/admin/settings/SettingsPage'
 import UsersPage from '@/features/admin/users/UsersPage'
+import NotificationsPage from '@/features/notifications/NotificationsPage'
+import RecruiterDrivePage from '@/features/recruiter/RecruiterDrivePage'
+import RecruiterOverviewPage from '@/features/recruiter/RecruiterOverviewPage'
 import { ROLE_HOME } from '@/features/auth/roles'
 import CareerPage from '@/features/career/CareerPage'
 import { ForbiddenPage, NotFoundPage, ServerErrorPage } from '@/features/errors/ErrorPages'
@@ -87,7 +94,7 @@ export default function App() {
       <Route element={<RequireRole />}>
         <Route element={<AppShell />}>
           <Route path="/settings/account" element={<AccountSettingsPage />} />
-          <Route path="/notifications" element={<RolePlaceholder title="Notifications" />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
         </Route>
       </Route>
 
@@ -135,7 +142,21 @@ export default function App() {
                 <Route path="/f/questions/:id" element={<QuestionFormPage />} />
               </>
             )}
-            {role === 'ADMIN' && <Route path="/admin/users" element={<UsersPage />} />}
+            {role === 'ADMIN' && (
+              <>
+                <Route path="/admin/users" element={<UsersPage />} />
+                <Route path="/admin/departments" element={<DepartmentsPage />} />
+                <Route path="/admin/roles" element={<RolesPage />} />
+                <Route path="/admin/audit" element={<AuditPage />} />
+                <Route path="/admin/settings" element={<SettingsPage />} />
+              </>
+            )}
+            {role === 'RECRUITER' && (
+              <>
+                <Route path="/r" element={<RecruiterOverviewPage />} />
+                <Route path="/r/drives/:id" element={<RecruiterDrivePage />} />
+              </>
+            )}
             {role === 'TP_HEAD' && (
               <>
                 <Route path="/tp" element={<TpOverviewPage />} />

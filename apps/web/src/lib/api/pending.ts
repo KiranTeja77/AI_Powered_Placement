@@ -7,6 +7,14 @@
  */
 
 import type {
+  AuditEntry,
+  NotificationItem,
+  PermissionMatrix,
+  RecruiterCandidate,
+  RecruiterDrive,
+  RecruiterDriveRow,
+} from './ops-types'
+import type {
   DepartmentReadiness,
   EligibilityReport,
   HeatmapCell,
@@ -219,6 +227,32 @@ export const useDriveShortlist = (driveId: string) => {
 
 /** TODO(api): GET /api/v1/tp/placements -> PlacementRow[] */
 export const usePlacements = () => usePendingList<PlacementRow>()
+
+// Admin, recruiter and notification screens.
+
+/** TODO(api): GET /api/v1/admin/audit?action=&from=&to= -> Page<AuditEntry> */
+export const useAuditLog = () => usePendingList<AuditEntry>()
+
+/** TODO(api): GET /api/v1/admin/permissions -> PermissionMatrix */
+export const usePermissionMatrix = () => usePendingItem<PermissionMatrix>()
+
+/** TODO(api): GET /api/v1/recruiter/drives -> RecruiterDriveRow[] (drives assigned to this recruiter) */
+export const useRecruiterDrives = () => usePendingList<RecruiterDriveRow>()
+
+/** TODO(api): GET /api/v1/recruiter/drives/{id} -> RecruiterDrive */
+export const useRecruiterDrive = (id: string) => {
+  void id
+  return usePendingItem<RecruiterDrive>()
+}
+
+/** TODO(api): GET /api/v1/recruiter/drives/{id}/candidates -> RecruiterCandidate[] (approved and consented only) */
+export const useRecruiterCandidates = (id: string) => {
+  void id
+  return usePendingList<RecruiterCandidate>()
+}
+
+/** TODO(api): GET /api/v1/notifications -> Page<NotificationItem> */
+export const useNotifications = () => usePendingList<NotificationItem>()
 
 // Intended endpoints for the screens that use the hooks above. Each is a TODO(api) until built.
 // TODO(api): GET /api/v1/student/overview            -> StudentOverview
