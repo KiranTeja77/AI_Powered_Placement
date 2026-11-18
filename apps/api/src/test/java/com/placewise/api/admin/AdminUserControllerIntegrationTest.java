@@ -233,13 +233,16 @@ class AdminUserControllerIntegrationTest extends IntegrationTestBase {
     @Test
     void deactivatingEndsTheUsersSessionsAtOnce() throws Exception {
         UUID id = insertUser("staff@college.edu", "FACULTY", "ACTIVE");
+        // With a department, since the response describes it after the sessions are revoked.
+        jdbc.update("update app_user set department_id = ? where id = ?", departmentId("CSE"), id);
         MvcResult signIn = mvc.perform(login("staff@college.edu", PASSWORD, "10.8.0.1")).andReturn();
         String access = read(signIn, "$.accessToken");
         Cookie refresh = refreshCookie(signIn);
         Cookie otherDevice = refreshCookie(mvc.perform(login("staff@college.edu", PASSWORD, "10.8.0.2")).andReturn());
         mvc.perform(get("/api/v1/me").header("Authorization", "Bearer " + access)).andExpect(status().isOk());
 
-        setStatus(admin, id, "INACTIVE").andExpect(status().isOk()).andExpect(jsonPath("$.status").value("INACTIVE"));
+        setStatus(admin, id, "INACTIVE").andExpect(status().isOk()).andExpect(jsonPath("$.status").value("INACTIVE"))
+                .andExpect(jsonPath("$.department.code").value("CSE"));
 
         // Every refresh token is revoked, the access token already stops working, and sign-in is refused.
         assertThat(jdbc.queryForObject("select count(*) from refresh_token where user_id = ? and revoked_at is null",

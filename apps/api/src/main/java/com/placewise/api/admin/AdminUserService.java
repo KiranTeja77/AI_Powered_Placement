@@ -128,10 +128,13 @@ class AdminUserService {
         }
         user.setStatus(status, clock.instant());
         users.save(user);
+        // Build the response first: the bulk revoke below clears the persistence context, after
+        // which the lazily loaded department could no longer be read.
+        AdminUserRow row = toRow(user, students.findById(user.getId()).orElse(null));
         if (status == UserStatus.INACTIVE) {
             refreshTokens.revokeAllForUser(user.getId());
         }
-        return toRow(user, students.findById(user.getId()).orElse(null));
+        return row;
     }
 
     private AdminUserRow toRow(AppUser u, Student student) {
