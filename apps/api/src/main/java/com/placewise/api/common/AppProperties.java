@@ -21,7 +21,13 @@ public record AppProperties(
             @DefaultValue("30m") Duration resetTtl,
             @DefaultValue("12") int bcryptStrength,
             @DefaultValue("5") int maxFailedLogins,
-            @DefaultValue("15m") Duration loginWindow) {}
+            @DefaultValue("15m") Duration loginWindow,
+            /**
+             * How long after a refresh token was rotated it may be presented once more without
+             * ending the session. Covers two tabs of one browser refreshing at the same moment.
+             * Zero turns it off, so any reuse ends the session.
+             */
+            @DefaultValue("10s") Duration refreshGrace) {}
 
     public record Cookie(@DefaultValue("true") boolean secure) {}
 

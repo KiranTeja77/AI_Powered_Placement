@@ -31,6 +31,9 @@ public class RefreshToken {
     @Column(name = "revoked_at")
     private Instant revokedAt;
 
+    @Column(name = "rotated_at")
+    private Instant rotatedAt;
+
     @Column(name = "created_at")
     private Instant createdAt;
 
@@ -62,5 +65,10 @@ public class RefreshToken {
 
     public Instant getRevokedAt() {
         return revokedAt;
+    }
+
+    /** Set only when rotation replaced this token; null for tokens killed any other way. */
+    public Instant getRotatedAt() {
+        return rotatedAt;
     }
 }
