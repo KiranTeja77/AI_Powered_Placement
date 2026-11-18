@@ -48,8 +48,8 @@ export interface ValidationReport {
   totalRows: number
   validRows: number
   issues: RowIssue[]
-  /** Roll numbers that do not look like a roll number at all. */
-  unknownRolls: { line: number; rollNo: string }[]
+  /** Roll numbers whose format is wrong. Matching to registered students happens on import. */
+  invalidFormat: { line: number; rollNo: string }[]
 }
 
 const ROLL = /^[A-Za-z0-9][A-Za-z0-9/_-]{2,31}$/
@@ -62,7 +62,7 @@ const isNumber = (v: string) => v.trim() !== '' && Number.isFinite(Number(v))
 export function validateRows(rows: string[][], mapping: Mapping): ValidationReport {
   const cell = (row: string[], key: ImportField) => (row[mapping[key]!] ?? '').trim()
   const issues: RowIssue[] = []
-  const unknownRolls: ValidationReport['unknownRolls'] = []
+  const invalidFormat: ValidationReport['invalidFormat'] = []
   const firstSeen = new Map<string, number>()
   let validRows = 0
 
@@ -73,7 +73,7 @@ export function validateRows(rows: string[][], mapping: Mapping): ValidationRepo
     const add = (field: string, message: string) => issues.push({ line, rollNo, field, message })
 
     if (!ROLL.test(rollNo)) {
-      unknownRolls.push({ line, rollNo })
+      invalidFormat.push({ line, rollNo })
       add('Roll number', rollNo === '' ? 'Roll number is empty' : 'Not a valid roll number')
     } else {
       const seen = firstSeen.get(rollNo.toLowerCase())
@@ -94,5 +94,5 @@ export function validateRows(rows: string[][], mapping: Mapping): ValidationRepo
     if (issues.length === before) validRows++
   })
 
-  return { totalRows: rows.length, validRows, issues, unknownRolls }
+  return { totalRows: rows.length, validRows, issues, invalidFormat }
 }

@@ -141,7 +141,13 @@ Dashboard, GitHub, Atlassian). It must NOT look AI-generated.
 - Access token: JWT, 15 min, held in memory on the client (not localStorage).
 - Refresh token: opaque random, 7 days, **httpOnly Secure SameSite=Strict cookie**, stored hashed
   in `refresh_token` table, rotated on every refresh, revoked on logout; reuse of a revoked token
-  revokes the whole family.
+  revokes the whole family, with one exception: a token that was **rotated** (not logged out or
+  revoked) less than the grace window ago (`app.auth.refresh-grace`, default 10 s) may be presented
+  once more without ending the session, because two tabs, or a reload during a refresh, do this
+  legitimately. Only digests are stored, so the successor already issued cannot be returned; the
+  session gets a second live token in the same family instead. Reuse after the window, of a token
+  that logout or a revocation killed, or for a deactivated account, still revokes the whole family.
+  A window of `0s` turns the exception off.
 - Endpoints: `POST /api/v1/auth/register`, `/login`, `/refresh`, `/logout`, `/forgot-password`,
   `/reset-password`; `GET /api/v1/me`; `POST /api/v1/me/password`.
 - Reset tokens: single-use, 30 min, stored hashed; email sent via SMTP (Mailpit in dev).

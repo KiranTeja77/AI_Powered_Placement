@@ -268,7 +268,7 @@ describe('CSV reading and validation', () => {
     )
     expect(report.totalRows).toBe(6)
     expect(report.validRows).toBe(1)
-    expect(report.unknownRolls).toEqual([{ line: 4, rollNo: '??' }])
+    expect(report.invalidFormat).toEqual([{ line: 4, rollNo: '??' }])
     expect(report.issues.map((i) => `${i.line}:${i.field}`)).toEqual([
       '3:Roll number',
       '4:Roll number',

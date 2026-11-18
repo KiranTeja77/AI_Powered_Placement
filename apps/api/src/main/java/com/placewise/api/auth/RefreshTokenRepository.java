@@ -12,10 +12,16 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, UUID
 
     Optional<RefreshToken> findByTokenHash(String tokenHash);
 
-    /** Atomically revokes a token that is still active. Returns 0 if it was already revoked. */
+    /**
+     * Atomically retires a token that is still active, recording that rotation did it. Returns 0 if
+     * it was already revoked.
+     */
     @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("update RefreshToken t set t.revokedAt = :now where t.id = :id and t.revokedAt is null")
-    int revokeIfActive(@Param("id") UUID id, @Param("now") Instant now);
+    @Query("update RefreshToken t set t.revokedAt = :now, t.rotatedAt = :now where t.id = :id and t.revokedAt is null")
+    int rotateIfActive(@Param("id") UUID id, @Param("now") Instant now);
+
+    /** True while the session still has a live token, so it has not been ended. */
+    boolean existsByFamilyIdAndRevokedAtIsNull(UUID familyId);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update RefreshToken t set t.revokedAt = :now where t.familyId = :familyId and t.revokedAt is null")

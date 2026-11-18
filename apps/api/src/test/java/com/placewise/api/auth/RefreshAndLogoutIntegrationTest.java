@@ -30,6 +30,11 @@ class RefreshAndLogoutIntegrationTest extends IntegrationTestBase {
                 .andReturn();
     }
 
+    /** Pretends the rotations happened a while ago, so the grace window (10 seconds) has passed. */
+    private void ageRotations() {
+        jdbc.update("update refresh_token set rotated_at = rotated_at - interval '11 seconds' where rotated_at is not null");
+    }
+
     private int active() {
         return jdbc.queryForObject("select count(*) from refresh_token where revoked_at is null", Integer.class);
     }
@@ -56,8 +61,9 @@ class RefreshAndLogoutIntegrationTest extends IntegrationTestBase {
         Cookie second = refreshCookie(refresh(first));
         Cookie third = refreshCookie(refresh(second));
         assertThat(active()).isEqualTo(1);
+        ageRotations();
 
-        // `first` was already rotated out; presenting it again means it was copied.
+        // `first` was rotated out long ago; presenting it again means it was copied.
         MvcResult replay = refresh(first);
         assertThat(replay.getResponse().getStatus()).isEqualTo(401);
         assertThat(replay.getResponse().getContentType()).contains("application/problem+json");
@@ -71,6 +77,7 @@ class RefreshAndLogoutIntegrationTest extends IntegrationTestBase {
     void reuseOnlyAffectsTheSessionItBelongsTo() throws Exception {
         Cookie otherDevice = refreshCookie(mvc.perform(login("session@college.edu", PASSWORD, "10.6.0.2")).andReturn());
         refresh(first);
+        ageRotations();
         refresh(first); // replay kills the first session only
         assertThat(refresh(otherDevice).getResponse().getStatus()).isEqualTo(200);
     }
@@ -96,7 +103,64 @@ class RefreshAndLogoutIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    void concurrentUseOfOneTokenSucceedsAtMostOnce() throws Exception {
+    void reuseWithinTheGraceWindowIssuesAnotherLiveTokenAndKeepsTheSession() throws Exception {
+        MvcResult winner = refresh(first);
+        Cookie second = refreshCookie(winner);
+
+        // The same, already rotated token arrives again a moment later, as from a second tab.
+        MvcResult again = refresh(first);
+        mvcStatus(again, 200);
+        Cookie sibling = refreshCookie(again);
+        assertThat(sibling.getValue()).isNotEqualTo(first.getValue());
+        assertThat(sibling.getValue()).isNotEqualTo(second.getValue());
+        assertThat(read(again, "$.user.email")).isEqualTo("session@college.edu");
+
+        // Only digests are stored, so a second successor is issued next to the first. One session.
+        assertThat(jdbc.queryForObject("select count(distinct family_id) from refresh_token", Integer.class)).isEqualTo(1);
+        assertThat(active()).isEqualTo(2);
+
+        // Both tabs carry on with their own token.
+        mvcStatus(refresh(second), 200);
+        mvcStatus(refresh(sibling), 200);
+    }
+
+    @Test
+    void reuseAfterTheGraceWindowRevokesTheWholeFamily() throws Exception {
+        Cookie second = refreshCookie(refresh(first));
+        ageRotations();
+        MvcResult replay = refresh(first);
+        mvcStatus(replay, 401);
+        assertThat(active()).isZero();
+        mvcStatus(refresh(second), 401);
+    }
+
+    @Test
+    void theWindowIsMeasuredFromTheRotationNotFromSignIn() throws Exception {
+        // Signed in a long time ago, rotated just now: still inside the window.
+        jdbc.update("update refresh_token set created_at = created_at - interval '1 hour'");
+        refresh(first);
+        mvcStatus(refresh(first), 200);
+    }
+
+    @Test
+    void aTokenKilledByLogoutGetsNoGraceEvenInsideTheWindow() throws Exception {
+        Cookie second = refreshCookie(refresh(first));
+        mvc.perform(post("/api/v1/auth/logout").cookie(second)).andExpect(status().isNoContent());
+        // `first` was rotated a moment ago, but the session has since been ended on purpose.
+        mvcStatus(refresh(first), 401);
+        assertThat(active()).isZero();
+    }
+
+    @Test
+    void aDeactivatedAccountGetsNoGraceEither() throws Exception {
+        refresh(first);
+        jdbc.update("update app_user set status = 'INACTIVE'");
+        mvcStatus(refresh(first), 401);
+        assertThat(active()).isZero();
+    }
+
+    @Test
+    void concurrentUseOfOneTokenBothSucceedAsOneSession() throws Exception {
         var pool = java.util.concurrent.Executors.newFixedThreadPool(2);
         try {
             var tasks = java.util.List.<java.util.concurrent.Callable<Integer>>of(
@@ -108,7 +172,9 @@ class RefreshAndLogoutIntegrationTest extends IntegrationTestBase {
                     ok++;
                 }
             }
-            assertThat(ok).isLessThanOrEqualTo(1);
+            // Two tabs refreshing at the same moment are the case the grace window exists for.
+            assertThat(ok).isEqualTo(2);
+            assertThat(active()).isEqualTo(2);
         } finally {
             pool.shutdownNow();
         }

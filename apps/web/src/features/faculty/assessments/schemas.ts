@@ -33,7 +33,9 @@ export const assessmentSchema = z
       .array(z.object({ id: z.string(), name: z.string().trim().min(1, 'Name the section') }))
       .min(1, 'Add at least one section'),
     /** Questions picked from the bank, each placed in a section. */
-    questions: z.array(z.object({ id: z.string(), text: z.string(), sectionId: z.string() })),
+    questions: z.array(
+      z.object({ id: z.string(), text: z.string(), sectionId: z.string(), marks: z.number() }),
+    ),
     fullScreenRequired: z.boolean(),
     tabSwitchLogging: z.boolean(),
     cameraRequired: z.boolean(),
@@ -47,6 +49,22 @@ export const assessmentSchema = z
         path: ['endsAt'],
         message: 'The window must close after it opens',
       })
+    }
+    // With questions picked, the total must be exactly what they add up to. With none picked
+    // there is nothing to add up, so the preview's "no questions yet" warning is all there is.
+    if (
+      a.questions.length > 0 &&
+      Number.isFinite(Number(a.totalMarks)) &&
+      a.totalMarks.trim() !== ''
+    ) {
+      const picked = a.questions.reduce((sum, q) => sum + q.marks, 0)
+      if (Number(a.totalMarks) !== picked) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['totalMarks'],
+          message: `Total marks is ${a.totalMarks}, but the picked questions add up to ${picked}. Change the total or the questions.`,
+        })
+      }
     }
     const names = a.sections.map((s) => s.name.trim().toLowerCase())
     names.forEach((n, i) => {

@@ -110,7 +110,7 @@ test.describe('academic import', () => {
     await expect(stat('Rows in file')).toContainText('7')
     await expect(stat('Valid rows')).toContainText('3')
     await expect(stat('Rows with errors')).toContainText('4')
-    await expect(stat('Unknown roll numbers')).toContainText('1')
+    await expect(stat('Invalid format')).toContainText('1')
     await expect(page.getByRole('cell', { name: 'Must be a number from 0 to 10' })).toBeVisible()
     await expect(page.getByRole('cell', { name: 'Repeated, first seen on line 2' })).toBeVisible()
     await expect(page.getByRole('cell', { name: 'Not a valid roll number' })).toBeVisible()
