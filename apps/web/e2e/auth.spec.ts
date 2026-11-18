@@ -135,3 +135,32 @@ test('two tabs refreshing at the same moment both stay signed in', async ({ cont
   await first.reload()
   await expect(first).toHaveURL(/\/s$/)
 })
+
+test('a reload right after the token was rotated elsewhere keeps the user signed in', async ({
+  page,
+  request,
+}) => {
+  const student = newStudent()
+  await register(page, student)
+  await signIn(page, student.email)
+  await expect(page.getByRole('button', { name: 'Account menu' })).toBeVisible()
+
+  // A refresh whose response never reached this browser: the server has rotated the token, but
+  // the browser still holds the old one. That is what reloading in the middle of a refresh leaves
+  // behind. Rotating it from a separate client reproduces it exactly.
+  const cookies = await page.context().cookies()
+  const stale = cookies.find((c) => c.name === 'refresh_token')
+  expect(stale).toBeDefined()
+  const rotated = await request.post('/api/v1/auth/refresh', {
+    headers: { Cookie: `refresh_token=${stale!.value}` },
+  })
+  expect(rotated.status()).toBe(200)
+
+  // The browser now presents a token that was rotated out a moment ago. Inside the grace window
+  // that is not treated as theft, so the session survives, and it keeps working afterwards.
+  await page.reload()
+  await expect(page.getByRole('button', { name: 'Account menu' })).toBeVisible()
+  await expect(page).toHaveURL(/\/s$/)
+  await page.reload()
+  await expect(page.getByRole('button', { name: 'Account menu' })).toBeVisible()
+})
