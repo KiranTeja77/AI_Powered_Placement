@@ -14,7 +14,12 @@ const ACCESS_NOTE: Record<Permission['access'], string | null> = {
 export function PermissionGrid({ matrix }: { matrix: PermissionMatrix }) {
   const groups = [...new Set(matrix.permissions.map((p) => p.group))]
   return (
-    <div className="relative overflow-x-auto">
+    <div
+      className="relative overflow-x-auto"
+      role="region"
+      aria-label="Permission matrix"
+      tabIndex={0}
+    >
       <table className="w-full border-collapse text-base">
         <caption className="sr-only">Permissions held by each role. Read only.</caption>
         <thead>

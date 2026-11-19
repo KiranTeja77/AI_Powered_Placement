@@ -35,7 +35,7 @@ export function AccountMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger aria-label="Account menu" className="rounded-full">
         <Avatar>
-          <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
+          <AvatarFallback aria-hidden="true">{initials(user.fullName)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64">
