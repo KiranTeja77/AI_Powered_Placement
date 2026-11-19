@@ -58,7 +58,7 @@ export default defineConfig(({ mode }) => {
       setupFiles: ['./src/test/setup.ts'],
       css: false,
       testTimeout: 20_000,
-      exclude: ['e2e/**', 'node_modules/**'],
+      exclude: ['e2e/**', 'e2e-csp/**', 'node_modules/**'],
     },
   }
 })
