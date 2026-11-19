@@ -43,7 +43,7 @@ export default function LoginPage() {
       footer={
         <p>
           New student?{' '}
-          <Link to="/register" className="text-primary hover:underline">
+          <Link to="/register" className="text-primary underline underline-offset-2">
             Create an account
           </Link>
         </p>

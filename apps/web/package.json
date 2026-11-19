@@ -13,7 +13,8 @@
     "test": "vitest run",
     "preview": "vite preview",
     "gen:api": "openapi-typescript http://localhost:8080/v3/api-docs -o src/lib/api/schema.d.ts",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "e2e:csp": "playwright test -c playwright.csp.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.5",
@@ -38,6 +39,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.65.0",
     "@testing-library/jest-dom": "^7.0.1",

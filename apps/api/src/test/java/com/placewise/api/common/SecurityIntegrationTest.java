@@ -106,6 +106,35 @@ class SecurityIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
+    void everyApiResponseCarriesTheSecurityHeaders() throws Exception {
+        // A normal answer, a refusal and an error all get them, because the headers are written
+        // before the request is handled.
+        String csp = "default-src 'none'; frame-ancestors 'none'";
+        for (var request : java.util.List.of(
+                get("/api/v1/health"),
+                get("/api/v1/me"),
+                get("/api/v1/no-such-endpoint"))) {
+            mvc.perform(request)
+                    .andExpect(header().string("X-Content-Type-Options", "nosniff"))
+                    .andExpect(header().string("X-Frame-Options", "DENY"))
+                    .andExpect(header().string("Referrer-Policy", "no-referrer"))
+                    .andExpect(header().string("Content-Security-Policy", csp));
+        }
+        mvc.perform(postJson("/api/v1/auth/login", "{not json"))
+                .andExpect(header().string("X-Content-Type-Options", "nosniff"))
+                .andExpect(header().string("Content-Security-Policy", csp));
+    }
+
+    @Test
+    void theDocumentationPagesKeepTheBasicHeadersButNotTheStrictPolicy() throws Exception {
+        // Swagger UI needs its own scripts, so the API-only policy is not applied to it.
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(header().string("X-Content-Type-Options", "nosniff"))
+                .andExpect(header().string("X-Frame-Options", "DENY"))
+                .andExpect(header().doesNotExist("Content-Security-Policy"));
+    }
+
+    @Test
     void malformedJsonIsAProblemNotAStackTrace() throws Exception {
         mvc.perform(postJson("/api/v1/auth/login", "{not json"))
                 .andExpect(status().isBadRequest())

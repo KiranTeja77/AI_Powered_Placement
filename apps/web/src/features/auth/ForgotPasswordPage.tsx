@@ -11,7 +11,7 @@ import { forgotPasswordSchema, type ForgotPasswordValues } from './schemas'
 
 const BACK = (
   <p>
-    <Link to="/login" className="text-primary hover:underline">
+    <Link to="/login" className="text-primary underline underline-offset-2">
       Back to sign in
     </Link>
   </p>

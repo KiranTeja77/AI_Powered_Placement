@@ -9,7 +9,8 @@ export default defineConfig({
   expect: { timeout: 15_000 },
   fullyParallel: false,
   workers: 1,
-  reporter: [['list']],
+  // In CI an HTML report is written too, so a failed run can be uploaded and opened.
+  reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : [['list']],
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'retain-on-failure',

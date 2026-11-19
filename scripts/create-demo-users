@@ -1,0 +1,181 @@
+#!/usr/bin/env node
+/**
+ * Creates one demo account per role, through the real APIs, and prints how to sign in to each.
+ *
+ *   node scripts/create-demo-users
+ *
+ * Needs the stack running (`docker compose up -d`) and ADMIN_EMAIL / ADMIN_PASSWORD in `.env`.
+ * These are accounts only. No scores, drives, questions or any other record is created, so every
+ * screen still starts empty, exactly as it would for a real user.
+ *
+ * Staff accounts are created the way an administrator creates them: through the admin API, which
+ * emails a set-password link. The script reads that email from Mailpit and uses the link to choose
+ * a random password, which is printed once and not stored anywhere. Students register themselves.
+ * Re-running is safe: an account that already exists is left alone (its password is not changed).
+ *
+ * Options:  --api <url>      API address            (default http://localhost:8080)
+ *           --mailpit <url>  Mailpit address        (default http://localhost:8025)
+ */
+'use strict'
+
+const fs = require('node:fs')
+const path = require('node:path')
+const crypto = require('node:crypto')
+
+function option(name, fallback) {
+  const i = process.argv.indexOf(name)
+  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : fallback
+}
+
+const API = option('--api', 'http://localhost:8080').replace(/\/$/, '')
+const MAILPIT = option('--mailpit', 'http://localhost:8025').replace(/\/$/, '')
+
+/** A readable random password that satisfies the policy (letters and numbers, 8 or more). */
+function newPassword() {
+  return `Demo${crypto.randomBytes(5).toString('hex')}a1`
+}
+
+function adminCredentials() {
+  const fromEnv = { email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD }
+  if (fromEnv.email && fromEnv.password) return fromEnv
+  const file = path.join(__dirname, '..', '.env')
+  if (!fs.existsSync(file)) fail('No .env file and ADMIN_EMAIL / ADMIN_PASSWORD are not set.')
+  const text = fs.readFileSync(file, 'utf-8')
+  const read = (key) => new RegExp(`^${key}=(.*)$`, 'm').exec(text)?.[1]?.trim()
+  const email = read('ADMIN_EMAIL')
+  const password = read('ADMIN_PASSWORD')
+  if (!email || !password) fail('ADMIN_EMAIL and ADMIN_PASSWORD must both be set in .env.')
+  return { email, password }
+}
+
+function fail(message) {
+  console.error(`\nError: ${message}\n`)
+  process.exit(1)
+}
+
+async function call(url, { method = 'GET', token, body } = {}) {
+  let response
+  try {
+    response = await fetch(url, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        ...(body ? { 'Content-Type': 'application/json' } : {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    })
+  } catch {
+    fail(`Could not reach ${url}. Is the stack running? Start it with: docker compose up -d`)
+  }
+  const text = await response.text()
+  let data = null
+  try {
+    data = text ? JSON.parse(text) : null
+  } catch {
+    data = text
+  }
+  return { status: response.status, data }
+}
+
+/** Waits for the set-password email to reach Mailpit and returns the token in its link. */
+async function inviteToken(email) {
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const found = await call(`${MAILPIT}/api/v1/search?query=${encodeURIComponent(`to:${email}`)}`)
+    const messages = found.data?.messages ?? []
+    if (messages.length > 0) {
+      const message = await call(`${MAILPIT}/api/v1/message/${messages[0].ID}`)
+      const token = /set-password\?token=([A-Za-z0-9_-]+)/.exec(message.data?.Text ?? '')?.[1]
+      if (token) return token
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250))
+  }
+  fail(`The set-password email for ${email} did not arrive in Mailpit (${MAILPIT}).`)
+}
+
+async function main() {
+  const admin = adminCredentials()
+  const login = await call(`${API}/api/v1/auth/login`, {
+    method: 'POST',
+    body: { identifier: admin.email, password: admin.password },
+  })
+  if (login.status !== 200) fail(`The administrator could not sign in (HTTP ${login.status}). Check .env.`)
+  const token = login.data.accessToken
+
+  const departments = (await call(`${API}/api/v1/departments`)).data
+  if (!Array.isArray(departments) || departments.length < 2) fail('Fewer than two departments exist.')
+  const byCode = (code) => departments.find((d) => d.code === code)
+  const first = byCode('CSE') ?? departments[0]
+  const second = byCode('ECE') ?? departments.find((d) => d.id !== first.id)
+
+  const staff = [
+    { label: 'Faculty', role: 'FACULTY', email: 'demo.faculty@college.edu', name: 'Demo Faculty', department: first },
+    { label: 'T&P head', role: 'TP_HEAD', email: 'demo.tp@college.edu', name: 'Demo T&P Head' },
+    { label: 'Recruiter', role: 'RECRUITER', email: 'demo.recruiter@college.edu', name: 'Demo Recruiter' },
+  ]
+  const students = [
+    { label: 'Student', email: 'demo.student1@college.edu', name: 'Demo Student One', rollNo: `DEMO001${first.code}`, department: first },
+    { label: 'Student', email: 'demo.student2@college.edu', name: 'Demo Student Two', rollNo: `DEMO002${second.code}`, department: second },
+  ]
+
+  const rows = []
+
+  for (const person of staff) {
+    const created = await call(`${API}/api/v1/admin/users`, {
+      method: 'POST',
+      token,
+      body: {
+        fullName: person.name,
+        email: person.email,
+        role: person.role,
+        departmentId: person.department?.id,
+      },
+    })
+    if (created.status === 409) {
+      rows.push({ ...person, detail: 'already existed, password unchanged', password: null })
+      continue
+    }
+    if (created.status !== 201) fail(`Creating ${person.email} failed (HTTP ${created.status}): ${JSON.stringify(created.data)}`)
+    const password = newPassword()
+    const set = await call(`${API}/api/v1/auth/reset-password`, {
+      method: 'POST',
+      body: { token: await inviteToken(person.email), newPassword: password },
+    })
+    if (set.status !== 204) fail(`Setting the password for ${person.email} failed (HTTP ${set.status}).`)
+    rows.push({ ...person, detail: person.department ? person.department.code : '', password })
+  }
+
+  for (const person of students) {
+    const password = newPassword()
+    const registered = await call(`${API}/api/v1/auth/register`, {
+      method: 'POST',
+      body: {
+        fullName: person.name,
+        email: person.email,
+        rollNo: person.rollNo,
+        departmentId: person.department.id,
+        graduationYear: new Date().getFullYear() + 1,
+        password,
+      },
+    })
+    if (registered.status === 409) {
+      rows.push({ ...person, detail: `${person.department.code}, already existed, password unchanged`, password: null })
+      continue
+    }
+    if (registered.status !== 201) fail(`Registering ${person.email} failed (HTTP ${registered.status}): ${JSON.stringify(registered.data)}`)
+    rows.push({ ...person, detail: `${person.department.code}, roll no ${person.rollNo}`, password })
+  }
+
+  const width = (key) => Math.max(...rows.map((r) => String(r[key] ?? '').length), key.length)
+  const pad = (value, n) => String(value ?? '').padEnd(n)
+  console.log('\nDemo accounts. Sign in at http://localhost:5173/login\n')
+  console.log(`${pad('Role', 9)}  ${pad('Email', width('email'))}  ${pad('Password', 20)}  Notes`)
+  console.log(`${'-'.repeat(9)}  ${'-'.repeat(width('email'))}  ${'-'.repeat(20)}  -----`)
+  for (const r of rows) {
+    console.log(`${pad(r.label, 9)}  ${pad(r.email, width('email'))}  ${pad(r.password ?? '(unchanged)', 20)}  ${r.detail}`)
+  }
+  console.log('\nPasswords are shown once and not stored. Staff reset theirs from "Forgot password" if needed.')
+  console.log('Only accounts were created. Every screen starts empty, as it would for a new user.\n')
+}
+
+main().catch((error) => fail(error instanceof Error ? error.message : String(error)))

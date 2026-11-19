@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Lets the end-to-end job be run by hand from the Actions tab.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,8 +18,8 @@ concurrency:
 # Runner image is pinned: `ubuntu-latest` moves to a new major image on a schedule.
 jobs:
   # The web job needs neither the API nor Docker. API types (src/lib/api/schema.d.ts) are
-  # generated with `pnpm gen:api` and committed, so CI uses them as they are. End-to-end tests
-  # need the full stack and run locally for now.
+  # generated with `pnpm gen:api` and committed, so CI uses them as they are. The end-to-end
+  # tests need the full stack and run in the e2e job below.
   web:
     runs-on: ubuntu-24.04
     defaults:
@@ -70,3 +72,86 @@ jobs:
       - run: uv run ruff format --check .
       - run: uv run mypy app
       - run: uv run pytest
+
+  # The whole stack, then the whole Playwright suite. Slow (about half an hour), so it runs on
+  # pushes to main and on demand, not on every pull request.
+  e2e:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v7
+
+      # CI-only values, generated here and never stored. The tests read the admin login from this
+      # same file, exactly as they do on a laptop.
+      - name: Write .env
+        run: |
+          {
+            echo "POSTGRES_DB=placewise"
+            echo "POSTGRES_USER=placewise"
+            echo "POSTGRES_PASSWORD=$(openssl rand -hex 16)"
+            echo "JWT_SECRET=$(openssl rand -hex 32)"
+            echo "ADMIN_EMAIL=ci.admin@college.edu"
+            echo "ADMIN_PASSWORD=Ci$(openssl rand -hex 8)A1"
+            echo "WEB_ORIGIN=http://localhost:5173"
+            echo "AI_SERVICE_URL=http://ai-service:8000"
+            echo "SMTP_HOST=mailpit"
+            echo "SMTP_PORT=1025"
+          } > .env
+
+      - name: Start the stack
+        run: docker compose up -d --build
+
+      # Postgres has a health check; the API and the analyzer are polled until they answer.
+      - name: Wait for the stack to be healthy
+        run: |
+          for i in $(seq 1 90); do
+            if curl -fsS http://localhost:8080/api/v1/health > /dev/null               && docker compose exec -T ai-service python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" > /dev/null 2>&1               && curl -fsS http://localhost:8025/api/v1/info > /dev/null; then
+              echo "stack is healthy after ${i} checks"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "the stack did not become healthy" >&2
+          docker compose ps
+          docker compose logs --tail=100
+          exit 1
+
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: apps/web/package.json
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: apps/web/.nvmrc
+          cache: pnpm
+          cache-dependency-path: apps/web/pnpm-lock.yaml
+      - name: Install web dependencies and the browser
+        working-directory: apps/web
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec playwright install --with-deps chromium
+
+      # Playwright starts the web dev server itself (see playwright.config.ts).
+      - name: Run the Playwright suite
+        working-directory: apps/web
+        run: pnpm exec playwright test
+
+      - name: Upload the report and screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-failure
+          if-no-files-found: ignore
+          retention-days: 14
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+            apps/web/e2e/screenshots
+
+      - name: Show the container logs
+        if: failure()
+        run: docker compose logs --tail=300
+
+      - name: Stop the stack
+        if: always()
+        run: docker compose down -v

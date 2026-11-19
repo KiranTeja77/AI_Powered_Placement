@@ -1,3 +1,5 @@
+// Must stay first: it configures zod before any module creates a schema.
+import '@/zod-config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'

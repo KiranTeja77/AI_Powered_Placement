@@ -42,6 +42,10 @@ vi.mock('@/lib/api/pending', async (importOriginal) => ({
   }),
 }))
 
+// No delay between keystrokes: this form has many fields, and the default pause makes the test
+// slow enough to time out when the machine is busy.
+const user = userEvent.setup({ delay: null })
+
 beforeEach(() => {
   toast.mockClear()
   vi.mocked(authApi.departments).mockResolvedValue([
@@ -92,19 +96,19 @@ describe('assessment total marks', () => {
 describe('builder with picked questions', () => {
   it('blocks Publish when the total does not match, and says why', async () => {
     renderScreen(<AssessmentBuilderPage />)
-    await userEvent.type(screen.getByLabelText('Title'), 'Placement mock 1')
-    await userEvent.click(screen.getByRole('combobox', { name: 'Department' }))
-    await userEvent.click(await screen.findByRole('option', { name: /CSE/ }))
-    await userEvent.type(screen.getByLabelText('Total marks'), '10')
-    await userEvent.type(screen.getByLabelText('Window opens'), '2026-12-01T10:00')
-    await userEvent.type(screen.getByLabelText('Window closes'), '2026-12-01T12:00')
-    await userEvent.type(screen.getByLabelText('Section 1 name'), 'Aptitude')
+    await user.type(screen.getByLabelText('Title'), 'Placement mock 1')
+    await user.click(screen.getByRole('combobox', { name: 'Department' }))
+    await user.click(await screen.findByRole('option', { name: /CSE/ }))
+    await user.type(screen.getByLabelText('Total marks'), '10')
+    await user.type(screen.getByLabelText('Window opens'), '2026-12-01T10:00')
+    await user.type(screen.getByLabelText('Window closes'), '2026-12-01T12:00')
+    await user.type(screen.getByLabelText('Section 1 name'), 'Aptitude')
 
-    await userEvent.click(screen.getByRole('checkbox', { name: /Question one/ }))
-    await userEvent.click(screen.getByRole('checkbox', { name: /Question two/ }))
-    await userEvent.click(screen.getByRole('button', { name: 'Add selected' }))
+    await user.click(screen.getByRole('checkbox', { name: /Question one/ }))
+    await user.click(screen.getByRole('checkbox', { name: /Question two/ }))
+    await user.click(screen.getByRole('button', { name: 'Add selected' }))
 
-    await userEvent.click(screen.getByRole('button', { name: 'Publish' }))
+    await user.click(screen.getByRole('button', { name: 'Publish' }))
     expect(
       await screen.findByText(/Total marks is 10, but the picked questions add up to 5/),
     ).toBeInTheDocument()
@@ -112,9 +116,9 @@ describe('builder with picked questions', () => {
 
     // Correct the total and it goes through.
     const total = screen.getByLabelText('Total marks')
-    await userEvent.clear(total)
-    await userEvent.type(total, '5')
-    await userEvent.click(screen.getByRole('button', { name: 'Publish' }))
+    await user.clear(total)
+    await user.type(total, '5')
+    await user.click(screen.getByRole('button', { name: 'Publish' }))
     await waitFor(() => expect(toast).toHaveBeenCalledWith("Saving isn't available yet"))
   })
 })

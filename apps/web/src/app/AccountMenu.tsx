@@ -33,9 +33,10 @@ export function AccountMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Account menu" className="rounded-full">
+      <DropdownMenuTrigger className="rounded-full">
+        <span className="sr-only">Account menu</span>
         <Avatar>
-          <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
+          <AvatarFallback aria-hidden="true">{initials(user.fullName)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64">

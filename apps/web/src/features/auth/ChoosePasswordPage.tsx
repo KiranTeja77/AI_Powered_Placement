@@ -21,7 +21,7 @@ export interface ChoosePasswordCopy {
 
 const REQUEST_NEW = (label: string) => (
   <p>
-    <Link to="/forgot-password" className="text-primary hover:underline">
+    <Link to="/forgot-password" className="text-primary underline underline-offset-2">
       {label}
     </Link>
   </p>
