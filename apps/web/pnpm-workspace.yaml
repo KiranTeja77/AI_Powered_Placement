@@ -1,2 +1,7 @@
 allowBuilds:
   esbuild: true
+
+# monaco-editor pins dompurify 3.4.15, which has a critical and a high advisory (fixed in 3.4.17).
+# Remove this override once monaco-editor depends on a patched version itself.
+overrides:
+  dompurify: 3.4.18

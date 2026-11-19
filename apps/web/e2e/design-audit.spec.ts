@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { chooseRole, registerAs, registerViaApi, sampleResume, signIn } from './helpers.ts'
+import { PUBLIC_ROUTES, ROUTES, SHARED_ROUTES, type SignedInRole } from './routes.ts'
 
 /**
  * Screenshots /dev/components at 375 and 1280 px in light and dark, and checks the rendered DOM
@@ -7,6 +8,7 @@ import { chooseRole, registerAs, registerViaApi, sampleResume, signIn } from './
  */
 const VIEWPORTS = [
   { name: '375', width: 375, height: 800 },
+  { name: '768', width: 768, height: 1000 },
   { name: '1280', width: 1280, height: 900 },
 ] as const
 const THEMES = ['light', 'dark'] as const
@@ -262,85 +264,34 @@ test.describe('resume screens', () => {
   }
 })
 
-/** Every student screen, with no data behind it: each must show its designed empty state. */
-const STUDENT_ROUTES = [
-  { name: 'overview', path: '/s' },
-  { name: 'onboarding', path: '/s/onboarding' },
-  { name: 'profile', path: '/s/profile' },
-  { name: 'roadmap', path: '/s/roadmap' },
-  { name: 'training-technical', path: '/s/training/technical' },
-  { name: 'training-non-technical', path: '/s/training/non-technical' },
-  { name: 'lesson', path: '/s/training/topic/lesson' },
-  { name: 'coding', path: '/s/practice/coding/problem' },
-  { name: 'assessments', path: '/s/assessments' },
-  { name: 'assessments-in-progress', path: '/s/assessments?tab=in_progress' },
-  { name: 'assessments-completed', path: '/s/assessments?tab=completed' },
-  { name: 'assessment-start', path: '/s/assessments/sample/start' },
-  { name: 'assessment-take', path: '/s/assessments/sample/take' },
-  { name: 'result', path: '/s/results/attempt' },
-  { name: 'progress', path: '/s/progress' },
-  { name: 'interviews', path: '/s/interviews' },
-  { name: 'drives', path: '/s/drives' },
-  { name: 'drive', path: '/s/drives/sample' },
-  { name: 'feedback', path: '/s/feedback' },
-] as const
-
-test.describe('student screens', () => {
-  for (const viewport of VIEWPORTS) {
-    for (const theme of THEMES) {
-      test(`student screens at ${viewport.name}px, ${theme}`, async ({ page, request }) => {
-        test.setTimeout(180_000)
-        const student = await registerViaApi(request)
-        await page.addInitScript((t) => localStorage.setItem('theme', t), theme)
-        await page.setViewportSize({ width: viewport.width, height: viewport.height })
-        await signIn(page, student.email)
-
-        const failures: Record<string, Violation[]> = {}
-        for (const route of STUDENT_ROUTES) {
-          await page.goto(route.path)
-          await expect(page.getByRole('heading', { level: 1 }), route.path).toBeVisible()
-          // Monaco is served unbundled by the dev server, so its first load is slow.
-          if (route.name === 'coding') {
-            await expect(page.locator('.monaco-editor')).toBeVisible({ timeout: 60_000 })
-          }
-          await page.waitForLoadState('networkidle')
-          await page.screenshot({
-            path: `e2e/screenshots/student-${route.name}-${viewport.name}-${theme}.png`,
-            fullPage: true,
-          })
-          const violations = await audit(page)
-          if (violations.length > 0) failures[route.path] = violations
-        }
-        expect(failures, JSON.stringify(failures, null, 2)).toEqual({})
-      })
-    }
-  }
-})
-
 /**
- * Audits a list of routes at both widths and both themes. Each route must show a level-1 heading
- * (so a crash or a blank page fails) and pass the design rules.
+ * Walks every route of a role at every width and theme. Each must show a level-1 heading (so a
+ * crash or a blank page fails) and pass the design rules from CLAUDE.md.
  */
-function auditRoutes(
-  title: string,
-  role: 'FACULTY' | 'TP_HEAD' | 'ADMIN' | 'RECRUITER',
-  routes: readonly { name: string; path: string }[],
-  prefix: string,
-) {
-  test.describe(title, () => {
+function auditRole(role: SignedInRole) {
+  const { prefix, routes } = ROUTES[role]
+  const all = [...routes, ...SHARED_ROUTES.map((r) => ({ ...r, name: `shared-${r.name}` }))]
+  test.describe(`${prefix} screens`, () => {
     for (const viewport of VIEWPORTS) {
       for (const theme of THEMES) {
-        test(`${title} at ${viewport.name}px, ${theme}`, async ({ page, request }) => {
-          test.setTimeout(240_000)
-          const user = await registerAs(request, role)
+        test(`${prefix} screens at ${viewport.name}px, ${theme}`, async ({ page, request }) => {
+          test.setTimeout(300_000)
+          const user =
+            role === 'STUDENT'
+              ? { ...(await registerViaApi(request)), home: /\/s$/ }
+              : await registerAs(request, role)
           await page.addInitScript((t) => localStorage.setItem('theme', t), theme)
           await page.setViewportSize({ width: viewport.width, height: viewport.height })
           await signIn(page, user.email, user.home)
 
           const failures: Record<string, Violation[]> = {}
-          for (const route of routes) {
+          for (const route of all) {
             await page.goto(route.path)
             await expect(page.getByRole('heading', { level: 1 }), route.path).toBeVisible()
+            // Monaco is served unbundled by the dev server, so its first load is slow.
+            if (route.name === 'coding') {
+              await expect(page.locator('.monaco-editor')).toBeVisible({ timeout: 60_000 })
+            }
             await page.waitForLoadState('networkidle')
             await page.screenshot({
               path: `e2e/screenshots/${prefix}-${route.name}-${viewport.name}-${theme}.png`,
@@ -356,63 +307,25 @@ function auditRoutes(
   })
 }
 
-auditRoutes(
-  'faculty screens',
-  'FACULTY',
-  [
-    { name: 'overview', path: '/f' },
-    { name: 'students', path: '/f/students' },
-    { name: 'student', path: '/f/students/sample' },
-    { name: 'mentoring', path: '/f/mentoring' },
-    { name: 'questions', path: '/f/questions' },
-    { name: 'question-new', path: '/f/questions/new' },
-    { name: 'question-edit', path: '/f/questions/sample' },
-    { name: 'assessment-new', path: '/f/assessments/new' },
-    { name: 'proctoring', path: '/f/proctoring' },
-  ],
-  'faculty',
-)
+for (const role of Object.keys(ROUTES) as SignedInRole[]) auditRole(role)
 
-auditRoutes(
-  'T&P screens',
-  'TP_HEAD',
-  [
-    { name: 'overview', path: '/tp' },
-    { name: 'analytics', path: '/tp/analytics' },
-    { name: 'drives', path: '/tp/drives' },
-    { name: 'drive-new', path: '/tp/drives/new' },
-    { name: 'eligibility', path: '/tp/drives/sample/eligibility' },
-    { name: 'shortlist', path: '/tp/drives/sample/shortlist' },
-    { name: 'academic-import', path: '/tp/academic-import' },
-    { name: 'placements', path: '/tp/placements' },
-  ],
-  'tp',
-)
-
-auditRoutes(
-  'admin screens',
-  'ADMIN',
-  [
-    { name: 'overview', path: '/admin' },
-    { name: 'users', path: '/admin/users' },
-    { name: 'departments', path: '/admin/departments' },
-    { name: 'roles', path: '/admin/roles' },
-    { name: 'audit', path: '/admin/audit' },
-    { name: 'settings', path: '/admin/settings' },
-    { name: 'notifications', path: '/notifications' },
-    { name: 'notifications-unread', path: '/notifications?tab=unread' },
-    { name: 'set-password', path: '/set-password?token=sample' },
-  ],
-  'admin',
-)
-
-auditRoutes(
-  'recruiter screens',
-  'RECRUITER',
-  [
-    { name: 'overview', path: '/r' },
-    { name: 'drive', path: '/r/drives/sample' },
-    { name: 'notifications', path: '/notifications' },
-  ],
-  'recruiter',
-)
+/** The pages anyone can open, signed out. */
+test.describe('public screens', () => {
+  for (const viewport of VIEWPORTS) {
+    for (const theme of THEMES) {
+      test(`public screens at ${viewport.name}px, ${theme}`, async ({ page }) => {
+        await page.addInitScript((t) => localStorage.setItem('theme', t), theme)
+        await page.setViewportSize({ width: viewport.width, height: viewport.height })
+        const failures: Record<string, Violation[]> = {}
+        for (const route of PUBLIC_ROUTES) {
+          await page.goto(route.path)
+          await expect(page.getByRole('heading', { level: 1 }), route.path).toBeVisible()
+          await page.waitForLoadState('networkidle')
+          const violations = await audit(page)
+          if (violations.length > 0) failures[route.path] = violations
+        }
+        expect(failures, JSON.stringify(failures, null, 2)).toEqual({})
+      })
+    }
+  }
+})
